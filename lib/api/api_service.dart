@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:sth/api/urls.dart';
-import 'package:sth/models/photos.dart';
+import 'package:sth/models/attachmanets.dart';
 import 'package:sth/models/player.dart';
 import 'package:sth/models/player_list.dart';
 import 'package:sth/models/post.dart';
