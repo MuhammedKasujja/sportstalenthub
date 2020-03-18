@@ -53,7 +53,7 @@ class ApiService {
     return sports.toList();
   }
 
-  Future<List<Photo>> getPlayersAttachments(
+  Future<List<Attachments>> getPlayersAttachments(
       {@required playerId, @required category}) async {
     final res = await http
         .get(Urls.GET_PLAYERS_ATTACHMENTS +
@@ -65,10 +65,10 @@ class ApiService {
     return compute(_parsePlayersPhotos, res.body);
   }
 
-  static List<Photo> _parsePlayersPhotos(String resBody) {
+  static List<Attachments> _parsePlayersPhotos(String resBody) {
     final responseJson = json.decode(resBody);
     final photos =
-        (responseJson['files'] as List).map((p) => new Photo.fromJson(p));
+        (responseJson['files'] as List).map((p) => new Attachments.fromJson(p));
     return photos.toList();
   }
 

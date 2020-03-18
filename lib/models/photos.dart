@@ -1,13 +1,13 @@
 import 'package:sth/api/urls.dart';
 
-class Photo{
+class Attachments{
   String filename;
   String playerId;
 
-  Photo({this.playerId,this.filename});
+  Attachments({this.playerId,this.filename});
 
-  factory Photo.fromJson(Map<String, dynamic> json){
-    return Photo(
+  factory Attachments.fromJson(Map<String, dynamic> json){
+    return Attachments(
       filename: Urls.ACTION_PHOTOS_LINKS+json['filename'],
       playerId: json['player_id'].toString()
     );
