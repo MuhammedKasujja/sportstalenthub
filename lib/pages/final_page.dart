@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pref_dessert/pref_dessert_internal.dart';
 import 'package:sth/api/database.dart';
+import 'package:sth/models/player.dart';
 import 'package:sth/models/sport.dart';
 import 'package:sth/models/sport_pref.dart';
 import 'package:sth/pages/prayer_profiles.dart';
@@ -10,6 +11,7 @@ import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'fancy_profile.dart';
 import 'my_players.dart';
 
 class StartPage extends StatefulWidget{
@@ -133,6 +135,7 @@ AutomaticKeepAliveClientMixin<StartPage>{
             drawerTile(title: 'Create Account'),
             drawerTile(title: 'Settings', page: SettingsPage()),
             drawerTile(title: 'About'),
+            drawerTile(title: 'Profile', page: FancyProfilePage(player: this.player,)),
           ],
           ),
       ),
@@ -236,5 +239,21 @@ AutomaticKeepAliveClientMixin<StartPage>{
         }
      }
   }
+
+   Player player = new Player(
+      fullname: "Kasujja Muhammed",
+      //imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
+      profilePhoto: "http://img.youtube.com/vi/rqahKvZZVdg/0.jpg",
+      lastUpdated: '20/04/2019 10:39 AM',
+      category: 'Soccer',
+      contact: '0774262923',
+      nationality: 'Ugandan',
+      position: 'GoalKeeper, Midfielder,GoalKeeper, Midfielder,GoalKeeper, Midfielder,GoalKeeper, Midfielder',
+      dob: '22/07/1992',
+      gender: 'Male',
+      teamName: 'Barcelona',
+      weight: '34',
+      height: '5');
+
 
 }

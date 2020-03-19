@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sth/models/player.dart';
+import 'package:sth/pages/fancy_profile.dart';
 import 'package:sth/pages/profile.dart';
 import 'package:sth/pages/view_image.dart';
 import 'package:sth/utils/app_utils.dart';
@@ -19,7 +20,7 @@ class ProfileCard extends StatelessWidget{
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          AppUtils(context: context,).gotoPage( page: ProfilePage(player: player,));
+          AppUtils(context: context,).gotoPage( page: FancyProfilePage(player: player,));
         },
         child: Card(
           elevation: 3.0,

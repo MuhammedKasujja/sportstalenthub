@@ -16,7 +16,12 @@ class PostCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
       child: GestureDetector(
         onTap: () {
-          AppUtils(context: context,).gotoPage( page: ViewPostPage(post: post,));
+          AppUtils(
+            context: context,
+          ).gotoPage(
+              page: ViewPostPage(
+            post: post,
+          ));
         },
         child: Card(
           elevation: 3.0,
@@ -27,7 +32,7 @@ class PostCard extends StatelessWidget {
                 child: Hero(
                   tag: tag,
                   child: Container(
-                    width: 120.0,
+                    // width: 120.0,
                     height: 170.0,
                     decoration: BoxDecoration(
                       borderRadius:
@@ -40,8 +45,14 @@ class PostCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                onTap: (){
-                  AppUtils(context: context,).gotoPage( page: ViewImagePage(tag: tag, imageUrl: "${post.imageUrl}",));
+                onTap: () {
+                  AppUtils(
+                    context: context,
+                  ).gotoPage(
+                      page: ViewImagePage(
+                    tag: tag,
+                    imageUrl: "${post.imageUrl}",
+                  ));
                 },
               ),
               Expanded(
@@ -62,16 +73,19 @@ class PostCard extends StatelessWidget {
                         Text(
                           post.description,
                           style: Theme.of(context).textTheme.body1,
-                         // maxLines: 4,
+                          // maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
                           height: 15.0,
                         ),
-                        Align(alignment: Alignment.bottomRight,
-                          child: Text('${post.date}',
-                              style: Theme.of(context).textTheme.caption,),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                            '${post.date}',
+                            style: Theme.of(context).textTheme.caption,
                           ),
+                        ),
                         Expanded(child: Container()),
                       ],
                     ),

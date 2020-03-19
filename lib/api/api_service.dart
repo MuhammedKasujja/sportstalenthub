@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sth/api/urls.dart';
-import 'package:sth/models/attachmanets.dart';
+import 'package:sth/models/achievement.dart';
+import 'package:sth/models/attachment.dart';
 import 'package:sth/models/player.dart';
 import 'package:sth/models/player_list.dart';
 import 'package:sth/models/post.dart';
@@ -39,6 +40,17 @@ class ApiService {
     return compute(_parsePlayers, res.body);
   }
 
+  Future<List<Player>> filterPlayers({sport, gender, country, ageGroup}) async {
+    print("fetching data");
+    final res = await http
+        .get(Urls.FILTER_PLAYERS + "gender=$gender&sport=$sport&country=$country&age_group=$ageGroup")
+        .catchError((onError) {
+      print("CatchError : ${onError.toString()}");
+    });
+    print(res.body);
+    return compute(_parsePlayers, res.body);
+  }
+
   static List<Player> _parsePlayers(String resBody) {
     final responseJson = json.decode(resBody);
     final players =
@@ -53,11 +65,11 @@ class ApiService {
     return sports.toList();
   }
 
-  Future<List<Attachments>> getPlayersAttachments(
+  Future<List<Attachment>> getPlayersAttachments(
       {@required playerId, @required category}) async {
     final res = await http
         .get(Urls.GET_PLAYERS_ATTACHMENTS +
-            "player_id={$playerId}&category={$category}")
+            "player_id=$playerId&category=$category")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -65,10 +77,10 @@ class ApiService {
     return compute(_parsePlayersPhotos, res.body);
   }
 
-  static List<Attachments> _parsePlayersPhotos(String resBody) {
+  static List<Attachment> _parsePlayersPhotos(String resBody) {
     final responseJson = json.decode(resBody);
     final photos =
-        (responseJson['files'] as List).map((p) => new Attachments.fromJson(p));
+        (responseJson['files'] as List).map((p) => new Attachment.fromJson(p));
     return photos.toList();
   }
 
@@ -103,5 +115,25 @@ class ApiService {
     final posts =
         (responseJson['posts'] as List).map((p) => new Post.fromJson(p));
     return posts.toList();
+  }
+
+  Future<List<Achievement>> getPlayersAchievements(
+      {@required playerId}) async {
+       print("Player ID: {$playerId} ");
+    final res = await http
+        .get(Urls.GET_PLAYERS_ACHIEVEMENTS +
+            "player_id=$playerId")
+        .catchError((onError) {
+      print("CatchError : ${onError.toString()}");
+    });
+    print(res.body);
+    return compute(_parseAchievements, res.body);
+  }
+
+  static List<Achievement> _parseAchievements(String resBody) {
+    final responseJson = json.decode(resBody);
+    final achievements =
+        (responseJson['achievements'] as List).map((p) => new Achievement.fromJson(p));
+    return achievements.toList();
   }
 }

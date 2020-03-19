@@ -23,7 +23,8 @@ dependencies:
   shared_preferences:
   pref_dessert: ^0.3.0
   sqflite: any
-  path_provider: any
+  path_provider: ^1.6.5
+  country_pickers: ^1.2.0
 
 dev_dependencies:
   flutter_test:

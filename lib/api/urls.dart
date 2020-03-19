@@ -12,6 +12,8 @@ class Urls{
   static const SEARCH_PLAYERS = BASE_URL+"/searchPlayers.php?query=";
   static const MY_FAVOURITE_PLAYERS = BASE_URL+"/fetchFavouritePlayers.php?";
   static const GET_POSTS = BASE_URL+"/fetchPosts.php?";
+  static const FILTER_PLAYERS = BASE_URL+"/filterPlayers.php?";
+  static const GET_PLAYERS_ACHIEVEMENTS = BASE_URL+"/getAchievements.php?";
 
   static const PROFILE_PHOTO_LINK = "https://www.sportstalenthub.com/media/cache/my_thumb_330x242/images/players/";
   static const ACTION_PHOTOS_LINKS = "https://www.sportstalenthub.com/media/cache/my_thumb_690x450/images/action_photos/";

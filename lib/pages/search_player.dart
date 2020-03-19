@@ -53,19 +53,15 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : Container(
-                child: players.length > 0
-                    ? ListView.builder(
-                        itemCount: players.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(
-                            player: players[index],
-                          );
-                        },
-                      )
-                    : Container(
-                        child: Center(child: Text("Holla")),
-                      )));
+            :  ListView.builder(
+                    itemCount: players.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProfileCard(
+                        player: players[index],
+                      );
+                    },
+                  )
+    );
   }
 
   void _searchPlayers(String query) {
