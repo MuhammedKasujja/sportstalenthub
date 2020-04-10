@@ -1,0 +1,236 @@
+{
+    "sports": [
+        {
+            "name": "Soccer",
+            "positions": [
+                "Striker\/Forward",
+                "Defender",
+                "Midfielder",
+                "Goal Keeper"
+            ]
+        },
+        {
+            "name": "Netball",
+            "positions": [
+                "Goal Keeper (GK)",
+                "Goal Defence (GD)",
+                "Wing Defence (WD)",
+                "Center (C)",
+                "Wing Attack (WA)",
+                "Goal Attack (GA)",
+                "Goal Shooter (GS)"
+            ]
+        },
+        {
+            "name": "Basketball",
+            "positions": [
+                "Center",
+                "Power Forward",
+                "Small Forward",
+                "Shooting Guard",
+                "Point Guard",
+                "Center fielder"
+            ]
+        },
+        {
+            "name": "Cricket",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Rugby",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Volleyball",
+            "positions": [
+                "Outside Hitter",
+                "Right Side Hitter",
+                "Opposite Hitter",
+                "Setter",
+                "Libero",
+                "Middle Blocker",
+                "Defensive Specialist"
+            ]
+        },
+        {
+            "name": "Tennis",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Table Tennis",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Snooke",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Cycling",
+            "positions": [
+                "Road Cycling",
+                "Track Cycling",
+                "Cyclo-cross",
+                "Mountain Bike",
+                "BMX",
+                "Cycle Speedway",
+                "Motor-paced Racing",
+                "Average Speeds",
+                "Mountain Bike Trials",
+                "Freestyle BMX"
+            ]
+        },
+        {
+            "name": "Darts",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Motorsport",
+            "positions": [
+                "Formula One",
+                "IndyCar Series",
+                "Sports Car Racing",
+                "Stock Car Racing",
+                "Touring Car Racing",
+                "Auto (car) racing",
+                "Motor rallying",
+                "Kart Racing",
+                "Truck racing"
+            ]
+        },
+        {
+            "name": "American Football",
+            "positions": [
+                "Backfield",
+                "Running backs",
+                "Linemen",
+                "Receivers"
+            ]
+        },
+        {
+            "name": "Golf",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Baseball",
+            "positions": [
+                "Pitcher",
+                "Catcher",
+                "First baseman",
+                "Second Baseman",
+                "Third Baseman",
+                "Shortstop",
+                "Left fielder"
+            ]
+        },
+        {
+            "name": "Field Hockey",
+            "positions": [
+                "Offensive Striker",
+                "Midfield",
+                "Defensive Fullback",
+                "Goalie"
+            ]
+        },
+        {
+            "name": "Athletics",
+            "positions": [
+                ""
+            ]
+        },
+        {
+            "name": "Boxing",
+            "positions": [
+                "Swarmer",
+                "Slugger",
+                "Boxer Puncher"
+            ]
+        },
+        {
+            "name": "Swimming",
+            "positions": [
+                "Butterfly",
+                "Backstroke",
+                "Breaststroke",
+                "Freestyle"
+            ]
+        },
+        {
+            "name": "Kickboxing",
+            "positions": [
+                "Adithada",
+                "American kickboxing",
+                "Gwon-gyokdo",
+                "Japanese kickboxing",
+                "K-1",
+                "Lethwei",
+                "Muay Thai",
+                "Pradal Serey",
+                "Sanshou \/ Sanda",
+                "Savate",
+                "Shoot boxing",
+                "Yaw-Yan"
+            ]
+        },
+        {
+            "name": "Bike Racing",
+            "positions": [
+                "Supersport racing",
+                "Superbike racing",
+                "Motorcycle Grand Prix",
+                "Traditional road racing",
+                "Endurance Racing",
+                "Sidecar Racing",
+                "Supercross",
+                "Supermoto",
+                "Enduro",
+                "Hare Scramble",
+                "Cross-country rally",
+                "Indoor short track and TT Racing",
+                "Speedway",
+                "Grasstrack",
+                "Ice speedway",
+                "Board track",
+                "Auto Race",
+                "Hill climb",
+                "Landspeed racing",
+                "Vintage"
+            ]
+        },
+        {
+            "name": "Woodball",
+            "positions": [
+                "Genaral"
+            ]
+        },
+        {
+            "name": "Lifting",
+            "positions": [
+                "Clean and Jerk",
+                "Snatch"
+            ]
+        },
+        {
+            "name": "Bodybuilding",
+            "positions": [
+                "Physique",
+                "Olympia",
+                "Classic Physique",
+                "Open Category"
+            ]
+        }
+    ]
+}

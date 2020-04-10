@@ -15,9 +15,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   List<Sport> sportsList = [
-    Sport(name: Consts.NEWS, sportId: '000111000'),
-    Sport(name: Consts.FEATURED_PROFILES, sportId: '11001'),
-    Sport(name: Consts.LATEST_PROFILES, sportId: "11002"),
+    Sport(name: Consts.NEWS, sportId: Consts.POSTS_PAGE_ID),
+    Sport(name: Consts.FEATURED_PROFILES, sportId: Consts.FEATURED_PROFILES_ID),
+    Sport(name: Consts.LATEST_PROFILES, sportId: Consts.LATEST_PROFILES_ID),
   ];
   var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
   List<Sport> savedSports = new List();

@@ -9,6 +9,8 @@ import 'package:sth/models/sport.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sth/utils/consts.dart';
+
 class ApiService {
   Future<List<Sport>> getSports() async {
     final res = await http.get(Urls.GET_SPORTS).catchError((onError) {
@@ -25,7 +27,7 @@ class ApiService {
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parsePlayers, res.body);
   }
 
@@ -41,13 +43,13 @@ class ApiService {
   }
 
   Future<List<Player>> filterPlayers({sport, gender, country, ageGroup}) async {
-    print("fetching data");
+    String sex = gender == Consts.GENDER_MALE ? 'M' : 'F';
     final res = await http
-        .get(Urls.FILTER_PLAYERS + "gender=$gender&sport=$sport&country=$country&age_group=$ageGroup")
+        .get(Urls.FILTER_PLAYERS + "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parsePlayers, res.body);
   }
 
@@ -73,7 +75,7 @@ class ApiService {
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parsePlayersPhotos, res.body);
   }
 
@@ -91,7 +93,7 @@ class ApiService {
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parsePagedPlayers, res.body);
   }
 
@@ -106,7 +108,7 @@ class ApiService {
     final res = await http.get(Urls.GET_POSTS).catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parsePosts, res.body);
   }
 
@@ -126,7 +128,7 @@ class ApiService {
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.body);
+    // print(res.body);
     return compute(_parseAchievements, res.body);
   }
 
@@ -136,4 +138,20 @@ class ApiService {
         (responseJson['achievements'] as List).map((p) => new Achievement.fromJson(p));
     return achievements.toList();
   }
+
+  Future<String> fetchPostFullArticle({@required String postId}) async {
+    final res = await http
+        .get(Urls.POST_FULL_ARTICLE + "post_id=$postId")
+        .catchError((onError) {
+      print("CatchError : ${onError.toString()}");
+    });
+    // print(res.body);
+    return compute(_parseArticle, res.body);
+  }
+
+  static String _parseArticle(String resBody) {
+    final responseJson = json.decode(resBody);
+    return responseJson['full_article'];
+  }
+
 }

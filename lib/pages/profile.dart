@@ -196,6 +196,8 @@ class _ProfilePageState extends State<ProfilePage>
                 AppUtils(context: context).gotoPage(
                     page: FilesPage(
                   category: Consts.FILE_TYPE_IMAGES,
+                  playerId: widget.player.playerId,
+                  playerName: widget.player.fullname,
                 ));
               },
             ),
@@ -209,6 +211,7 @@ class _ProfilePageState extends State<ProfilePage>
                     page: FilesPage(
                   category: Consts.FILE_TYPE_VIDEOS,
                   playerId: widget.player.playerId,
+                  playerName: widget.player.fullname,
                 ));
               },
             ),
@@ -492,10 +495,10 @@ class _ProfilePageState extends State<ProfilePage>
       setState(() {
         isFavourite = true;
       });
-    }else{
+    } else {
       setState(() {
         isFavourite = false;
       });
-    } 
+    }
   }
 }

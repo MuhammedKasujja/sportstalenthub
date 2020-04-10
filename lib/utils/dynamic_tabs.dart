@@ -1,76 +1,116 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sth/api/api_service.dart';
+import 'package:sth/models/player.dart';
+import 'package:sth/pages/search_player.dart';
+import 'package:sth/utils/app_utils.dart';
+import 'package:sth/utils/consts.dart';
+import 'package:sth/widgets/profile_card.dart';
+import 'package:sth/widgets/retry.dart';
 
-class DynamicTabsPage extends StatefulWidget {
+class MyPlayersPage extends StatefulWidget {
   @override
-  _DynamicTabsPageState createState() => _DynamicTabsPageState();
+  _MyPlayersPageState createState() => _MyPlayersPageState();
 }
 
-class _DynamicTabsPageState extends State<DynamicTabsPage> with TickerProviderStateMixin {
-  TabController _tc;
-
-  List<Map<String, dynamic>> _tabs = [];
-  List<String> _views = [];
-
+class _MyPlayersPageState extends State<MyPlayersPage> {
+  final _api = ApiService();
+  var futurePlayers;
+  String playerIds;
+  List<Player> apiPlayers;
+  List<Player> filterPlayers;
   @override
   void initState() {
     super.initState();
-    this._addTab();
-  }
-
-  TabController _makeNewTabController() => TabController(
-        vsync: this,
-        length: _tabs.length,
-        initialIndex: _tabs.length - 1,
-      );
-
-  void _addTab() {
-    setState(() {
-      _tabs.add({
-        'icon': Icons.star,
-        'text': "Tab ${_tabs.length}",
-      });
-      _views.add("Tab ${_tabs.length}'s view");
-      _tc = _makeNewTabController();
-    });
-  }
-
-  void _removeTab() {
-    setState(() {
-      _tabs.removeLast();
-      _views.removeLast();
-      _tc = _makeNewTabController();
-    });
+    _getFavouriteListId();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
-        title: Text("Dynamic tabs"),
+        title: Text("My Players"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: this._addTab),
-          IconButton(icon: Icon(Icons.remove), onPressed: this._removeTab),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+            },
+          ),
         ],
-        bottom: TabBar(
-          key: Key(Random().nextDouble().toString()),
-          controller: _tc,
-          isScrollable: true,
-          tabs: _tabs
-              .map((tab) => Tab(
-                    icon: Icon(tab['icon']),
-                    text: "Tab ${_tabs.length}",
-                  ))
-              .toList(),
+      ),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            
+            FutureBuilder(
+                future: futurePlayers,
+                builder: (context, AsyncSnapshot<List<Player>> playersSnapshot) {
+                  if (playersSnapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  } else {
+                    if (playersSnapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: playersSnapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(
+                            player: playersSnapshot.data[index],
+                          );
+                        },
+                      );
+                    } else {
+                      return RetryAgainIcon(
+                        onTry: () {
+                          setState(
+                            () {
+                              futurePlayers = _api.getFavouritePlayers(playerIds);
+                            },
+                          );
+                        },
+                      );
+                    }
+                  }
+                }),
+          ],
         ),
       ),
-      body: TabBarView(
-        controller: _tc,
-        children: _views
-            .map((view) => Center(child: Text("Tab ${_tabs.length}'s view")))
-            .toList(),
-      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+          }),
     );
+  }
+
+  _getFavouriteListId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List<String> myPlayersIds =
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
+            ? List()
+            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+    String ids;
+    for (int i = 0; i < myPlayersIds.length; i++) {
+      if (i == 0) {
+        ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+      } else {
+        ids = ids + '&players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+      }
+    }
+
+    setState(() {
+      playerIds = ids;
+    });
+
+    futurePlayers = _api.getFavouritePlayers(ids).then((players){
+      setState((){
+         apiPlayers = players;
+      });
+    });
+
+    print("My Ids: " + ids);
   }
 }

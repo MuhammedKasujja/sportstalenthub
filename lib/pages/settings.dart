@@ -4,6 +4,9 @@ import 'package:sth/api/api_service.dart';
 import 'package:sth/api/database.dart';
 import 'package:sth/models/sport.dart';
 import 'package:sth/models/sport_pref.dart';
+import 'package:sth/utils/app_utils.dart';
+import 'package:sth/utils/consts.dart';
+import 'package:sth/widgets/retry.dart';
 
 class SettingsPage extends StatefulWidget {
   final ValueChanged<List<Sport>> callbackRemoveTabs;
@@ -69,53 +72,29 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              repo.saveAll(selectedList).then((list) {
-                Navigator.pop(context, selectedList);
-              });
-              //if(repoList.length > selectedList.length){
-
-              //}
-              widget.callbackRemoveTabs(selectedList);
-            },
+            onPressed: _saveChanges,
           ),
-          title: Text('Settings'),
-          // actions: <Widget>[
-          //   IconButton(
-          //       icon: Icon(Icons.markunread_mailbox),
-          //       onPressed: AppUtils(context: context).goBack())
-          // ],
+          title: Text(Consts.SETTINGS),
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.save), onPressed: _saveChanges,)
+          ],
         ),
         body: FutureBuilder<List<Sport>>(
           future: sportsList,
           builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
             if (snapshot.hasError) {
               print("${snapshot.error}");
-              return Container(
-                child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "No internet connection",
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.refresh,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          setState(
-                            () {
-                              sportsList = api.getSports();
-                            },
-                          );
-                        })
-                  ],
-                )),
+              return RetryAgainIcon(
+                onTry: () {
+                  setState(
+                    () {
+                      sportsList = api.getSports();
+                    },
+                  );
+                },
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -139,10 +118,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     });
               } else {
-                return Center(child: Text("No data Found"));
+                return Center(child: Text(Consts.NO_DATA_FOUND));
               }
             } else {
-              return Text("No data Found");
+              return Text(Consts.NO_DATA_FOUND);
             }
           },
         ));
@@ -174,5 +153,15 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       //sportsList = _cars;
     });
+  }
+
+  _saveChanges() {
+    repo.saveAll(selectedList).then((list) {
+      Navigator.pop(context, selectedList);
+    });
+    //if(repoList.length > selectedList.length){
+
+    //}
+    widget.callbackRemoveTabs(selectedList);
   }
 }

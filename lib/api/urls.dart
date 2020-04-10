@@ -15,6 +15,8 @@ class Urls{
   static const FILTER_PLAYERS = BASE_URL+"/filterPlayers.php?";
   static const GET_PLAYERS_ACHIEVEMENTS = BASE_URL+"/getAchievements.php?";
 
+  static const POST_FULL_ARTICLE = BASE_URL+"/postFullArticle.php?";
+
   static const PROFILE_PHOTO_LINK = "https://www.sportstalenthub.com/media/cache/my_thumb_330x242/images/players/";
   static const ACTION_PHOTOS_LINKS = "https://www.sportstalenthub.com/media/cache/my_thumb_690x450/images/action_photos/";
   static const POST_IMAGE_LINKS = "https://www.sportstalenthub.com/media/cache/my_thumb_690x450/images/posts/";

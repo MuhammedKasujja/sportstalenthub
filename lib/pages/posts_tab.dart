@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sth/api/api_service.dart';
 import 'package:sth/models/post.dart';
 import 'package:sth/widgets/post_card.dart';
+import 'package:sth/widgets/retry.dart';
 
 class PostsPage extends StatefulWidget {
   @override
@@ -27,21 +28,21 @@ class _PostsPageState extends State<PostsPage>
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(child: Center(child: CircularProgressIndicator()));
-          } else {
-            if (snapshot.hasError) {
-              return InkWell(
-                child: Chip(label: Text("Try Again")),
-                onTap: () {
-                  this.posts = api.fetchPosts();
-                },
-              );
-            }
-            return ListView.builder(
-              itemCount: 10,
-              itemBuilder: (BuildContext context, int index) =>
-                  PostCard(tag: "$index", post: snapshot.data[index]),
+          }
+          if (snapshot.hasError) {
+            return RetryAgainIcon(
+              onTry: () {
+                setState(() {
+                  posts = api.fetchPosts();
+                });
+              },
             );
           }
+          return ListView.builder(
+            itemCount: 10,
+            itemBuilder: (BuildContext context, int index) =>
+                PostCard(tag: "$index", post: snapshot.data[index]),
+          );
         });
   }
 
@@ -51,8 +52,8 @@ class _PostsPageState extends State<PostsPage>
   Post _post = new Post(
       title: "There is no doubt Lionel Messi's Talent has made him a legend",
       description: info,
-      //imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
-      imageUrl: 'lib/images/lionels_mesi.png',
+      imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
+      // imageUrl: 'lib/images/lionels_mesi.png',
       date: '20/04/2019 10:39 AM',
       category: 'Football');
 

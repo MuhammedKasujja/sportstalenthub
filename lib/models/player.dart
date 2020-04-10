@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:sth/api/urls.dart';
 
 class Player{
@@ -17,9 +19,10 @@ class Player{
   String weight;
   String teamName;
   String birthPlace;
+  String ageGroup;
 
   Player({this.playerId, this.fullname,this.gender, this.category,this.lastUpdated, this.nationality, this.contact, this.profilePhoto, this.dob, this.position, this.height,
-   this.location, this.weight, this.teamName, this.birthPlace});
+   this.location, this.weight, this.teamName, this.birthPlace, this.ageGroup});
 
   factory Player.fromJson(Map<String, dynamic> json){
      return Player(
@@ -35,7 +38,8 @@ class Player{
        profilePhoto: Urls.PROFILE_PHOTO_LINK+json['profile_photo'],
        gender: json['gender'],
        teamName: json['team_name'],
-       position: json['position']
+       position: json['position'],
+       ageGroup: json['group_name'],
     );
   }
   

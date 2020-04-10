@@ -5,6 +5,7 @@ import 'package:sth/models/sport.dart';
 import 'package:sth/pages/posts_tab.dart';
 import 'package:sth/utils/consts.dart';
 import 'package:sth/widgets/profile_card.dart';
+import 'package:sth/widgets/retry.dart';
 
 class PrayerProfiles extends StatefulWidget {
   const PrayerProfiles({Key key, this.sport}) : super(key: key);
@@ -24,16 +25,15 @@ class _PrayerProfilesState extends State<PrayerProfiles>
   void initState() {
     super.initState();
     print("${widget.sport.sportId}");
-    if(widget.sport.sportId != "000111000"){
-       playerList = api.getPlayers(category: widget.sport.sportId);
+    if (widget.sport.sportId != Consts.POSTS_PAGE_ID) {
+      playerList = api.getPlayers(category: widget.sport.sportId);
     }
-    
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return widget.sport.sportId == "000111000"
+    return widget.sport.sportId == Consts.POSTS_PAGE_ID
         ? PostsPage()
         : FutureBuilder<List<Player>>(
             future: this.playerList,
@@ -42,25 +42,16 @@ class _PrayerProfilesState extends State<PrayerProfiles>
               if (snapshot.hasError) {
                 return Container(
                   child: Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      //Text("Error: ${snapshot.error}"),
-                      Text(Consts.ERROR_MESSAGE),
-                      IconButton(
-                          icon: Icon(
-                            Icons.refresh,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                playerList = api.getPlayers(
-                                    category: widget.sport.sportId);
-                              },
-                            );
-                          })
-                    ],
+                      child: InkWell(
+                    child: RetryIcon(),
+                    onTap: () {
+                      setState(
+                        () {
+                          playerList =
+                              api.getPlayers(category: widget.sport.sportId);
+                        },
+                      );
+                    },
                   )),
                 );
               }
