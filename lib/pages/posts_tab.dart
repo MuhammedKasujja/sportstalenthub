@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sth/api/api_service.dart';
 import 'package:sth/models/post.dart';
 import 'package:sth/widgets/post_card.dart';
+import 'package:sth/widgets/post_shimmer.dart';
 import 'package:sth/widgets/retry.dart';
 
 class PostsPage extends StatefulWidget {
@@ -27,7 +28,8 @@ class _PostsPageState extends State<PostsPage>
         future: posts,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(child: Center(child: CircularProgressIndicator()));
+            //return Container(child: Center(child: CircularProgressIndicator()));
+            return PostShimmer();
           }
           if (snapshot.hasError) {
             return RetryAgainIcon(

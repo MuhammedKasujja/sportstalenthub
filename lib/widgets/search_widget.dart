@@ -6,7 +6,7 @@ class SearchWidget extends StatelessWidget {
   final String hint = 'Search';
 
   const SearchWidget(
-      {Key key, @required this.onTextChange, hint, @required this.backPressed})
+      {Key key, @required this.onTextChange, hint, this.backPressed})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,12 @@ class SearchWidget extends StatelessWidget {
       elevation: 9.0,
       child: Row(
         children: <Widget>[
+          this.backPressed != null ?
           IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.red),
-              onPressed: backPressed),
+              onPressed: backPressed) : IconButton(
+              icon: Icon(Icons.search, color: Colors.red), onPressed: () {},
+              ) , 
           Expanded(
               child: TextField(
             // autofocus: true,

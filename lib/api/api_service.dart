@@ -140,6 +140,7 @@ class ApiService {
   }
 
   Future<String> fetchPostFullArticle({@required String postId}) async {
+    // print("post_id: $postId");
     final res = await http
         .get(Urls.POST_FULL_ARTICLE + "post_id=$postId")
         .catchError((onError) {

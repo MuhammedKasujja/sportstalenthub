@@ -204,11 +204,6 @@ class _StartPageState extends State<StartPage>
                     callbackClearTabs: _removeAllTabs,
                   )),
               drawerTile(icon: Icons.info, title: Consts.ABOUT),
-              // drawerTile(
-              //     title: Consts.PROFILE,
-              //     page: FancyProfilePage(
-              //       player: this.player,
-              //     )),
             ],
           ),
         ),
@@ -261,33 +256,6 @@ class _StartPageState extends State<StartPage>
         _allSports = total;
       });
     });
-  }
-
-  _removeTabs(List<Sport> removeSports) {
-    List<Sport> oldSports = new List();
-
-    for (Sport r in widget.sportsList) {
-      for (Sport s in removeSports) {
-        if (s == r) {
-          oldSports.add(s);
-          print("saved ${s.name} ids: ${s.sportId}");
-        }
-      }
-    }
-    for (Sport s in oldSports) {
-      // setState(() {
-      // widget.sportsList.removeWhere((sport)=> sport == s);
-
-      // });
-      print("removed ${s.name} ids: ${s.sportId}");
-    }
-
-    if (removeSports.length > 0) {
-      setState(() {
-        widget.sportsList.removeRange(2, widget.sportsList.length);
-        initTabController(0);
-      });
-    }
   }
 
   _removeAllTabs(List<Sport> savedTabs) {

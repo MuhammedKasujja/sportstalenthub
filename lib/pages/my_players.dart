@@ -46,7 +46,7 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            SearchWidget(onTextChange: _onTextChange, backPressed: () {}),
+            SearchWidget(onTextChange: _onTextChange,),
             // SizedBox(
             //   height: 5,
             // ),

@@ -4,7 +4,6 @@ import 'package:pref_dessert/pref_dessert_internal.dart';
 import 'package:sth/models/sport.dart';
 import 'package:sth/models/sport_pref.dart';
 import 'package:sth/pages/final_page.dart';
-import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
 
 class SplashPage extends StatefulWidget {
@@ -48,19 +47,15 @@ class _SplashPageState extends State<SplashPage>
         });
       }
       new Timer.periodic(Duration(seconds: 2), (timer) {
-      
-         AppUtils(context: context).goBack();
-         AppUtils(context: context).gotoPage(page: StartPage(sportsList: sportsList,));
-        // Navigator.replace(context,
-        //     oldRoute: MaterialPageRoute(
-        //         builder: (BuildContext context) => SplashPage()),
-        //     newRoute: MaterialPageRoute(
-        //         builder: (BuildContext context) => StartPage(
-        //               sportsList: sportsList,
-        //             )));
-         timer.cancel();
+        // Remove and replace this page with the new Page ie StartPage
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => StartPage(
+                      sportsList: sportsList,
+                    )));
+        timer.cancel();
       });
-       
     });
     //
     //Checking the status of the animation and do some work

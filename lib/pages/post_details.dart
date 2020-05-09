@@ -206,20 +206,29 @@ class _ContentCardState extends State<ContentCard> {
           fullArticle != null
               ? Expanded(
                   child: GestureDetector(
-                  child:
-                      Container(child: PostFullArticle(article: fullArticle)),
+                  child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: _articleInfo(fullArticle)),
                   onTap: () {
-                    AppUtils(context: context)
-                        .showFullArticle(fullArticle, widget.post.description);
+                    AppUtils(context: context).showFullArticle(
+                        viewArticle(fullArticle), widget.post.description);
                   },
                   onVerticalDragStart: (dragDetails) {
-                    AppUtils(context: context)
-                        .showFullArticle(fullArticle, widget.post.description);
+                    AppUtils(context: context).showFullArticle(
+                        viewArticle(fullArticle), widget.post.description);
                   },
                 ))
               : LoadingIcon(),
         ],
       ),
     );
+  }
+
+  Widget viewArticle(fullArticle) {
+    return PostFullArticle(article: fullArticle);
+  }
+
+  Widget _articleInfo(fullArticle) {
+    return Text(fullArticle);
   }
 }

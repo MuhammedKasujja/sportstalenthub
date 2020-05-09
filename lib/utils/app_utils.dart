@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sth/widgets/post_full_article.dart';
 
 class AppUtils {
   BuildContext context;
@@ -19,7 +20,7 @@ class AppUtils {
     return null;
   }
 
-  showFullArticle(String article, title) {
+  showFullArticle(Widget article, title) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -29,24 +30,40 @@ class AppUtils {
         context: this.context,
         builder: (ctx) {
           return SafeArea(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      title,
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 16.0),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Divider(color: Colors.black,),
-                    Expanded(
-                        child: Scrollbar(
-                            child:
-                                SingleChildScrollView(child: Text(article)))),
-                  ],
+            child: Scaffold(
+              body: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          IconButton(icon: Icon(Icons.close), onPressed: (){
+                            AppUtils(context: ctx).goBack();
+                          }),
+                          Expanded(
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
+                                  fontSize: 16.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Expanded(
+                          child: Container(
+                              child: article
+                      )),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -54,7 +71,7 @@ class AppUtils {
         });
   }
 
-  showSnack({String message='Your message'}) {
+  showSnack({String message = 'Your message'}) {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));

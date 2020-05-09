@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sth/models/post.dart';
 import 'package:sth/pages/post_details.dart';
+import 'package:sth/pages/post_info.dart';
 import 'package:sth/utils/app_utils.dart';
 
 class PostCard extends StatelessWidget {
@@ -20,7 +21,7 @@ class PostCard extends StatelessWidget {
             AppUtils(
               context: context,
             ).gotoPage(
-                page: PostDetailsPage(
+                page: PostInfoPage(
               post: post,
             ));
           },

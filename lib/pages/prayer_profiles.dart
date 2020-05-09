@@ -4,6 +4,7 @@ import 'package:sth/models/player.dart';
 import 'package:sth/models/sport.dart';
 import 'package:sth/pages/posts_tab.dart';
 import 'package:sth/utils/consts.dart';
+import 'package:sth/widgets/player_shimmer.dart';
 import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/widgets/retry.dart';
 
@@ -56,9 +57,8 @@ class _PrayerProfilesState extends State<PrayerProfiles>
                 );
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                  child: Center(child: CircularProgressIndicator()),
-                );
+                return PlayerShimmer();
+                // return Container( child: Center(child: CircularProgressIndicator()),);
               }
               if (snapshot.hasData) {
                 if (snapshot.data.length > 0) {
