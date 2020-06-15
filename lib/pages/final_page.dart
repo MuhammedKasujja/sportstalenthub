@@ -84,7 +84,7 @@ class _StartPageState extends State<StartPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
+      backgroundColor: Colors.grey.shade300,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(95),
         child: AppBar(

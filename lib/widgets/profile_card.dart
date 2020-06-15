@@ -7,20 +7,27 @@ import 'package:sth/pages/fancy_profile.dart';
 import 'package:sth/pages/view_image.dart';
 import 'package:sth/utils/app_utils.dart';
 
-class ProfileCard extends StatelessWidget{
-
+class ProfileCard extends StatelessWidget {
   final Player player;
 
-  const ProfileCard({Key key, @required this.player,}) : super(key: key);
+  const ProfileCard({
+    Key key,
+    @required this.player,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final _tag = createStringTag();
     return GestureDetector(
       onTap: () {
-        AppUtils(context: context,).gotoPage( page: FancyProfilePage(player: player,));
+        AppUtils(
+          context: context,
+        ).gotoPage(
+            page: FancyProfilePage(
+          player: player,
+        ));
       },
       child: Card(
-        margin: EdgeInsets.only(left: 1.0, right: 1.0, bottom: 4,top: 4),
+        margin: EdgeInsets.only(left: 1.0, right: 1.0, bottom: 4, top: 4),
         elevation: 3.0,
         child: Row(
           //mainAxisSize: MainAxisSize.min,
@@ -42,8 +49,14 @@ class ProfileCard extends StatelessWidget{
                   ),
                 ),
               ),
-              onTap: (){
-                AppUtils(context: context,).gotoPage( page: ViewImagePage(tag: _tag, imageUrl: "${player.profilePhoto}",));
+              onTap: () {
+                AppUtils(
+                  context: context,
+                ).gotoPage(
+                    page: ViewImagePage(
+                  tag: _tag,
+                  imageUrl: "${player.profilePhoto}",
+                ));
               },
             ),
             Expanded(
@@ -64,7 +77,7 @@ class ProfileCard extends StatelessWidget{
                       Text(
                         player.nationality,
                         style: Theme.of(context).textTheme.body1,
-                       // maxLines: 4,
+                        // maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(
@@ -73,16 +86,18 @@ class ProfileCard extends StatelessWidget{
                       Text(
                         player.category,
                         style: Theme.of(context).textTheme.body1,
-                       // maxLines: 4,
+                        // maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(
                         height: 2.0,
                       ),
-                      Align(alignment: Alignment.bottomRight,
-                        child: Text('${player.teamName}',
-                            style: Theme.of(context).textTheme.caption,),
-                        ),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                            '${player.teamName}',
+                            style: TextStyle(fontSize: 12, color: Colors.red),
+                          )),
                     ],
                   ),
                 ),
@@ -94,10 +109,9 @@ class ProfileCard extends StatelessWidget{
     );
   }
 
-  String createStringTag(){
+  String createStringTag() {
     final Random random = Random.secure();
-    var values = List<int>.generate(12, (i)=> random.nextInt(256));
+    var values = List<int>.generate(12, (i) => random.nextInt(256));
     return base64Url.encode(values);
   }
-
 }

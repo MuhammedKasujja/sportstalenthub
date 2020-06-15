@@ -36,20 +36,43 @@ class _PostInfoPageState extends State<PostInfoPage> {
                 expandedHeight: 210.0,
                 floating: false,
                 pinned: true,
-                leading: IconButton(
-                    color: Colors.red,
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.red,
+                leading: InkWell(
+                  splashColor: Colors.red,
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                       color: Colors.red,
+                       shape: BoxShape.circle
                     ),
-                    onPressed: () {
-                      AppUtils(context: context).goBack();
-                    }),
+                    child:  Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        
+                  ),
+                  onTap: (){
+                    AppUtils(context: context).goBack();
+                  },
+                ),
                 actions: <Widget>[
-                  IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.share, color: Colors.red),
-                      onPressed: null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                         color: Colors.red,
+                         shape: BoxShape.circle
+                      ),
+                      child:  Icon(
+                            Icons.share,
+                            color: Colors.white,
+                          ),
+                          
+                    ),
+                  ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sth/models/post.dart';
-import 'package:sth/pages/post_details.dart';
 import 'package:sth/pages/post_info.dart';
 import 'package:sth/utils/app_utils.dart';
 
@@ -70,7 +69,8 @@ class PostCard extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Text(
                               '${post.date}',
-                              style: Theme.of(context).textTheme.caption,
+                              //style: Theme.of(context).textTheme.caption,
+                              style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
                           Expanded(child: Container()),

@@ -94,7 +94,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                 ];
               },
               body: Container(
-                color: Colors.grey.shade400,
+                color: Colors.grey.shade300,
                 child: SingleChildScrollView(
                   // physics: BouncingScrollPhysics(),
                   child: Column(
@@ -207,7 +207,14 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                           children: <Widget>[
                                             Row(
                                               children: <Widget>[
-                                                Chip(label: Text('From')),
+                                                Chip(
+                                                  label: Text(
+                                                    'From',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  backgroundColor: Colors.red,
+                                                ),
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
@@ -221,7 +228,10 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
-                                                Chip(label: Text('To')),
+                                                Chip(label: Text('To', style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  backgroundColor: Colors.red),
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
@@ -245,8 +255,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                             SizedBox(
                                               height: 5.0,
                                             ),
-                                            snapshot.data[index]
-                                                        .achievements !=
+                                            snapshot.data[index].achievements !=
                                                     null
                                                 ? Text(snapshot
                                                     .data[index].achievements)
@@ -299,7 +308,8 @@ class _FancyProfilePageState extends State<FancyProfilePage>
           ],
         ),
         widget.player,
-        checked ? Icon(Icons.remove) : Icon(Icons.add), _addRemoveFavourite);
+        checked ? Icon(Icons.remove) : Icon(Icons.add),
+        _addRemoveFavourite);
   }
 
   Widget _sportsCategories(String listCategories) {
@@ -312,7 +322,13 @@ class _FancyProfilePageState extends State<FancyProfilePage>
         .map(
           (c) => Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Chip(label: Text(c)),
+            child: Chip(
+              label: Text(
+                c,
+                style: TextStyle(color: Colors.red),
+              ),
+              backgroundColor: Colors.white,
+            ),
           ),
         )
         .toList();
@@ -343,7 +359,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
       setState(() {
         isFavourite = true;
         appTab = _generateAppTab(isFavourite);
-      //  AppUtils(context: context).showSnack(message: 'Added to favourites');
+        //  AppUtils(context: context).showSnack(message: 'Added to favourites');
       });
     }
 
