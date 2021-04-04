@@ -11,9 +11,9 @@ import 'package:sth/api/repositoty.dart';
 
 import 'package:sth/models/player.dart';
 import 'package:sth/models/sport.dart';
-import 'package:sth/models/sport_json.dart';
 import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
+import 'package:sth/widgets/player_shimmer.dart';
 import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/api/urls.dart';
 
@@ -67,7 +67,7 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
       color: Colors.red,
       child: SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.grey.shade400,
+            backgroundColor: Colors.grey[100],
             // appBar: AppBar(
             //   title: TextField(
             //     style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -95,11 +95,7 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
                 _createSearchBar(context),
                 Expanded(
                   child: isLoading
-                      ? Container(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
+                      ? PlayerShimmer()
                       : players.length > 0
                           ? ListView.builder(
                               itemCount: players.length,
@@ -206,8 +202,13 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
               }),
           Expanded(
               child: TextField(
+            textInputAction: TextInputAction.search,
             // autofocus: true,
             decoration: InputDecoration(
+                // suffix: Icon(
+                //   Icons.search,
+                //   color: Colors.grey[400],
+                // ),
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.all(16.0),
                 hintText: "Search Players"),
@@ -223,67 +224,104 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            DropdownButton<String>(
-              isExpanded: true,
-              items: _sportsArr.map((String dropDownStringItem) {
-                return DropdownMenuItem<String>(
-                  value: dropDownStringItem,
-                  child: Text(dropDownStringItem),
-                );
-              }).toList(),
-              onChanged: (value) => _onSelectedSport(value),
-              value: _selectedSport,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 4,
+                margin: EdgeInsets.all(0),
+                child: DropdownButton<String>(
+                  underline: Container(),
+                  isExpanded: true,
+                  items: _sportsArr.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (value) => _onSelectedSport(value),
+                  value: _selectedSport,
+                ),
+              ),
             ),
-            DropdownButton<String>(
-              isExpanded: true,
-              items: _positions.map((String dropDownStringItem) {
-                return DropdownMenuItem<String>(
-                  value: dropDownStringItem,
-                  child: Text(dropDownStringItem),
-                );
-              }).toList(),
-              // onChanged: (value) => print(value),
-              onChanged: (value) => _onSelectedPostion(value),
-              value: _selectedPosition,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: DropdownButton<String>(
+                  underline: Container(),
+                  isExpanded: true,
+                  items: _positions.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  // onChanged: (value) => print(value),
+                  onChanged: (value) => _onSelectedPostion(value),
+                  value: _selectedPosition,
+                ),
+              ),
             ),
-            DropdownButton<String>(
-              isExpanded: true,
-              items: _gender.map((String dropDownStringItem) {
-                return DropdownMenuItem<String>(
-                  value: dropDownStringItem,
-                  child: Text(dropDownStringItem),
-                );
-              }).toList(),
-              onChanged: (value) => _onSelectedGender(value),
-              value: _selectedGender,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: DropdownButton<String>(
+                  underline: Container(),
+                  isExpanded: true,
+                  items: _gender.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (value) => _onSelectedGender(value),
+                  value: _selectedGender,
+                ),
+              ),
             ),
-            DropdownButton<String>(
-              isExpanded: true,
-              items: _ageGroup.map((String dropDownStringItem) {
-                return DropdownMenuItem<String>(
-                  value: dropDownStringItem,
-                  child: Text(dropDownStringItem),
-                );
-              }).toList(),
-              onChanged: (value) => _onSelectedAgeGroup(value),
-              value: _selectedAgeGroup,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: DropdownButton<String>(
+                  underline: Container(),
+                  isExpanded: true,
+                  items: _ageGroup.map((String dropDownStringItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
+                    );
+                  }).toList(),
+                  onChanged: (value) => _onSelectedAgeGroup(value),
+                  value: _selectedAgeGroup,
+                ),
+              ),
             ),
-            Container(
-              child: CountryPickerDropdown(
-                initialValue: _selectedCountry,
-                // isExpanded: true,
-                itemBuilder: (Country country) {
-                  return Container(
-                    child: Row(
-                      children: <Widget>[
-                        CountryPickerUtils.getDefaultFlagImage(country),
-                        SizedBox(width: 8.0),
-                        Text("${country.name}")
-                      ],
-                    ),
-                  );
-                },
-                onValuePicked: (country) => _onSelectedCountry(country.isoCode),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                margin: EdgeInsets.all(0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  child: CountryPickerDropdown(
+                    initialValue: _selectedCountry,
+                    // isExpanded: true,
+                    itemBuilder: (Country country) {
+                      return Container(
+                        child: Row(
+                          children: <Widget>[
+                            CountryPickerUtils.getDefaultFlagImage(country),
+                            SizedBox(width: 8.0),
+                            Text("${country.name}")
+                          ],
+                        ),
+                      );
+                    },
+                    onValuePicked: (country) =>
+                        _onSelectedCountry(country.isoCode),
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -292,7 +330,14 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
             Container(
               child: Center(
                 child: InkWell(
-                  child: Chip(label: Text("Filter Players")),
+                  child: Chip(
+                    elevation: 8,
+                    label: Text(
+                      "Filter Players",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.redAccent,
+                  ),
                   onTap: () {
                     _clearPlayers();
                     api

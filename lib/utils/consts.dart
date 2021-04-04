@@ -16,14 +16,16 @@ class Consts{
   static const NEWS = 'News';
 
   static const DARTS = 'Darts';
+  
+  static const SEARCH = 'Search';
 
   static const VOLLEYBALL = 'Volleyball';
 
   static const PROFILES = 'Profiles';
 
-  static const FEATURED_PROFILES = 'Featured Profiles';
+  static const FEATURED_PROFILES = 'Featured CVs';
 
-  static const LATEST_PROFILES = 'Lastest Profiles';
+  static const LATEST_PROFILES = 'Lastest CVs';
 
   static const FILE_TYPE_IMAGES = 'images';
 
@@ -49,6 +51,8 @@ class Consts{
 
   static const LOGIN = 'Login';
 
+  static const FAVOURITE_PLAYERS = "My Players";
+
   static const CREATE_ACCOUNT = 'Create Account';
 
   static const FEEDBACK = 'Feedback';
@@ -57,7 +61,7 @@ class Consts{
 
   static const POSITIONS = "Positions";
 
-  static const ACHIEVEMENTS = 'Achievements';
+  static const ACHIEVEMENTS = 'Career Path';
 
   static const WEIGHT = 'Weight';
 

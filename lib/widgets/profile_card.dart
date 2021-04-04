@@ -27,7 +27,7 @@ class ProfileCard extends StatelessWidget {
         ));
       },
       child: Card(
-        margin: EdgeInsets.only(left: 1.0, right: 1.0, bottom: 4, top: 4),
+        margin: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 4, top: 4),
         elevation: 3.0,
         child: Row(
           //mainAxisSize: MainAxisSize.min,
@@ -70,13 +70,13 @@ class ProfileCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(player.fullname,
-                          style: Theme.of(context).textTheme.subhead),
+                          style: Theme.of(context).textTheme.subtitle1),
                       SizedBox(
                         height: 4.0,
                       ),
                       Text(
                         player.nationality,
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText2,
                         // maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -85,7 +85,7 @@ class ProfileCard extends StatelessWidget {
                       ),
                       Text(
                         player.category,
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText2,
                         // maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),

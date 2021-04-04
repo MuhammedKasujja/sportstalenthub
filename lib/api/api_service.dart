@@ -42,10 +42,16 @@ class ApiService {
     return compute(_parsePlayers, res.body);
   }
 
-  Future<List<Player>> filterPlayers({sport, gender, country, ageGroup}) async {
-    String sex = gender == Consts.GENDER_MALE ? 'M' : 'F';
+  Future<List<Player>> filterPlayers(
+      {sport, String gender, country, ageGroup}) async {
+    String sex = (gender != null && gender.isNotEmpty)
+        ? gender == Consts.GENDER_MALE
+            ? 'M'
+            : 'F'
+        : '';
     final res = await http
-        .get(Urls.FILTER_PLAYERS + "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
+        .get(Urls.FILTER_PLAYERS +
+            "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -114,17 +120,14 @@ class ApiService {
 
   static List<Post> _parsePosts(String resBody) {
     final responseJson = json.decode(resBody);
-    final posts =
-        (responseJson['posts'] as List).map((p) => new Post.fromJson(p));
+    final posts = (responseJson['posts'] as List).map((p) => Post.fromJson(p));
     return posts.toList();
   }
 
-  Future<List<Achievement>> getPlayersAchievements(
-      {@required playerId}) async {
-       print("Player ID: {$playerId} ");
+  Future<List<Achievement>> getPlayersAchievements({@required playerId}) async {
+    print("Player ID: {$playerId} ");
     final res = await http
-        .get(Urls.GET_PLAYERS_ACHIEVEMENTS +
-            "player_id=$playerId")
+        .get(Urls.GET_PLAYERS_ACHIEVEMENTS + "player_id=$playerId")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -134,8 +137,8 @@ class ApiService {
 
   static List<Achievement> _parseAchievements(String resBody) {
     final responseJson = json.decode(resBody);
-    final achievements =
-        (responseJson['achievements'] as List).map((p) => new Achievement.fromJson(p));
+    final achievements = (responseJson['achievements'] as List)
+        .map((p) => new Achievement.fromJson(p));
     return achievements.toList();
   }
 
@@ -154,5 +157,4 @@ class ApiService {
     final responseJson = json.decode(resBody);
     return responseJson['full_article'];
   }
-
 }

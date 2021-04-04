@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sth/widgets/post_full_article.dart';
 
 class AppUtils {
   BuildContext context;

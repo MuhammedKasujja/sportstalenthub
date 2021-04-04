@@ -152,9 +152,9 @@ class _FilesPageState extends State<FilesPage> {
   }
 
   Widget gridFiles(List snapshot) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
-    final double itemWidth = size.width / 3; 
+    // var size = MediaQuery.of(context).size;
+    // final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    // final double itemWidth = size.width / 3; 
     return GridView.builder(
         itemCount: snapshot.length,
         gridDelegate:

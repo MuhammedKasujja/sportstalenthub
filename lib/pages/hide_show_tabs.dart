@@ -42,6 +42,7 @@ class _ShowTabsTageState extends State<ShowTabsTage> with TickerProviderStateMix
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("STH"),

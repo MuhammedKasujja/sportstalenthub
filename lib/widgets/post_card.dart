@@ -52,13 +52,13 @@ class PostCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(post.title,
-                              style: Theme.of(context).textTheme.subtitle),
+                              style: Theme.of(context).textTheme.subtitle2),
                           SizedBox(
                             height: 10.0,
                           ),
                           Text(
                             post.description,
-                            style: Theme.of(context).textTheme.body1,
+                            style: Theme.of(context).textTheme.bodyText2,
                             // maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),

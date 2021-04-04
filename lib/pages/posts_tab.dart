@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sth/api/api_service.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/models/post.dart';
 import 'package:sth/widgets/post_card.dart';
-import 'package:sth/widgets/post_shimmer.dart';
 import 'package:sth/widgets/retry.dart';
+import '../widgets/shimmers/shimmers.dart';
 
 class PostsPage extends StatefulWidget {
   @override
@@ -28,8 +29,8 @@ class _PostsPageState extends State<PostsPage>
         future: posts,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(child: Center(child: CircularProgressIndicator()));
-           // return PostShimmer();
+            return ShimmerWidget(type: ShimmerType.post);
+            // return PostShimmer();
           }
           if (snapshot.hasError) {
             return RetryAgainIcon(
@@ -51,7 +52,7 @@ class _PostsPageState extends State<PostsPage>
   @override
   bool get wantKeepAlive => true;
 
-  Post _post = new Post(
+  Post post = new Post(
       title: "There is no doubt Lionel Messi's Talent has made him a legend",
       description: info,
       imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
@@ -59,8 +60,7 @@ class _PostsPageState extends State<PostsPage>
       date: '20/04/2019 10:39 AM',
       category: 'Football');
 
-  static String info =
-      '''Lionel Andrés \"Leo\" Messi is an Argentine
+  static String info = '''Lionel Andrés \"Leo\" Messi is an Argentine
        professional footballer who plays as a forward 
        for Spanish club FC Barcelona and the Argentina 
        national team. Often considered the best player in 

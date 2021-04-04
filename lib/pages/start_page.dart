@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sth/models/sport.dart';
-import 'package:sth/pages/dynamic_tabs.dart';
 import 'package:sth/pages/prayer_profiles.dart';
 import 'package:sth/pages/search_player.dart';
 import 'package:sth/pages/settings.dart';
@@ -43,6 +42,7 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin, Au
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("STH"),

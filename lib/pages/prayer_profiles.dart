@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:sth/api/api_service.dart';
-import 'package:sth/models/player.dart';
-import 'package:sth/models/sport.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/pages/posts_tab.dart';
 import 'package:sth/utils/consts.dart';
-import 'package:sth/widgets/player_shimmer.dart';
 import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/widgets/retry.dart';
+import 'package:sth/widgets/shimmers/shimmers.dart';
 
 class PrayerProfiles extends StatefulWidget {
   const PrayerProfiles({Key key, this.sport}) : super(key: key);
@@ -24,11 +24,11 @@ class _PrayerProfilesState extends State<PrayerProfiles>
 
   @override
   void initState() {
-    super.initState();
-    print("${widget.sport.sportId}");
+    // print("${widget.sport.sportId}");
     if (widget.sport.sportId != Consts.POSTS_PAGE_ID) {
       playerList = api.getPlayers(category: widget.sport.sportId);
     }
+    super.initState();
   }
 
   @override
@@ -57,11 +57,16 @@ class _PrayerProfilesState extends State<PrayerProfiles>
                 );
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return PlayerShimmer();
+                return ShimmerWidget(
+                  type: ShimmerType.player,
+                );
                 // return Container( child: Center(child: CircularProgressIndicator()),);
               }
               if (snapshot.hasData) {
                 if (snapshot.data.length > 0) {
+                  if (widget.sport.sportId == Consts.LATEST_PROFILES_ID) {
+                    return _headedList(snapshot.data);
+                  }
                   return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) =>
@@ -76,6 +81,20 @@ class _PrayerProfilesState extends State<PrayerProfiles>
             },
           );
   }
+
+  Widget _headedList(List<Player> players) => GroupedListView<Player, String>(
+      elements: players,
+      groupBy: (player) {
+        return player.category;
+      },
+      groupSeparatorBuilder: (caterory) {
+        // we will add this later
+        return PlayersGroupSeparator(
+          category: caterory,
+        );
+      },
+      // order: GroupedListOrder.ASC,
+      itemBuilder: (context, Player p) => ProfileCard(player: p));
 
   Player player = new Player(
       fullname: "Kasujja Muhammed",
@@ -92,4 +111,22 @@ class _PrayerProfilesState extends State<PrayerProfiles>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class PlayersGroupSeparator extends StatelessWidget {
+  final String category;
+  PlayersGroupSeparator({@required this.category});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+        child: Text(
+          "$category",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
 }

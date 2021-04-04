@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
-import 'package:sth/models/achievement.dart';
-import 'package:sth/models/player.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/pages/files_page.dart';
 import 'package:sth/pages/player_videos.dart';
 import 'package:sth/pages/view_image.dart';
 import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
-import 'package:sth/widgets/loading.dart';
+import 'package:sth/widgets/shimmers/shimmers.dart';
 import 'package:sth/widgets/retry.dart';
 
 class FancyProfilePage extends StatefulWidget {
@@ -29,11 +28,11 @@ class _FancyProfilePageState extends State<FancyProfilePage>
 
   @override
   void initState() {
-    super.initState();
     _tabController = TabController(length: 3, vsync: this);
     achievements = api.getPlayersAchievements(playerId: widget.player.playerId);
     appTab = _generateAppTab(isFavourite);
     _checkFavourite();
+    super.initState();
   }
 
   @override
@@ -53,10 +52,16 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    expandedHeight: 200.0,
+                    expandedHeight: 220.0,
                     floating: false,
                     pinned: true,
                     elevation: 0.0,
+                    leading: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.red,
+                        ),
+                        onPressed: () => Navigator.pop(context)),
                     flexibleSpace: FlexibleSpaceBar(
                       centerTitle: true,
                       title: Text(
@@ -71,15 +76,15 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                           tag: widget.player.playerId,
                           child: Image.network(
                             widget.player.profilePhoto,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
                         onTap: () {
-                          print("object");
                           AppUtils(
                             context: context,
                           ).gotoPage(
                               page: ViewImagePage(
+                            title: widget.player.fullname,
                             tag: widget.player.playerId,
                             imageUrl: "${widget.player.profilePhoto}",
                           ));
@@ -103,39 +108,62 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                         height: 10.0,
                       ),
                       Card(
-                        margin: EdgeInsets.all(0.0),
+                        elevation: 5,
+                        margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                         child: Container(
                           child: Column(
                             children: <Widget>[
-                              ListTile(
-                                subtitle: Text(Consts.SPORT),
-                                title: Text(widget.player.category),
-                              ),
-                              ListTile(
-                                subtitle: Text(Consts.COUNTRY),
-                                title: Text(widget.player.nationality),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: ListTile(
+                                      subtitle: Text(widget.player.category),
+                                      title: Text(Consts.SPORT),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: ListTile(
+                                      subtitle: Text(widget.player.nationality),
+                                      title: Text(Consts.COUNTRY),
+                                    ),
+                                  ),
+                                ],
                               ),
                               ListTile(
                                 subtitle: Text(Consts.TEAM),
                                 title: Text(widget.player.teamName),
                               ),
-                              ListTile(
-                                title: Text(Consts.HEIGHT),
-                                subtitle: widget.player.height != null
-                                    ? Text(widget.player.height + " M")
-                                    : Text(''),
-                              ),
-                              ListTile(
-                                title: Text(Consts.WEIGHT),
-                                subtitle: widget.player.weight != null
-                                    ? Text(widget.player.weight + " kg")
-                                    : Text(''),
-                              ),
-                              ListTile(
-                                title: Text(Consts.DATE_OF_BIRTH),
-                                subtitle: widget.player.dob != null
-                                    ? Text(widget.player.dob)
-                                    : Text(''),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: ListTile(
+                                      title: Text(Consts.HEIGHT),
+                                      subtitle: (widget.player.height != null &&
+                                                  widget.player.height
+                                                      .isNotEmpty ||
+                                              widget.player.height != 'null')
+                                          ? Text(widget.player.height + " M")
+                                          : Text('-'),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: ListTile(
+                                      title: Text(Consts.WEIGHT),
+                                      subtitle: (widget.player.weight != null &&
+                                              widget.player.weight.isNotEmpty)
+                                          ? Text(widget.player.weight + " kg")
+                                          : Text('-'),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: ListTile(
+                                      title: Text(Consts.DATE_OF_BIRTH),
+                                      subtitle: widget.player.dob != null
+                                          ? Text(widget.player.dob)
+                                          : Text(''),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -177,7 +205,10 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                               AsyncSnapshot<List<Achievement>> snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return LoadingIcon();
+                              return ShimmerWidget(
+                                itemLength: 3,
+                                type: ShimmerType.careerPath,
+                              );
                             }
                             if (snapshot.hasError) {
                               return Container(
@@ -199,7 +230,9 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (context, index) {
                                   return Card(
-                                    margin: EdgeInsets.all(0),
+                                    elevation: 5,
+                                    margin:
+                                        EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
@@ -208,12 +241,14 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                             Row(
                                               children: <Widget>[
                                                 Chip(
+                                                  elevation: 8,
                                                   label: Text(
                                                     'From',
                                                     style: TextStyle(
                                                         color: Colors.white),
                                                   ),
-                                                  backgroundColor: Colors.red,
+                                                  backgroundColor:
+                                                      Colors.red[400],
                                                 ),
                                                 SizedBox(
                                                   width: 5.0,
@@ -228,10 +263,15 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
-                                                Chip(label: Text('To', style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  backgroundColor: Colors.red),
+                                                Chip(
+                                                    elevation: 8,
+                                                    label: Text(
+                                                      'To',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                    backgroundColor:
+                                                        Colors.red[400]),
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
@@ -244,7 +284,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                               ],
                                             ),
                                             Divider(
-                                              thickness: 3.0,
+                                              thickness: 1.0,
                                             ),
                                             Padding(
                                               padding:
@@ -274,6 +314,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                   ),
                 ),
               )),
+          floatingActionButton: _itemsButton(), //_buildFloatingActionButton(),
           // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
           // floatingActionButton: FloatingActionButton(
           //   onPressed: _addRemoveFavourite,
@@ -281,6 +322,51 @@ class _FancyProfilePageState extends State<FancyProfilePage>
           // ),
         ),
       ),
+    );
+  }
+
+  Widget _itemsButton() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton(
+          tooltip: 'photos',
+          child: Icon(Icons.photo),
+          onPressed: () {
+            AppUtils(context: context).gotoPage(
+                page: FilesPage(
+              category: Consts.FILE_TYPE_IMAGES,
+              playerId: widget.player.playerId,
+              playerName: widget.player.fullname,
+            ));
+          },
+          heroTag: null,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        FloatingActionButton(
+          tooltip: 'videos',
+          child: Icon(Icons.videocam),
+          onPressed: () {
+            AppUtils(context: context).gotoPage(
+                page: PlayerVideosPage(
+              playerId: widget.player.playerId,
+              playerName: widget.player.fullname,
+            ));
+          },
+          heroTag: null,
+        ),
+      ],
+    );
+  }
+
+  Widget _tabItem(String value) {
+    return Container(
+      height: 30,
+      decoration: BoxDecoration(
+          color: Colors.red[300], borderRadius: BorderRadius.circular(5)),
+      child: Center(child: Text(value ?? '')),
     );
   }
 
@@ -292,23 +378,13 @@ class _FancyProfilePageState extends State<FancyProfilePage>
           indicatorColor: Colors.transparent,
           controller: _tabController,
           tabs: [
-            Tab(
-              child: widget.player.category != null
-                  ? Text(widget.player.category)
-                  : Container(),
-            ),
-            Tab(
-                text: widget.player.ageGroup == null
-                    ? ''
-                    : widget.player.ageGroup),
-            Tab(
-                text: widget.player.gender == null
-                    ? ''
-                    : widget.player.gender == 'M' ? 'Male' : 'Female'),
+            _tabItem(widget.player.category),
+            _tabItem(widget.player.ageGroup),
+            _tabItem(widget.player.gender == 'M' ? 'Male' : 'Female'),
           ],
         ),
         widget.player,
-        checked ? Icon(Icons.remove) : Icon(Icons.add),
+        checked ? 'Unfollow' : 'Follow',
         _addRemoveFavourite);
   }
 
@@ -393,78 +469,114 @@ class _FancyProfilePageState extends State<FancyProfilePage>
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar tabBar;
   final Player player;
-  Icon icon;
+  String type;
   final Function addFav;
 
-  _SliverAppBarDelegate(this.tabBar, this.player, this.icon, this.addFav);
+  _SliverAppBarDelegate(this.tabBar, this.player, this.type, this.addFav);
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     // print("Tab height: ${this._tabBar.preferredSize.height}");
     return Container(
-        color: Colors.red,
+        padding: EdgeInsets.only(top: 8),
+        color: Colors.white,
         child: Stack(
           alignment: FractionalOffset(0.96, 1.8),
+          overflow: Overflow.visible,
           children: <Widget>[
             Column(
               children: <Widget>[
                 this.tabBar,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    InkWell(
-                      child: Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.photo,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Photos",
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
-                      onTap: () {
-                        AppUtils(context: context).gotoPage(
-                            page: FilesPage(
-                          category: Consts.FILE_TYPE_IMAGES,
-                          playerId: this.player.playerId,
-                          playerName: this.player.fullname,
-                        ));
-                      },
-                    ),
-                    InkWell(
-                      child: Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.videocam,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Videos",
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      ),
-                      onTap: () {
-                        AppUtils(context: context).gotoPage(
-                            page: PlayerVideosPage(
-                          playerId: this.player.playerId,
-                          playerName: this.player.fullname,
-                        ));
-                      },
-                    )
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: <Widget>[
+                //     InkWell(
+                //       child: Column(
+                //         children: <Widget>[
+                //           Icon(
+                //             Icons.photo,
+                //             color: Colors.white,
+                //           ),
+                //           Text(
+                //             "Photos",
+                //             style: TextStyle(color: Colors.white),
+                //           )
+                //         ],
+                //       ),
+                //       onTap: () {
+                //         AppUtils(context: context).gotoPage(
+                //             page: FilesPage(
+                //           category: Consts.FILE_TYPE_IMAGES,
+                //           playerId: this.player.playerId,
+                //           playerName: this.player.fullname,
+                //         ));
+                //       },
+                //     ),
+                //     InkWell(
+                //       child: Column(
+                //         children: <Widget>[
+                //           Icon(
+                //             Icons.videocam,
+                //             color: Colors.white,
+                //           ),
+                //           Text(
+                //             "Videos",
+                //             style: TextStyle(color: Colors.white),
+                //           )
+                //         ],
+                //       ),
+                //       onTap: () {
+                //         AppUtils(context: context).gotoPage(
+                //             page: PlayerVideosPage(
+                //           playerId: this.player.playerId,
+                //           playerName: this.player.fullname,
+                //         ));
+                //       },
+                //     )
+                //   ],
+                // )
               ],
             ),
-            FloatingActionButton(
-                tooltip: "Add to Favourites",
-                heroTag: null,
-                child: icon,
-                onPressed: addFav)
+            Positioned(
+              right: 10,
+              bottom: -15,
+              child: InkWell(
+                onTap: addFav,
+                child: Material(
+                  borderRadius: BorderRadius.circular(8),
+                  elevation: 10,
+                  child: Container(
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Center(
+                      child: Text(
+                        this.type,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+            // FloatingActionButton(
+            //   backgroundColor: Colors.transparent,
+            //     tooltip: "Add to Favourites",
+            //     heroTag: null,
+            //     child: Container(
+            //       height: 30,
+            //       width: 100,
+            //       decoration: BoxDecoration(
+            //           color: Colors.grey,
+            //           borderRadius: BorderRadius.circular(10)),
+            //       child: Center(
+            //         child: Text('Follow'),
+            //       ),
+            //     ),
+            //     onPressed: addFav)
           ],
         ));
   }

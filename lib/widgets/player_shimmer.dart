@@ -5,29 +5,57 @@ class PlayerShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5), color: Colors.white),
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
       child: Shimmer.fromColors(
         baseColor: Colors.grey[300],
         highlightColor: Colors.grey[100],
-        child: ListView.builder(
+        child: ListView.separated(
           itemCount: 10,
           padding: const EdgeInsets.only(bottom: 8.0),
           itemBuilder: (_, index) => Container(
             // width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4.8,
+            height: 125,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                // color: Colors.white,
+                border: Border.all(width: 1, color: Colors.grey[300])),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(
-                    width: 48.0,
-                    height: 48.0,
+                    width: 100.0,
+                    height: 100.0,
                     color: Colors.white,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  SizedBox(
+                    width: 10,
                   ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: 80,
+                        height: 8.0,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 8.0,
+                        color: Colors.white,
+                      ),
+                    ],
+                  )
                 ]),
                 Container(
                   width: double.infinity,
@@ -53,9 +81,11 @@ class PlayerShimmer extends StatelessWidget {
               ],
             ),
           ),
+          separatorBuilder: (context, index) => Container(
+            height: 10,
+          ),
         ),
       ),
     );
   }
-   
 }

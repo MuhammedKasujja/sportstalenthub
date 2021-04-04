@@ -18,8 +18,8 @@ class _SplashPageState extends State<SplashPage>
     Sport(name: Consts.FEATURED_PROFILES, sportId: Consts.FEATURED_PROFILES_ID),
     Sport(name: Consts.LATEST_PROFILES, sportId: Consts.LATEST_PROFILES_ID),
   ];
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
-  List<Sport> savedSports = new List();
+  var repo =  FuturePreferencesRepository<Sport>(new SportDesSer());
+  List<Sport> savedSports =  [];
   Animation<double> animation;
   AnimationController animationController;
 

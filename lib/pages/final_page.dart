@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pref_dessert/pref_dessert_internal.dart';
 import 'package:sth/api/database.dart';
-import 'package:sth/models/player.dart';
-import 'package:sth/models/sport.dart';
-import 'package:sth/models/sport_pref.dart';
-import 'package:sth/pages/fancy_settings.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/pages/feedback.dart';
 import 'package:sth/pages/prayer_profiles.dart';
 import 'package:sth/pages/search_player.dart';
@@ -12,7 +9,9 @@ import 'package:sth/pages/settings.dart';
 import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'drag_drop.dart';
 import 'my_players.dart';
+import './drag_drop_settings.dart';
 
 class StartPage extends StatefulWidget {
   final List<Sport> sportsList;
@@ -27,11 +26,30 @@ class _StartPageState extends State<StartPage>
   TabController tabController;
 
   List<DrawerTile> drawerTiles = [
-    DrawerTile(title: Consts.LOGIN, icon: Icons.list),
-    DrawerTile(title: Consts.CREATE_ACCOUNT, icon: Icons.list),
-    DrawerTile(title: Consts.FEEDBACK, icon: Icons.list),
-    DrawerTile(title: Consts.SETTINGS, icon: Icons.list,),
-    DrawerTile(title: Consts.ABOUT, icon: Icons.list),
+    DrawerTile(
+      title: Consts.SEARCH,
+      icon: Icons.search,
+      page: SearchPlayerPage(),
+    ),
+    DrawerTile(
+      title: Consts.FAVOURITE_PLAYERS,
+      icon: Icons.favorite,
+      page: MyPlayersPage(),
+    ),
+    DrawerTile(
+      title: Consts.LOGIN,
+      icon: Icons.list,
+    ),
+    DrawerTile(
+      title: Consts.CREATE_ACCOUNT,
+      icon: Icons.list,
+      page: DragDropSettiogsPage(),
+    ),
+    DrawerTile(
+      title: Consts.FEEDBACK,
+      icon: Icons.list,
+      page: FeedbackPage(),
+    ),
   ];
 
   var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
@@ -145,6 +163,19 @@ class _StartPageState extends State<StartPage>
               )
               .toList()),
       drawer: appDrawer(),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.home,
+      //         ),
+      //         label: 'Home'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.favorite), label: 'My Players'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.settings), label: 'Settings'),
+      //   ],
+      // ),
     );
   }
 
@@ -186,64 +217,31 @@ class _StartPageState extends State<StartPage>
                 ),
               ),
               Divider(),
-              drawerTile(
-                icon: Icons.vpn_lock,
-                title: Consts.LOGIN,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        children: drawerTiles,
+                      ),
+                      DrawerTile(
+                          icon: Icons.settings,
+                          title: Consts.SETTINGS,
+                          page: FinalSettingsPage(
+                            totalSports: _allSports,
+                            callbackRemoveTabs: _addRemoveTabs,
+                            callbackClearTabs: _removeAllTabs,
+                          )),
+                      DrawerTile(icon: Icons.info, title: Consts.ABOUT),
+                    ],
+                  ),
+                ),
               ),
-              drawerTile(icon: Icons.create, title: Consts.CREATE_ACCOUNT),
-              drawerTile(
-                  icon: Icons.feedback,
-                  title: Consts.FEEDBACK,
-                  page: FeedbackPage()),
-              drawerTile(
-                  icon: Icons.settings,
-                  title: Consts.SETTINGS,
-                  page: FancySettingsPage(
-                    totalSports: _allSports,
-                    callbackRemoveTabs: _addRemoveTabs,
-                    callbackClearTabs: _removeAllTabs,
-                  )),
-              drawerTile(icon: Icons.info, title: Consts.ABOUT),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget drawerTile({title, page, icon}) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(
-            icon,
-            color: Colors.red,
-          ),
-          title: Text(
-            title,
-            style: TextStyle(color: Colors.red),
-          ),
-          onTap: () {
-            AppUtils(context: context).goBack();
-            if (page != null) {
-              AppUtils(context: context).gotoPage(page: page);
-            } else {
-              _launchURL();
-            }
-          },
-        ),
-        //Divider(),
-      ],
-    );
-  }
-
-  _launchURL() async {
-    const url = 'https://www.sportstalenthub.com/login';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   @override
@@ -306,10 +304,46 @@ class _StartPageState extends State<StartPage>
       height: '5');
 }
 
-class DrawerTile {
+class DrawerTile extends StatelessWidget {
   final String title;
   final icon;
   final page;
 
   DrawerTile({@required this.title, @required this.icon, this.page});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          leading: Icon(
+            icon,
+            color: Colors.red,
+          ),
+          title: Text(
+            title,
+            style: TextStyle(color: Colors.red),
+          ),
+          onTap: () {
+            AppUtils(context: context).goBack();
+            if (page != null) {
+              AppUtils(context: context).gotoPage(page: page);
+            } else {
+              _launchURL();
+            }
+          },
+        ),
+        //Divider(),
+      ],
+    );
+  }
+
+  _launchURL() async {
+    const url = 'https://www.sportstalenthub.com/login';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

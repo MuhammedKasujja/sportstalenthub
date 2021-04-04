@@ -27,9 +27,13 @@ dependencies:
   path_provider: ^1.6.5
   country_pickers: ^1.2.0
   shimmer: ^1.1.1
-  android_intent: ^0.3.7+2
+  android_intent: ^0.3.7+3
   # firebase_admob: ^0.9.3+1
   connectivity: ^0.4.8+2
+  provider: ^4.3.2+2
+  grouped_list: ^3.7.1
+  flutter_speed_dial_material_design: ^2.0.0
+  drag_and_drop_lists: ^0.2.10
 
 dev_dependencies:
   flutter_test:

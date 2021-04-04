@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
-import 'package:sth/models/player.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/pages/search_player.dart';
 import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
-import 'package:sth/widgets/loading.dart';
 import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/widgets/retry.dart';
 import 'package:sth/widgets/search_widget.dart';
+import 'package:sth/widgets/shimmers/index.dart';
 
 class MyPlayersPage extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
+      backgroundColor: Colors.grey[400],
       appBar: AppBar(
         title: Text("My Players"),
         actions: <Widget>[
@@ -46,12 +46,15 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            SearchWidget(onTextChange: _onTextChange,),
+            SearchWidget(
+              onTextChange: _onTextChange,
+            ),
             // SizedBox(
             //   height: 5,
             // ),
             apiPlayers != null && apiPlayers.length > 0
-                ? filter != ''//filterPlayers != null && filterPlayers.length > 0
+                ? filter !=
+                        '' //filterPlayers != null && filterPlayers.length > 0
                     ? Expanded(
                         child: ListView.builder(
                           itemCount: filterPlayers.length,
@@ -84,7 +87,9 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
                                       _fetchPlayers(playerIds);
                                     },
                                   )
-                                : LoadingIcon()))),
+                                : ShimmerWidget(
+                                    type: ShimmerType.player,
+                                  )))),
           ],
         ),
       ),

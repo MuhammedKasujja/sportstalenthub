@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/models/player.dart';
-import 'package:sth/pages/posts_tab.dart';
 import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'files_page.dart';
 
