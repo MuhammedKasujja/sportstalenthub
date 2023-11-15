@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:sth/api/urls.dart';
 import 'package:sth/utils/consts.dart';
 
@@ -55,6 +58,14 @@ class Player {
   }
 
   String get ageGroup => _getAgeGroup(dob);
+
+  String get imageTag => _createStringTag();
+
+  String _createStringTag() {
+    final Random random = Random.secure();
+    var values = List<int>.generate(12, (i) => random.nextInt(256));
+    return base64Url.encode(values);
+  }
 
   String _getAgeGroup(String birthDate) {
     var birthYear = int.parse(birthDate.substring(0, 4));

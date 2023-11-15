@@ -13,18 +13,18 @@ class FancySettingsPage extends StatefulWidget {
   final int totalSports;
 
   const FancySettingsPage({
-    Key? key,
+    super.key,
     required this.totalSports,
     required this.callbackRemoveTabs,
     required this.callbackClearTabs,
   });
   @override
-  _FancySettingsPageState createState() => _FancySettingsPageState();
+  State<FancySettingsPage> createState() => _FancySettingsPageState();
 }
 
 class _FancySettingsPageState extends State<FancySettingsPage> {
   //Storing sport in SharedPref as Serialized
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
 
   final api = ApiService();
   final db = DBProvider();
@@ -56,7 +56,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
     db.getAllSports().then((sports) {
       List<Sport> savedList = [];
       for (Sport s in sports) {
-        print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
           savedList.add(s);
         }
@@ -73,13 +72,13 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: _saveChanges,
         ),
-        title: Text(Consts.SETTINGS),
+        title: const Text(Consts.SETTINGS),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: _saveChanges,
           )
         ],
@@ -101,7 +100,7 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-              child: Center(child: CircularProgressIndicator()),
+              child: const Center(child: CircularProgressIndicator()),
             );
           }
           if (snapshot.hasData) {
@@ -109,8 +108,8 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
               return Container(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text("My Sports"),
                     ),
                     Expanded(
@@ -120,16 +119,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                             .map(
                               (s) => Draggable(
                                 data: s,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Material(
-                                      color: Colors.transparent,
-                                      child: Chip(
-                                        label: Text(s.name),
-                                        deleteIcon: Icon(Icons.delete),
-                                        deleteIconColor: Colors.red,
-                                      )),
-                                ),
                                 feedback: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Material(
@@ -140,13 +129,23 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                                   opacity: 0.0,
                                   child: Container(),
                                 ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Material(
+                                      color: Colors.transparent,
+                                      child: Chip(
+                                        label: Text(s.name),
+                                        deleteIcon: const Icon(Icons.delete),
+                                        deleteIconColor: Colors.red,
+                                      )),
+                                ),
                               ),
                             )
                             .toList(),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text("Other Sports"),
                     ),
                     Expanded(
@@ -156,19 +155,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                             .map(
                               (s) => Draggable(
                                 data: s,
-                                child: !s.isSelected
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Material(
-                                            color: Colors.transparent,
-                                            child: Chip(
-                                              label: Text(s.name),
-                                              deleteIcon:
-                                                  Icon(Icons.rotate_right),
-                                              deleteIconColor: Colors.green,
-                                            )),
-                                      )
-                                    : Container(),
                                 feedback: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Material(
@@ -182,6 +168,19 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                                   opacity: 0.0,
                                   child: Container(),
                                 ),
+                                child: !s.isSelected
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Material(
+                                            color: Colors.transparent,
+                                            child: Chip(
+                                              label: Text(s.name),
+                                              deleteIcon:
+                                                  const Icon(Icons.rotate_right),
+                                              deleteIconColor: Colors.green,
+                                            )),
+                                      )
+                                    : Container(),
                               ),
                             )
                             .toList(),
@@ -198,9 +197,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                         builder: (context, List<Sport?> incomming, rejected) {
                           return selectedSport != null
                               ? Draggable(
-                                  child: Chip(
-                                    label: Text("${selectedSport!.name}"),
-                                  ),
                                   feedback: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Material(
@@ -210,8 +206,11 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                                       ),
                                     ),
                                   ),
+                                  child: Chip(
+                                    label: Text(selectedSport!.name),
+                                  ),
                                 )
-                              : SizedBox();
+                              : const SizedBox();
                         },
                       ),
                     )
@@ -219,10 +218,10 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                 ),
               );
             } else {
-              return Center(child: Text(Consts.NO_DATA_FOUND));
+              return const Center(child: Text(Consts.NO_DATA_FOUND));
             }
           } else {
-            return Text(Consts.NO_DATA_FOUND);
+            return const Text(Consts.NO_DATA_FOUND);
           }
         },
       ),
@@ -242,7 +241,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
       });
     }
     DBProvider.db.updateSport(sport);
-    print('object: ${sport.isSelected}');
     for (Sport s in selectedList) {
       print(s.name);
     }
@@ -250,7 +248,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
 
   void loadLocalSports() async {
     var _cars = await db.getAllSports();
-    print(_cars);
 
     setState(() {
       //sportsList = _cars;

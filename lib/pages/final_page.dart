@@ -16,9 +16,9 @@ import './drag_drop_settings.dart';
 class StartPage extends StatefulWidget {
   final List<Sport> sportsList;
 
-  const StartPage({Key? key, required this.sportsList});
+  const StartPage({super.key, required this.sportsList});
   @override
-  _StartPageState createState() => _StartPageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage>
@@ -48,11 +48,11 @@ class _StartPageState extends State<StartPage>
     DrawerTile(
       title: Consts.FEEDBACK,
       icon: Icons.list,
-      page: FeedbackPage(),
+      page: const FeedbackPage(),
     ),
   ];
 
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
   int _allSports = 0;
   void initTabController(int index) {
     tabController = TabController(
@@ -104,25 +104,25 @@ class _StartPageState extends State<StartPage>
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(95),
+        preferredSize: const Size.fromHeight(95),
         child: AppBar(
-          title: Text(Consts.APP_NAME),
+          title: const Text(Consts.APP_NAME),
           elevation: 0.0,
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.favorite),
+              icon: const Icon(Icons.favorite),
               onPressed: () {
                 AppUtils(context: context).gotoPage(page: MyPlayersPage());
               },
             ),
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 AppUtils(context: context).gotoPage(page: SearchPlayerPage());
               },
             ),
             IconButton(
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               onPressed: () {
                 AppUtils(context: context).gotoPage(
                     page: SettingsPage(
@@ -191,13 +191,13 @@ class _StartPageState extends State<StartPage>
               SizedBox(
                 height: 200,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       //color: Colors.grey[100],
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10))),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       minWidth: double.infinity,
                       minHeight: double.infinity,
                     ),
@@ -216,7 +216,7 @@ class _StartPageState extends State<StartPage>
                   // ),
                 ),
               ),
-              Divider(),
+              const Divider(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -287,7 +287,7 @@ class _StartPageState extends State<StartPage>
     }
   }
 
-  Player player = new Player(
+  Player player = Player(
       playerId: '5467890',
       fullname: "Kasujja Muhammed",
       //imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
@@ -327,7 +327,7 @@ class DrawerTile extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.red),
           ),
           onTap: () {
             AppUtils(context: context).goBack();

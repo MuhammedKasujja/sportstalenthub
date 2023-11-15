@@ -3,7 +3,6 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
 import 'package:sth/api/database.dart';
@@ -18,6 +17,8 @@ import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/api/urls.dart';
 
 class SearchPlayerPage extends StatefulWidget {
+  const SearchPlayerPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SearchPlayerPageState();
@@ -33,15 +34,15 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
 
   final api = ApiService();
 
-  List<String> _sportsArr = [Consts.SELECTED_SPORT];
+  final List<String> _sportsArr = [Consts.SELECTED_SPORT];
   List<String> _positions = [Consts.SELECTED_POSITION];
 
-  List<String> _gender = [
+  final List<String> _gender = [
     Consts.SELECTED_GENDER,
     Consts.GENDER_MALE,
     Consts.GENDER_FEMALE
   ];
-  List<String> _ageGroup = [
+  final List<String> _ageGroup = [
     Consts.SELECTED_AGE_GROUP,
     Consts.GROUP_ABOVE23,
     Consts.GROUP_U23,
@@ -68,35 +69,13 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
       child: SafeArea(
         child: Scaffold(
             backgroundColor: Colors.grey[100],
-            // appBar: AppBar(
-            //   title: TextField(
-            //     style: TextStyle(color: Colors.white, fontSize: 18.0),
-            //     decoration: InputDecoration(
-            //         hintText: "Search Player",
-            //         hintStyle: TextStyle(color: Colors.white)),
-            //     onChanged: (query) {
-            //       subject.add(query);
-            //     },
-            //   ),
-            //   actions: <Widget>[
-            //     IconButton(
-            //       icon: Icon(
-            //         Icons.clear,
-            //         color: Colors.white,
-            //       ),
-            //       onPressed: () {
-            //         Navigator.of(context).pop();
-            //       },
-            //     )
-            //   ],
-            // ),
             body: Column(
               children: <Widget>[
                 _createSearchBar(context),
                 Expanded(
                   child: isLoading
                       ? PlayerShimmer()
-                      : players.length > 0
+                      : players.isNotEmpty
                           ? ListView.builder(
                               itemCount: players.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -154,9 +133,9 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
     super.dispose();
   }
 
-  void _changeState(bool _isLoading) {
+  void _changeState(bool loading) {
     setState(() {
-      isLoading = _isLoading;
+      isLoading = loading;
     });
   }
 
@@ -177,24 +156,21 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
   _saveSearchQuery({query}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? searchStrings =
-        prefs.getStringList(Consts.PREF_LIST_SEARCH_STRINGS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_SEARCH_STRINGS);
-    if (searchStrings == null) return;
+        prefs.getStringList(Consts.PREF_LIST_SEARCH_STRINGS) ?? [];
     searchStrings.add(query);
     await prefs.setStringList(Consts.PREF_LIST_SEARCH_STRINGS, searchStrings);
   }
 
   Widget _createSearchBar(context) {
     return Card(
-      margin: EdgeInsets.all(0.0),
+      margin: const EdgeInsets.all(0.0),
       elevation: 9.0,
       child: Row(
         children: <Widget>[
           IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.red),
+              icon: const Icon(Icons.arrow_back, color: Colors.red),
               onPressed: () {
-                if (players.length > 0) {
+                if (players.isNotEmpty) {
                   _clearPlayers();
                 } else {
                   AppUtils(context: context).goBack();
@@ -204,7 +180,7 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
               child: TextField(
             textInputAction: TextInputAction.search,
             // autofocus: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 // suffix: Icon(
                 //   Icons.search,
                 //   color: Colors.grey[400],
@@ -220,149 +196,143 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
   }
 
   Widget _playerFilter() {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 4,
-                margin: EdgeInsets.all(0),
-                child: DropdownButton<String>(
-                  underline: Container(),
-                  isExpanded: true,
-                  items: _sportsArr.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(0),
+              child: DropdownButton<String>(
+                underline: Container(),
+                isExpanded: true,
+                items: _sportsArr.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (value) => _onSelectedSport(value),
+                value: _selectedSport,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              child: DropdownButton<String>(
+                underline: Container(),
+                isExpanded: true,
+                items: _positions.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                // onChanged: (value) => print(value),
+                onChanged: (value) => _onSelectedPostion(value),
+                value: _selectedPosition,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              child: DropdownButton<String>(
+                underline: Container(),
+                isExpanded: true,
+                items: _gender.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (value) => _onSelectedGender(value),
+                value: _selectedGender,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              child: DropdownButton<String>(
+                underline: Container(),
+                isExpanded: true,
+                items: _ageGroup.map((String dropDownStringItem) {
+                  return DropdownMenuItem<String>(
+                    value: dropDownStringItem,
+                    child: Text(dropDownStringItem),
+                  );
+                }).toList(),
+                onChanged: (value) => _onSelectedAgeGroup(value),
+                value: _selectedAgeGroup,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: CountryPickerDropdown(
+                  initialValue: _selectedCountry,
+                  // isExpanded: true,
+                  itemBuilder: (Country country) {
+                    return Row(
+                      children: <Widget>[
+                        CountryPickerUtils.getDefaultFlagImage(country),
+                        const SizedBox(width: 8.0),
+                        Text(country.name)
+                      ],
                     );
-                  }).toList(),
-                  onChanged: (value) => _onSelectedSport(value),
-                  value: _selectedSport,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                child: DropdownButton<String>(
-                  underline: Container(),
-                  isExpanded: true,
-                  items: _positions.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
-                    );
-                  }).toList(),
-                  // onChanged: (value) => print(value),
-                  onChanged: (value) => _onSelectedPostion(value),
-                  value: _selectedPosition,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                child: DropdownButton<String>(
-                  underline: Container(),
-                  isExpanded: true,
-                  items: _gender.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
-                    );
-                  }).toList(),
-                  onChanged: (value) => _onSelectedGender(value),
-                  value: _selectedGender,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                child: DropdownButton<String>(
-                  underline: Container(),
-                  isExpanded: true,
-                  items: _ageGroup.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                      value: dropDownStringItem,
-                      child: Text(dropDownStringItem),
-                    );
-                  }).toList(),
-                  onChanged: (value) => _onSelectedAgeGroup(value),
-                  value: _selectedAgeGroup,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  child: CountryPickerDropdown(
-                    initialValue: _selectedCountry,
-                    // isExpanded: true,
-                    itemBuilder: (Country country) {
-                      return Container(
-                        child: Row(
-                          children: <Widget>[
-                            CountryPickerUtils.getDefaultFlagImage(country),
-                            SizedBox(width: 8.0),
-                            Text("${country.name}")
-                          ],
-                        ),
-                      );
-                    },
-                    onValuePicked: (country) =>
-                        _onSelectedCountry(country.isoCode),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              child: Center(
-                child: InkWell(
-                  child: Chip(
-                    elevation: 8,
-                    label: Text(
-                      "Filter Players",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.redAccent,
-                  ),
-                  onTap: () {
-                    _clearPlayers();
-                    api
-                        .filterPlayers(
-                            sport: _selectedSport,
-                            gender: _selectedGender,
-                            country: _selectedCountry,
-                            ageGroup: _selectedAgeGroup)
-                        .then((playersList) {
-                      setState(() {
-                        players = playersList;
-                        isLoading = false;
-                      });
-                    }).catchError((onError) {
-                      _changeState(false);
-                    });
-                    setState(() {
-                      isLoading = true;
-                    });
                   },
+                  onValuePicked: (country) =>
+                      _onSelectedCountry(country.isoCode),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Center(
+            child: InkWell(
+              child: const Chip(
+                elevation: 8,
+                label: Text(
+                  "Filter Players",
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.redAccent,
+              ),
+              onTap: () {
+                _clearPlayers();
+                api
+                    .filterPlayers(
+                        sport: _selectedSport,
+                        gender: _selectedGender,
+                        country: _selectedCountry,
+                        ageGroup: _selectedAgeGroup)
+                    .then((playersList) {
+                  setState(() {
+                    players = playersList;
+                    isLoading = false;
+                  });
+                }).catchError((onError) {
+                  _changeState(false);
+                });
+                setState(() {
+                  isLoading = true;
+                });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

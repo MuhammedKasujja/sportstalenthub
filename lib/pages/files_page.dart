@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:sth/api/api_service.dart';
+import 'package:sth/models/models.dart';
 
 class FilesPage extends StatefulWidget {
   final String category;
   final playerId;
   final String playerName;
 
-  const FilesPage({
-    Key? key,
+  const FilesPage({super.key, 
     required this.category,
     required this.playerId,
     required this.playerName,
   });
   @override
-  _FilesPageState createState() => _FilesPageState();
+  State<FilesPage>  createState() => _FilesPageState();
 }
 
 class _FilesPageState extends State<FilesPage> {
   final api = ApiService();
-  var photos;
+  late Future<List<Attachment>> photos;
   bool isGridTiles = false;
   final PageController pageController = PageController();
   double currentPage = 0.0;
@@ -70,7 +70,7 @@ class _FilesPageState extends State<FilesPage> {
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-              child: Center(child: CircularProgressIndicator()),
+              child: const Center(child: CircularProgressIndicator()),
             );
           }
           if (snapshot.hasData) {
@@ -100,10 +100,10 @@ class _FilesPageState extends State<FilesPage> {
               //   ),
               // );
             } else {
-              return Center(child: Text("No data Found"));
+              return const Center(child: Text("No data Found"));
             }
           } else {
-            return Text("No data Found");
+            return const Text("No data Found");
           }
         },
       ),
@@ -124,10 +124,10 @@ class _FilesPageState extends State<FilesPage> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   // height:500,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(5.0)),
+                        const BorderRadius.horizontal(left: Radius.circular(5.0)),
                     image: DecorationImage(
                       image: NetworkImage(
                         snapshot[index].filename,
@@ -142,7 +142,7 @@ class _FilesPageState extends State<FilesPage> {
                 bottom: 16,
                 child: Text(
                   "${index + 1}/${snapshot.length}",
-                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                  style: const TextStyle(color: Colors.white, fontSize: 18.0),
                 ))
           ],
         );
@@ -159,7 +159,7 @@ class _FilesPageState extends State<FilesPage> {
     // final double itemWidth = size.width / 3;
     return GridView.builder(
         itemCount: snapshot.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ), //childAspectRatio: (itemWidth/itemHeight)
         itemBuilder: (context, index) {
@@ -167,10 +167,10 @@ class _FilesPageState extends State<FilesPage> {
             child: Container(
               // width: MediaQuery.of(context).size.width,
               // height:500,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
               decoration: BoxDecoration(
                 borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(5.0)),
+                    const BorderRadius.horizontal(left: Radius.circular(5.0)),
                 image: DecorationImage(
                     image: NetworkImage(
                       snapshot[index].filename,

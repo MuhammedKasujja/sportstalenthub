@@ -13,9 +13,9 @@ import 'package:sth/widgets/retry.dart';
 class FancyProfilePage extends StatefulWidget {
   final Player player;
 
-  const FancyProfilePage({Key? key, required this.player});
+  const FancyProfilePage({super.key, required this.player});
   @override
-  _FancyProfilePageState createState() => _FancyProfilePageState();
+  State<FancyProfilePage> createState() => _FancyProfilePageState();
 }
 
 class _FancyProfilePageState extends State<FancyProfilePage>
@@ -67,9 +67,10 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                       title: Text(
                         widget.player.fullname,
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       background: GestureDetector(
                         child: Hero(
@@ -86,7 +87,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                               page: ViewImagePage(
                             title: widget.player.fullname,
                             tag: widget.player.playerId,
-                            imageUrl: "${widget.player.profilePhoto}",
+                            imageUrl: widget.player.profilePhoto,
                           ));
                         },
                       ),
@@ -110,61 +111,59 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                       Card(
                         elevation: 5,
                         margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: ListTile(
-                                      subtitle: Text(widget.player.category),
-                                      title: const Text(Consts.SPORT),
-                                    ),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: ListTile(
+                                    subtitle: Text(widget.player.category),
+                                    title: const Text(Consts.SPORT),
                                   ),
-                                  Flexible(
-                                    child: ListTile(
-                                      subtitle: Text(widget.player.nationality),
-                                      title: const Text(Consts.COUNTRY),
-                                    ),
+                                ),
+                                Flexible(
+                                  child: ListTile(
+                                    subtitle: Text(widget.player.nationality),
+                                    title: const Text(Consts.COUNTRY),
                                   ),
-                                ],
-                              ),
-                              ListTile(
-                                subtitle: const Text(Consts.TEAM),
-                                title: Text(widget.player.teamName),
-                              ),
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: ListTile(
-                                      title: const Text(Consts.HEIGHT),
-                                      subtitle: (widget.player.height != null &&
-                                                  widget.player.height!
-                                                      .isNotEmpty ||
-                                              widget.player.height != 'null')
-                                          ? Text("${widget.player.height} M")
-                                          : const Text('-'),
-                                    ),
+                                ),
+                              ],
+                            ),
+                            ListTile(
+                              subtitle: const Text(Consts.TEAM),
+                              title: Text(widget.player.teamName),
+                            ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: ListTile(
+                                    title: const Text(Consts.HEIGHT),
+                                    subtitle: (widget.player.height != null &&
+                                                widget.player.height!
+                                                    .isNotEmpty ||
+                                            widget.player.height != 'null')
+                                        ? Text("${widget.player.height} M")
+                                        : const Text('-'),
                                   ),
-                                  Flexible(
-                                    child: ListTile(
-                                      title: const Text(Consts.WEIGHT),
-                                      subtitle: (widget.player.weight != null &&
-                                              widget.player.weight!.isNotEmpty)
-                                          ? Text("${widget.player.weight!} kg")
-                                          : const Text('-'),
-                                    ),
+                                ),
+                                Flexible(
+                                  child: ListTile(
+                                    title: const Text(Consts.WEIGHT),
+                                    subtitle: (widget.player.weight != null &&
+                                            widget.player.weight!.isNotEmpty)
+                                        ? Text("${widget.player.weight!} kg")
+                                        : const Text('-'),
                                   ),
-                                  Flexible(
-                                    child: ListTile(
-                                      title: const Text(Consts.DATE_OF_BIRTH),
-                                      subtitle: Text(widget.player.dob),
-                                    ),
+                                ),
+                                Flexible(
+                                  child: ListTile(
+                                    title: const Text(Consts.DATE_OF_BIRTH),
+                                    subtitle: Text(widget.player.dob),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -344,7 +343,6 @@ class _FancyProfilePageState extends State<FancyProfilePage>
         ),
         FloatingActionButton(
           tooltip: 'videos',
-          child: const Icon(Icons.videocam),
           onPressed: () {
             AppUtils(context: context).gotoPage(
                 page: PlayerVideosPage(
@@ -353,6 +351,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
             ));
           },
           heroTag: null,
+          child: const Icon(Icons.videocam),
         ),
       ],
     );
@@ -439,8 +438,6 @@ class _FancyProfilePageState extends State<FancyProfilePage>
       });
     }
 
-    print("object");
-
     await prefs.setStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS, myPlayers);
   }
 
@@ -449,7 +446,6 @@ class _FancyProfilePageState extends State<FancyProfilePage>
 
     List<String>? myPlayers =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
-    if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -584,10 +580,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             //     onPressed: addFav)
           ],
         ));
-  }
-
-  pressedIcon() {
-    print("Hoola....");
   }
   // @override
   // double get maxExtent => this._tabBar.preferredSize.height;

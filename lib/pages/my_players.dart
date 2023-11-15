@@ -11,8 +11,10 @@ import 'package:sth/widgets/search_widget.dart';
 import 'package:sth/widgets/shimmers/index.dart';
 
 class MyPlayersPage extends StatefulWidget {
+  const MyPlayersPage({super.key});
+
   @override
-  _MyPlayersPageState createState() => _MyPlayersPageState();
+  State<MyPlayersPage> createState() => _MyPlayersPageState();
 }
 
 class _MyPlayersPageState extends State<MyPlayersPage> {
@@ -33,8 +35,8 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        title: Text("My Players"),
-        actions: <Widget>[
+        title: const Text("My Players"),
+        actions: const <Widget>[
           // IconButton(
           //   icon: Icon(Icons.search),
           //   onPressed: () {
@@ -43,60 +45,58 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
           // ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            SearchWidget(
-              onTextChange: _onTextChange,
-            ),
-            // SizedBox(
-            //   height: 5,
-            // ),
-            apiPlayers != null && apiPlayers!.isNotEmpty
-                ? filter !=
-                        '' //filterPlayers != null && filterPlayers.length > 0
-                    ? Expanded(
-                        child: ListView.builder(
-                          itemCount: filterPlayers.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProfileCard(
-                              player: filterPlayers[index],
-                            );
-                          },
-                        ),
-                      )
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: apiPlayers!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProfileCard(
-                              player: apiPlayers![index],
-                            );
-                          },
-                        ),
-                      )
-                : Expanded(
-                    child: Container(
-                        child: Center(
-                            child: hasError
-                                ? RetryAgainIcon(
-                                    onTry: () {
-                                      setState(() {
-                                        hasError = false;
-                                      });
-                                      _fetchPlayers(playerIds);
-                                    },
-                                  )
-                                : ShimmerWidget(
-                                    type: ShimmerType.player,
-                                  )))),
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          SearchWidget(
+            onTextChange: _onTextChange,
+          ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          apiPlayers != null && apiPlayers!.isNotEmpty
+              ? filter != '' //filterPlayers != null && filterPlayers.length > 0
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: filterPlayers.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(
+                            player: filterPlayers[index],
+                          );
+                        },
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: apiPlayers!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(
+                            player: apiPlayers![index],
+                          );
+                        },
+                      ),
+                    )
+              : Expanded(
+                  child: Center(
+                    child: hasError
+                        ? RetryAgainIcon(
+                            onTry: () {
+                              setState(() {
+                                hasError = false;
+                              });
+                              _fetchPlayers(playerIds);
+                            },
+                          )
+                        : const ShimmerWidget(
+                            type: ShimmerType.player,
+                          ),
+                  ),
+                ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
-            AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+            AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
           }),
     );
   }
@@ -104,18 +104,15 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
   _getFavouriteListId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String>? myPlayersIds =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+    List<String> myPlayersIds =
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
     String ids = '';
-    if (myPlayersIds == null) return;
-    
+
     for (int i = 0; i < myPlayersIds.length; i++) {
       if (i == 0) {
-        ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+        ids = 'players_ids[$i]=${myPlayersIds[i]}';
       } else {
-        ids = ids + '&players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+        ids = '$ids&players_ids[$i]=${myPlayersIds[i]}';
       }
     }
 

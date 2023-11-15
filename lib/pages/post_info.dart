@@ -9,9 +9,9 @@ import 'package:sth/widgets/retry.dart';
 class PostInfoPage extends StatefulWidget {
   final Post post;
 
-  const PostInfoPage({Key? key, required this.post});
+  const PostInfoPage({super.key, required this.post});
   @override
-  _PostInfoPageState createState() => _PostInfoPageState();
+  State<PostInfoPage> createState() => _PostInfoPageState();
 }
 
 class _PostInfoPageState extends State<PostInfoPage> {
@@ -41,11 +41,11 @@ class _PostInfoPageState extends State<PostInfoPage> {
                   child: Container(
                     height: 30,
                     width: 30,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.red,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
@@ -58,12 +58,12 @@ class _PostInfoPageState extends State<PostInfoPage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       height: 40,
                       width: 40,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.red, shape: BoxShape.circle),
-                      child: Icon(
+                      child: const Icon(
                         Icons.share,
                         color: Colors.white,
                       ),
@@ -73,7 +73,7 @@ class _PostInfoPageState extends State<PostInfoPage> {
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
                     //titlePadding: EdgeInsets.only(left: 10),
-                    title: Text('News',
+                    title: const Text('News',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12.0,
@@ -92,7 +92,7 @@ class _PostInfoPageState extends State<PostInfoPage> {
                         ).gotoPage(
                             page: ViewImagePage(
                           tag: widget.post.postId,
-                          imageUrl: "${widget.post.imageUrl}",
+                          imageUrl: widget.post.imageUrl,
                         ));
                       },
                     )),
@@ -117,17 +117,17 @@ class _PostInfoPageState extends State<PostInfoPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.post.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "${widget.post.description}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -141,8 +141,8 @@ class _PostInfoPageState extends State<PostInfoPage> {
                       padding:
                           const EdgeInsets.only(right: 10, top: 2, bottom: 2),
                       child: Text(
-                        '${widget.post.date}',
-                        style: TextStyle(color: Colors.red),
+                        widget.post.date,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     )),
               ),
@@ -159,7 +159,7 @@ class _PostInfoPageState extends State<PostInfoPage> {
                     }
                     return Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: _articleInfo(snapshot.data),
                       ),
                     );
