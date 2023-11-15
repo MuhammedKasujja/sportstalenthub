@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppUtils {
   BuildContext context;
 
-  AppUtils({Key key, @required this.context});
+  AppUtils({Key? key, required this.context});
 
   gotoPage({@required page}) {
     Navigator.push(this.context,
@@ -16,7 +16,7 @@ class AppUtils {
 
   String getDate() {
     // return DateFormat('dd/MM/yyyy —   HH:mm:ss:S').format(DateTime.now());
-    return null;
+    return '';
   }
 
   showFullArticle(Widget article, title) {
@@ -37,9 +37,11 @@ class AppUtils {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          IconButton(icon: Icon(Icons.close), onPressed: (){
-                            AppUtils(context: ctx).goBack();
-                          }),
+                          IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                AppUtils(context: ctx).goBack();
+                              }),
                           Expanded(
                             child: Text(
                               title,
@@ -57,10 +59,7 @@ class AppUtils {
                       Divider(
                         color: Colors.black,
                       ),
-                      Expanded(
-                          child: Container(
-                              child: article
-                      )),
+                      Expanded(child: Container(child: article)),
                     ],
                   ),
                 ),
@@ -71,7 +70,7 @@ class AppUtils {
   }
 
   showSnack({String message = 'Your message'}) {
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));
   }

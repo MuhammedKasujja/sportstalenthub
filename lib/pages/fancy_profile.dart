@@ -13,7 +13,7 @@ import 'package:sth/widgets/retry.dart';
 class FancyProfilePage extends StatefulWidget {
   final Player player;
 
-  const FancyProfilePage({Key key, @required this.player}) : super(key: key);
+  const FancyProfilePage({Key? key, required this.player});
   @override
   _FancyProfilePageState createState() => _FancyProfilePageState();
 }

@@ -1,22 +1,25 @@
-
-class Achievement{
+class Achievement {
   String startDate;
   String itemId;
   String endDate;
   String achievements;
   String description;
 
-  Achievement({this.itemId,this.startDate, this.endDate, this.achievements, this.description});
+  Achievement({
+    required this.itemId,
+    required this.startDate,
+    required this.endDate,
+    required this.achievements,
+    required this.description,
+  });
 
-  factory Achievement.fromJson(Map<String, dynamic> json){
+  factory Achievement.fromJson(Map<String, dynamic> json) {
     return Achievement(
-      startDate:json['start_date'],
+      startDate: json['start_date'],
       itemId: json['item_id'].toString(),
       endDate: json['end_date'],
       achievements: json['achievements'],
       description: json['description'],
-
     );
   }
-
 }

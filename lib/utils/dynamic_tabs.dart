@@ -43,11 +43,12 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            
             FutureBuilder(
                 future: futurePlayers,
-                builder: (context, AsyncSnapshot<List<Player>> playersSnapshot) {
-                  if (playersSnapshot.connectionState == ConnectionState.waiting) {
+                builder:
+                    (context, AsyncSnapshot<List<Player>> playersSnapshot) {
+                  if (playersSnapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return Container(
                       child: Center(child: CircularProgressIndicator()),
                     );
@@ -66,7 +67,8 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
                         onTry: () {
                           setState(
                             () {
-                              futurePlayers = _api.getFavouritePlayers(playerIds);
+                              futurePlayers =
+                                  _api.getFavouritePlayers(playerIds);
                             },
                           );
                         },
@@ -88,11 +90,12 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
   _getFavouriteListId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayersIds =
+    List<String>? myPlayersIds =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
-    String ids;
+    String ids = '';
+    if(myPlayersIds == null) return;
     for (int i = 0; i < myPlayersIds.length; i++) {
       if (i == 0) {
         ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
@@ -105,9 +108,9 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
       playerIds = ids;
     });
 
-    futurePlayers = _api.getFavouritePlayers(ids).then((players){
-      setState((){
-         apiPlayers = players;
+    futurePlayers = _api.getFavouritePlayers(ids).then((players) {
+      setState(() {
+        apiPlayers = players;
       });
     });
 

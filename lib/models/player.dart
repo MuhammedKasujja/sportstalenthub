@@ -7,55 +7,54 @@ class Player {
   String dob;
   String gender;
   String nationality;
-  String location;
-  String contact;
+  String? location;
+  String? contact;
   String profilePhoto;
   String category;
-  String lastUpdated;
+  String? lastUpdated;
   String position;
   String height;
   String weight;
   String teamName;
-  String birthPlace;
-  String ageGroup;
+  String? birthPlace;
 
-  Player(
-      {this.playerId,
-      this.fullname,
-      this.gender,
-      this.category,
-      this.lastUpdated,
-      this.nationality,
-      this.contact,
-      this.profilePhoto,
-      this.dob,
-      this.position,
-      this.height,
-      this.location,
-      this.weight,
-      this.teamName,
-      this.birthPlace,
-      this.ageGroup});
+  Player({
+    required this.playerId,
+    required this.fullname,
+    required this.gender,
+    required this.category,
+    this.lastUpdated,
+    required this.nationality,
+    this.contact,
+    required this.profilePhoto,
+    required this.dob,
+    required this.position,
+    required this.height,
+    this.location,
+    required this.weight,
+    required this.teamName,
+    this.birthPlace,
+  });
 
-  Player.fromJson(Map<String, dynamic> json) {
-    // return Player(
-    playerId = json['player_id'].toString();
-    fullname = json['full_name'];
-    weight = json['weight'].toString();
-    height = json['height'].toString();
-    dob = json['birth_date'];
-    birthPlace = json['birth_place'];
-    nationality = json['country_name'];
-    category = json['sport_name'];
-    //contact: json['contact'],
-    profilePhoto = Urls.PROFILE_PHOTO_LINK + json['profile_photo'];
-    gender = json['gender'];
-    teamName = json['team_name'];
-    position = json['position'];
-    //ageGroup = json['group_name'];
-    ageGroup = _getAgeGroup(json['birth_date']);
-    // );
+  factory Player.fromJson(Map<String, dynamic> json) {
+    return Player(
+      playerId: json['player_id'].toString(),
+      fullname: json['full_name'],
+      weight: json['weight'].toString(),
+      height: json['height'].toString(),
+      dob: json['birth_date'],
+      birthPlace: json['birth_place'],
+      nationality: json['country_name'],
+      category: json['sport_name'],
+      contact: json['contact'],
+      profilePhoto: Urls.PROFILE_PHOTO_LINK + json['profile_photo'],
+      gender: json['gender'],
+      teamName: json['team_name'],
+      position: json['position'],
+    );
   }
+
+  String get ageGroup => _getAgeGroup(dob);
 
   String _getAgeGroup(String birthDate) {
     var birthYear = int.parse(birthDate.substring(0, 4));
@@ -79,7 +78,6 @@ class Player {
     } else {
       ageGroup = Consts.GROUP_ABOVE23;
     }
-
     return ageGroup;
   }
 }

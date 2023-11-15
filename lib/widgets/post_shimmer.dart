@@ -8,8 +8,8 @@ class PostShimmer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
         child: ListView.builder(
           itemCount: 10,
           padding: const EdgeInsets.only(bottom: 8.0),

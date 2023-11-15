@@ -8,9 +8,11 @@ class PlayerVideosPage extends StatefulWidget {
   final String playerId;
   final String playerName;
 
-  const PlayerVideosPage(
-      {Key key, @required this.playerId, @required this.playerName})
-      : super(key: key);
+  const PlayerVideosPage({
+    Key? key,
+    required this.playerId,
+    required this.playerName,
+  });
   @override
   _PlayerVideosPageState createState() => _PlayerVideosPageState();
 }
@@ -26,8 +28,9 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
   bool isError = false;
 
   final youtubePlayerController = YoutubePlayerController(
-      initialVideoId:
-          YoutubePlayer.convertUrlToId("https://youtu.be/kqyXwSV0rgM"));
+    initialVideoId:
+        YoutubePlayer.convertUrlToId("https://youtu.be/kqyXwSV0rgM") ?? '',
+  );
   @override
   void initState() {
     futureVideos = api.getPlayersAttachments(
@@ -117,7 +120,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
           Expanded(
             child: FutureBuilder(
               future: futureVideos,
-              builder: ( context, snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Container(
                     child: Center(
@@ -146,7 +149,8 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                         children: <Widget>[
                           GestureDetector(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0, left:4, right:4.0, top: 4),
+                              padding: const EdgeInsets.only(
+                                  bottom: 8.0, left: 4, right: 4.0, top: 4),
                               child: Stack(
                                 children: <Widget>[
                                   Container(
@@ -161,8 +165,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                                                   snapshot.data[0].filename
                                               ? Colors.red
                                               : Colors.transparent),
-                                      borderRadius: BorderRadius.circular(
-                                      5.0),
+                                      borderRadius: BorderRadius.circular(5.0),
                                       image: DecorationImage(
                                           image: NetworkImage(
                                             "http://img.youtube.com/vi/" +
@@ -209,10 +212,15 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                       ),
                     );
                   } else {
-                    return Center(child: Text("Player has no videos", style: TextStyle(color: Colors.grey),));
+                    return Center(
+                        child: Text(
+                      "Player has no videos",
+                      style: TextStyle(color: Colors.grey),
+                    ));
                   }
                 } else {
-                  return Text("Player has no videos", style: TextStyle(color: Colors.grey));
+                  return Text("Player has no videos",
+                      style: TextStyle(color: Colors.grey));
                 }
               },
             ),

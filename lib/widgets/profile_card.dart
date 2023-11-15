@@ -11,8 +11,8 @@ class ProfileCard extends StatelessWidget {
   final Player player;
 
   const ProfileCard({
-    Key key,
-    @required this.player,
+    Key? key,
+    required this.player,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

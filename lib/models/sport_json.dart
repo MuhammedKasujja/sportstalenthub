@@ -2,15 +2,17 @@ class SportJson {
   String name;
   List<String> positions;
 
-  SportJson({this.name, this.positions});
+  SportJson({required this.name, required this.positions});
 
-  SportJson.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    positions = json['positions'].cast<String>();
+  factory SportJson.fromJson(Map<String, dynamic> json) {
+    return SportJson(
+      name: json['name'],
+      positions: json['positions'].cast<String>(),
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = {};
     data['name'] = this.name;
     data['positions'] = this.positions;
     return data;

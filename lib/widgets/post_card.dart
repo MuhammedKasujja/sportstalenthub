@@ -5,9 +5,9 @@ import 'package:sth/utils/app_utils.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
-  final String tag;
+  final String? tag;
 
-  const PostCard({Key key, @required this.post, this.tag}) : super(key: key);
+  const PostCard({Key? key, required this.post, this.tag});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class PostCard extends StatelessWidget {
                             height: 10.0,
                           ),
                           Text(
-                            post.description,
+                            post.description ?? '',
                             style: Theme.of(context).textTheme.bodyText2,
                             // maxLines: 4,
                             overflow: TextOverflow.ellipsis,

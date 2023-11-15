@@ -9,7 +9,7 @@ class PlayerShimmer extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           // color: Colors.white,
-          border: Border.all(width: 1, color: Colors.grey[300])),
+          border: Border.all(width: 1, color: Colors.grey.shade300),),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

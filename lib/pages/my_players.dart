@@ -18,8 +18,8 @@ class MyPlayersPage extends StatefulWidget {
 class _MyPlayersPageState extends State<MyPlayersPage> {
   final _api = ApiService();
   String playerIds;
-  List<Player> apiPlayers;
-  List<Player> filterPlayers;
+  List<Player>? apiPlayers;
+  List<Player> filterPlayers = [];
   bool hasError = false;
   String filter = '';
   @override
@@ -52,7 +52,7 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
             // SizedBox(
             //   height: 5,
             // ),
-            apiPlayers != null && apiPlayers.length > 0
+            apiPlayers != null && apiPlayers!.isNotEmpty
                 ? filter !=
                         '' //filterPlayers != null && filterPlayers.length > 0
                     ? Expanded(
@@ -67,10 +67,10 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
                       )
                     : Expanded(
                         child: ListView.builder(
-                          itemCount: apiPlayers.length,
+                          itemCount: apiPlayers!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return ProfileCard(
-                              player: apiPlayers[index],
+                              player: apiPlayers![index],
                             );
                           },
                         ),
@@ -104,12 +104,15 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
   _getFavouriteListId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayersIds =
+    List<String>? myPlayersIds =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
-    String ids;
-    for (int i = 0; i < myPlayersIds.length; i++) {
+    String ids = '';
+    if (myPlayersIds == null) {
+      return;
+    }
+    for (int i = 0; i < myPlayersIds!.length; i++) {
       if (i == 0) {
         ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
       } else {
@@ -130,7 +133,7 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
     //print(value);
     setState(() {
       filter = value;
-      filterPlayers = apiPlayers.where((p) {
+      filterPlayers = apiPlayers!.where((p) {
         return p.fullname.toLowerCase().contains(value.toLowerCase()) ||
             p.category.toLowerCase().contains(value.toLowerCase());
       }) //|| p.fullname.toLowerCase().contains(value.toLowerCase()))

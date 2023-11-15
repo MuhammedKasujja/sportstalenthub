@@ -13,22 +13,23 @@ class PlayersSearchDelegate extends SearchDelegate {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.arrow_menu,
-          progress: null,
-        ),
-        onPressed: () {
-          this.close(context, null);
-        });
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.arrow_menu,
+        progress: null,
+      ),
+      onPressed: () {
+        this.close(context, null);
+      },
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return null;
+    return SizedBox();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return null;
+    return SizedBox();
   }
 }

@@ -1,11 +1,15 @@
 import 'package:pref_dessert/pref_dessert.dart';
 import 'package:sth/models/sport.dart';
 
-class SportDesSer extends DesSer<Sport>{
+class SportDesSer extends DesSer<Sport> {
   @override
   Sport deserialize(String s) {
     var split = s.split(",");
-    return new Sport(name :split[0],sportId: split[1]);
+    return Sport(
+      name: split[0],
+      sportId: split[1],
+      isSelected: false,
+    );
   }
 
   @override
@@ -15,5 +19,4 @@ class SportDesSer extends DesSer<Sport>{
 
   @override
   String get key => "Sport";
-
 }

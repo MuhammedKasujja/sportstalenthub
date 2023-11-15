@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
 class SelectionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: () {
         _navigateAndDisplaySelection(context);
       },
@@ -35,7 +35,7 @@ class SelectionButton extends StatelessWidget {
 
     // After the Selection Screen returns a result, hide any previous snackbars
     // and show the new result.
-    Scaffold.of(context)
+    ScaffoldMessenger.of(context)
       ..removeCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text("$result")));
   }
@@ -54,7 +54,7 @@ class SelectionScreen extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   // Close the screen and return "Yep!" as the result.
                   Navigator.pop(context, 'Yep!');
@@ -64,7 +64,7 @@ class SelectionScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   // Close the screen and return "Nope!" as the result.
                   Navigator.pop(context, 'Nope.');

@@ -1,23 +1,30 @@
 import 'package:sth/api/urls.dart';
 
-class Post{
+class Post {
   String postId;
   String title;
   String date;
   String imageUrl;
-  String description;
-  String category;
-  
-  Post({this.title,this.description, this.imageUrl, this.category, this.date, this.postId});
+  String? description;
+  String? category;
 
-  factory Post.fromJson(Map<String, dynamic> json){
-     return Post(
-       title: json['post_title'],
-       description: json['brief_description'],
-       imageUrl: Urls.POST_IMAGE_LINKS + json['post_image'],
+  Post({
+    required this.title,
+    this.description,
+    required this.imageUrl,
+    this.category,
+    required this.date,
+    required this.postId,
+  });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      title: json['post_title'],
+      description: json['brief_description'],
+      imageUrl: Urls.POST_IMAGE_LINKS + json['post_image'],
       //  category: json['article_category'],
-       date: json['created_on'],
-       postId: json['post_id'],
+      date: json['created_on'],
+      postId: json['post_id'],
     );
   }
 }

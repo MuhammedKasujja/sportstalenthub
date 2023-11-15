@@ -10,7 +10,7 @@ class DBProvider{
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  static Database _database;
+  static late Database _database;
 
   factory DBProvider() {
     return db;
@@ -53,8 +53,8 @@ class DBProvider{
     //database connection
     final db = await this.database;
     var x = await db.rawQuery('SELECT COUNT (*) from  $sportsTable');
-    int count = Sqflite.firstIntValue(x);
-    return count;
+    int? count = Sqflite.firstIntValue(x);
+    return count ?? 0;
   }
 
   updateSport(Sport sport) async {

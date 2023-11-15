@@ -16,7 +16,7 @@ import './drag_drop_settings.dart';
 class StartPage extends StatefulWidget {
   final List<Sport> sportsList;
 
-  const StartPage({Key key, this.sportsList}) : super(key: key);
+  const StartPage({Key? key, this.sportsList}) : super(key: key);
   @override
   _StartPageState createState() => _StartPageState();
 }
@@ -288,6 +288,7 @@ class _StartPageState extends State<StartPage>
   }
 
   Player player = new Player(
+      playerId: '5467890',
       fullname: "Kasujja Muhammed",
       //imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
       profilePhoto: "http://img.youtube.com/vi/rqahKvZZVdg/0.jpg",
@@ -309,7 +310,11 @@ class DrawerTile extends StatelessWidget {
   final icon;
   final page;
 
-  DrawerTile({@required this.title, @required this.icon, this.page});
+  DrawerTile({
+    required this.title,
+    required this.icon,
+    this.page,
+  });
 
   @override
   Widget build(BuildContext context) {

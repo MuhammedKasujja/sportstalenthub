@@ -7,9 +7,10 @@ class PostShimmer extends StatelessWidget {
       // width: MediaQuery.of(context).size.width,
       height: 300,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          // color: Colors.white,
-          border: Border.all(width: 1, color: Colors.grey[500])),
+        borderRadius: BorderRadius.circular(5),
+        // color: Colors.white,
+        border: Border.all(width: 1, color: Colors.grey.shade500),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

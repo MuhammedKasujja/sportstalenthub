@@ -8,10 +8,13 @@ class PlayerShimmer extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), color: Colors.white),
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 16.0,
+      ),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
         child: ListView.separated(
           itemCount: 10,
           padding: const EdgeInsets.only(bottom: 8.0),
@@ -19,9 +22,13 @@ class PlayerShimmer extends StatelessWidget {
             // width: MediaQuery.of(context).size.width,
             height: 125,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                // color: Colors.white,
-                border: Border.all(width: 1, color: Colors.grey[300])),
+              borderRadius: BorderRadius.circular(5),
+              // color: Colors.white,
+              border: Border.all(
+                width: 1,
+                color: Colors.grey.shade300,
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

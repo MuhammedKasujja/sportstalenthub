@@ -15,9 +15,9 @@ class RetryIcon extends StatelessWidget {
 
 class RetryAgainIcon extends StatelessWidget {
   final String message ="Try Again";
-  final Function onTry;
+  final Function()? onTry;
 
-  const RetryAgainIcon({Key key, @required this.onTry}) : super(key: key);
+  const RetryAgainIcon({Key? key, required this.onTry});
   @override
   Widget build(BuildContext context) {
     return Container(

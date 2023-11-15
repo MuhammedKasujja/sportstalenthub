@@ -4,12 +4,13 @@ class SkeletonLoader extends StatefulWidget {
   final double height;
   final double width;
 
-  SkeletonLoader({Key key, this.height = 20, this.width = 200 }) : super(key: key);
+  const SkeletonLoader({Key? key, this.height = 20, this.width = 200});
 
   createState() => SkeletonLoaderState();
 }
 
-class SkeletonLoaderState extends State<SkeletonLoader> with SingleTickerProviderStateMixin {
+class SkeletonLoaderState extends State<SkeletonLoader>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   Animation gradientPosition;
@@ -17,19 +18,19 @@ class SkeletonLoaderState extends State<SkeletonLoader> with SingleTickerProvide
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 1500), vsync: this);
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 1500),
+      vsync: this,
+    );
 
     gradientPosition = Tween<double>(
       begin: -3,
       end: 10,
     ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.linear
-      ),
+      CurvedAnimation(parent: _controller, curve: Curves.linear),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
 
     _controller.repeat();
   }
@@ -43,15 +44,19 @@ class SkeletonLoaderState extends State<SkeletonLoader> with SingleTickerProvide
   @override
   Widget build(BuildContext context) {
     return Container(
-        width:  widget.width,
-        height: widget.height, 
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(gradientPosition.value, 0),
-            end: Alignment(-1, 0),
-            colors: [Colors.black12, Colors.black26, Colors.black12]
-          )
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(gradientPosition.value, 0),
+          end: Alignment(-1, 0),
+          colors: [
+            Colors.black12,
+            Colors.black26,
+            Colors.black12,
+          ],
         ),
+      ),
     );
   }
 }

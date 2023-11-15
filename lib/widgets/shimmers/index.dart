@@ -7,18 +7,22 @@ class ShimmerWidget extends StatelessWidget {
   final ShimmerType type;
   final int itemLength;
 
-  const ShimmerWidget({Key key, @required this.type, this.itemLength: 10})
-      : super(key: key);
+  const ShimmerWidget({Key? key, required this.type, this.itemLength = 10});
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), color: Colors.white),
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+      ),
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 16.0,
+      ),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
         child: ListView.separated(
           shrinkWrap: true,
           itemCount: this.itemLength,

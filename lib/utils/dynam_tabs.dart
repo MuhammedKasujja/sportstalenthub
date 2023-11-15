@@ -9,15 +9,17 @@
 import 'package:flutter/material.dart';
 
 class DynamoTabs extends StatefulWidget {
-  @override DynamoTabsState createState() => DynamoTabsState();
+  @override
+  DynamoTabsState createState() => DynamoTabsState();
 }
 
 class DynamoTabsState extends State<DynamoTabs> with TickerProviderStateMixin {
-  TabController tabController;
+  late TabController tabController;
   List<Tab> tabs = <Tab>[Tab(text: '0')];
 
   void initTabController(int index) {
-    tabController = TabController(initialIndex: index, length: tabs.length, vsync: this);
+    tabController =
+        TabController(initialIndex: index, length: tabs.length, vsync: this);
   }
 
   void newTab() {
@@ -30,7 +32,7 @@ class DynamoTabsState extends State<DynamoTabs> with TickerProviderStateMixin {
 
   void closeCurrentTab() {
     if (tabs.length > 1) {
-      setState((){
+      setState(() {
         tabs.removeAt(tabController.index);
         if (tabController.index > 0) {
           initTabController(tabController.index - 1);
@@ -39,31 +41,39 @@ class DynamoTabsState extends State<DynamoTabs> with TickerProviderStateMixin {
     }
   }
 
-  @override void initState() {
+  @override
+  void initState() {
     super.initState();
     initTabController(0);
   }
 
-  @override void dispose() {
+  @override
+  void dispose() {
     tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.add), onPressed: newTab),
-            IconButton(icon: Icon(Icons.close), onPressed: closeCurrentTab,)
-          ],
-          bottom: TabBar(controller: tabController, tabs: tabs.map((tab) => tab).toList()),
-        ),
-        body: TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.add), onPressed: newTab),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: closeCurrentTab,
+          )
+        ],
+        bottom: TabBar(
           controller: tabController,
-          children: tabs.map((tab) => Center(child: Text(tab.text))).toList(),
+          tabs: tabs.map((tab) => tab).toList(),
         ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children:
+            tabs.map((tab) => Center(child: Text(tab.text ?? ''))).toList(),
+      ),
     );
   }
 }
-

@@ -7,9 +7,13 @@ class CareerPathShimmer extends StatelessWidget {
       // width: MediaQuery.of(context).size.width,
       height: 180,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          // color: Colors.white,
-          border: Border.all(width: 1, color: Colors.grey[300])),
+        borderRadius: BorderRadius.circular(5),
+        // color: Colors.white,
+        border: Border.all(
+          width: 1,
+          color: Colors.grey.shade300,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

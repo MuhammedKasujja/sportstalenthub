@@ -1,4 +1,3 @@
-import 'package:drag_and_drop_lists/drag_and_drop_list.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,8 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
   final api = ApiService();
   final db = DBProvider();
   Future<List<Sport>> sportsList;
-  List<Sport> selectedList = List();
-  List<Sport> repoList = List();
+  List<Sport> selectedList = [];
+  List<Sport> repoList = [];
   @override
   void initState() {
     super.initState();
@@ -59,7 +58,7 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
     }
 
     db.getAllSports().then((sports) {
-      List<Sport> savedList = List();
+      List<Sport> savedList = [];
       for (Sport s in sports) {
         print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {

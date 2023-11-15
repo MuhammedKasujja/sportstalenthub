@@ -48,7 +48,7 @@ class _PaginationPageState extends State<PaginationPage> {
     );
   }
 
-  Future<List<int>> getMoreItems() async{
+  Future getMoreItems() async{
     if(!isPerformingRequest){
       setState(() {
        isPerformingRequest = true; 

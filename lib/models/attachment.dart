@@ -4,7 +4,7 @@ class Attachment {
   String filename;
   String playerId;
 
-  Attachment({this.playerId, this.filename});
+  Attachment({required this.playerId, required this.filename});
 
   factory Attachment.fromJson(Map<String, dynamic> json) {
     String file, temp;
