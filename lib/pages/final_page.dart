@@ -16,14 +16,14 @@ import './drag_drop_settings.dart';
 class StartPage extends StatefulWidget {
   final List<Sport> sportsList;
 
-  const StartPage({Key? key, this.sportsList}) : super(key: key);
+  const StartPage({Key? key, required this.sportsList});
   @override
   _StartPageState createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<StartPage> {
-  TabController tabController;
+  late TabController tabController;
 
   List<DrawerTile> drawerTiles = [
     DrawerTile(
@@ -53,7 +53,7 @@ class _StartPageState extends State<StartPage>
   ];
 
   var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
-  int _allSports;
+  late int _allSports;
   void initTabController(int index) {
     tabController = TabController(
         initialIndex: index, length: widget.sportsList.length, vsync: this);
@@ -274,7 +274,7 @@ class _StartPageState extends State<StartPage>
     await _addTabs(addedSports);
   }
 
-  _addTabs(List<Sport> newSports) {
+  _addTabs(List<Sport>? newSports) {
     if (newSports != null) {
       for (Sport s in newSports) {
         changeTabs(s).then((onValue) {

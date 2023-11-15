@@ -17,7 +17,7 @@ class MyPlayersPage extends StatefulWidget {
 
 class _MyPlayersPageState extends State<MyPlayersPage> {
   final _api = ApiService();
-  String playerIds;
+  late String playerIds;
   List<Player>? apiPlayers;
   List<Player> filterPlayers = [];
   bool hasError = false;
@@ -109,10 +109,9 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
             ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
     String ids = '';
-    if (myPlayersIds == null) {
-      return;
-    }
-    for (int i = 0; i < myPlayersIds!.length; i++) {
+    if (myPlayersIds == null) return;
+    
+    for (int i = 0; i < myPlayersIds.length; i++) {
       if (i == 0) {
         ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
       } else {

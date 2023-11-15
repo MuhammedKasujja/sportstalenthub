@@ -15,11 +15,11 @@ class ShowTabsTage extends StatefulWidget {
 
 class _ShowTabsTageState extends State<ShowTabsTage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  TabController _tabController;
+  late TabController _tabController;
 
-  List<Widget> _tabViews;
+  late List<Widget> _tabViews;
 
-  List<Widget> _tabTitles;
+  late List<Widget> _tabTitles;
 
   List<Sport> sportsList = [
     Sport(name: Consts.FEATURED_PROFILES, sportId: '11001', isSelected: true),

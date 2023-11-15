@@ -9,7 +9,7 @@ import 'package:sth/widgets/retry.dart';
 import 'package:sth/widgets/shimmers/shimmers.dart';
 
 class PrayerProfiles extends StatefulWidget {
-  const PrayerProfiles({Key key, this.sport}) : super(key: key);
+  const PrayerProfiles({Key? key, required this.sport});
   final Sport sport;
 
   @override
@@ -63,14 +63,14 @@ class _PrayerProfilesState extends State<PrayerProfiles>
                 // return Container( child: Center(child: CircularProgressIndicator()),);
               }
               if (snapshot.hasData) {
-                if (snapshot.data.length > 0) {
+                if (snapshot.data!.isNotEmpty) {
                   if (widget.sport.sportId == Consts.LATEST_PROFILES_ID) {
-                    return _headedList(snapshot.data);
+                    return _headedList(snapshot.data!);
                   }
                   return ListView.builder(
-                    itemCount: snapshot.data.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) =>
-                        ProfileCard(player: snapshot.data[index]),
+                        ProfileCard(player: snapshot.data![index]),
                   );
                 } else {
                   return Center(child: Text("No data Found"));
@@ -97,6 +97,8 @@ class _PrayerProfilesState extends State<PrayerProfiles>
       itemBuilder: (context, Player p) => ProfileCard(player: p));
 
   Player player = new Player(
+      playerId: '56789',
+      teamName: 'Kataka',
       fullname: "Kasujja Muhammed",
       //imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',
       profilePhoto: 'lib/images/profile.jpg',
@@ -115,7 +117,7 @@ class _PrayerProfilesState extends State<PrayerProfiles>
 
 class PlayersGroupSeparator extends StatelessWidget {
   final String category;
-  PlayersGroupSeparator({@required this.category});
+  PlayersGroupSeparator({required this.category});
 
   @override
   Widget build(BuildContext context) {

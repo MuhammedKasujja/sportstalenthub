@@ -2,7 +2,7 @@ class Achievement {
   String startDate;
   String itemId;
   String endDate;
-  String achievements;
+  String? achievements;
   String description;
 
   Achievement({

@@ -18,10 +18,10 @@ class _SplashPageState extends State<SplashPage>
     Sport(name: Consts.FEATURED_PROFILES, sportId: Consts.FEATURED_PROFILES_ID),
     Sport(name: Consts.LATEST_PROFILES, sportId: Consts.LATEST_PROFILES_ID),
   ];
-  var repo =  FuturePreferencesRepository<Sport>(new SportDesSer());
-  List<Sport> savedSports =  [];
-  Animation<double> animation;
-  AnimationController animationController;
+  var repo = FuturePreferencesRepository<Sport>(new SportDesSer());
+  List<Sport> savedSports = [];
+  late Animation<double> animation;
+  late AnimationController animationController;
 
   @override
   void initState() {
@@ -88,11 +88,11 @@ class _SplashPageState extends State<SplashPage>
 }
 
 class LogoAnimation extends AnimatedWidget {
-  LogoAnimation({Key key, Animation animation})
+  LogoAnimation({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
   @override
   Widget build(BuildContext context) {
-    Animation animation = listenable;
+    final animation = listenable as Animation<double>;
     return Center(
       child: Container(
         height: animation.value,

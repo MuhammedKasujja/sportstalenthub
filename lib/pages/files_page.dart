@@ -7,11 +7,11 @@ class FilesPage extends StatefulWidget {
   final String playerName;
 
   const FilesPage({
-    Key key,
-    @required this.category,
-    @required this.playerId,
-    @required this.playerName,
-  }) : super(key: key);
+    Key? key,
+    required this.category,
+    required this.playerId,
+    required this.playerName,
+  });
   @override
   _FilesPageState createState() => _FilesPageState();
 }
@@ -21,15 +21,17 @@ class _FilesPageState extends State<FilesPage> {
   var photos;
   bool isGridTiles = false;
   final PageController pageController = PageController();
-  var currentPage = 0.0;
+  double currentPage = 0.0;
   @override
   void initState() {
     super.initState();
     photos = api.getPlayersAttachments(
-        playerId: widget.playerId.toString(), category: widget.category);
+      playerId: widget.playerId.toString(),
+      category: widget.category,
+    );
     pageController.addListener(() {
       setState(() {
-        currentPage = pageController.page;
+        currentPage = pageController.page ?? 0.0;
       });
     });
   }
@@ -48,7 +50,7 @@ class _FilesPageState extends State<FilesPage> {
         actions: <Widget>[
           IconButton(
               icon: Icon(
-               isGridTiles ? Icons.menu : Icons.grid_on,
+                isGridTiles ? Icons.menu : Icons.grid_on,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -154,11 +156,12 @@ class _FilesPageState extends State<FilesPage> {
   Widget gridFiles(List snapshot) {
     // var size = MediaQuery.of(context).size;
     // final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
-    // final double itemWidth = size.width / 3; 
+    // final double itemWidth = size.width / 3;
     return GridView.builder(
         itemCount: snapshot.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, ), //childAspectRatio: (itemWidth/itemHeight)
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ), //childAspectRatio: (itemWidth/itemHeight)
         itemBuilder: (context, index) {
           return GestureDetector(
             child: Container(
@@ -169,17 +172,15 @@ class _FilesPageState extends State<FilesPage> {
                 borderRadius:
                     BorderRadius.horizontal(left: Radius.circular(5.0)),
                 image: DecorationImage(
-                  image: NetworkImage(
-                    snapshot[index].filename,
-                  ),
-                  fit: BoxFit.fill
-                ),
+                    image: NetworkImage(
+                      snapshot[index].filename,
+                    ),
+                    fit: BoxFit.fill),
               ),
             ),
             onTap: () {
               setState(() {
                 isGridTiles = !isGridTiles;
-                
               });
               // pageController.jumpToPage(index);
             },

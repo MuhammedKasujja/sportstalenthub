@@ -16,9 +16,9 @@ class MyPlayersPage extends StatefulWidget {
 class _MyPlayersPageState extends State<MyPlayersPage> {
   final _api = ApiService();
   var futurePlayers;
-  String playerIds;
-  List<Player> apiPlayers;
-  List<Player> filterPlayers;
+  late String playerIds;
+  late List<Player> apiPlayers;
+  late List<Player> filterPlayers;
   @override
   void initState() {
     super.initState();
@@ -55,10 +55,10 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
                   } else {
                     if (playersSnapshot.hasData) {
                       return ListView.builder(
-                        itemCount: playersSnapshot.data.length,
+                        itemCount: playersSnapshot.data!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ProfileCard(
-                            player: playersSnapshot.data[index],
+                            player: playersSnapshot.data![index],
                           );
                         },
                       );

@@ -5,50 +5,49 @@ import 'package:path/path.dart';
 import 'package:sth/models/sport.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DBProvider{
-  final String sportsTable ="sport";
+class DBProvider {
+  final String sportsTable = "sport";
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  static late Database _database;
+  static late Database? _database;
 
   factory DBProvider() {
     return db;
   }
 
   Future<Database> get database async {
-    if (_database != null)
-    return _database;
+    if (_database != null) return _database!;
 
     // if _database is null we instantiate it
     _database = await initDB();
-    return _database;
+    return _database!;
   }
 
-  initDB() async {
+  Future<Database> initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String dbPath = join(documentsDirectory.path, "database.db");
 
-    var database = openDatabase(dbPath, version: 1, onCreate: _onCreate, onUpgrade: _onUpgrade);
+    final database = openDatabase(dbPath,
+        version: 1, onCreate: _onCreate, onUpgrade: _onUpgrade);
     return database;
   }
 
   void _onCreate(Database db, int version) {
     db.execute("CREATE TABLE $sportsTable ("
-          "sport_id TEXT PRIMARY KEY,"
-          "sport_name TEXT,"
-          "isSelected INTEGER"
-          ")"
-    );
+        "sport_id TEXT PRIMARY KEY,"
+        "sport_name TEXT,"
+        "isSelected INTEGER"
+        ")");
     print("Database was created!");
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) {
     // Run migration according database versions
   }
- //
- // Counting all Row in the Table //
- // 
+  //
+  // Counting all Row in the Table //
+  //
   Future<int> getCount() async {
     //database connection
     final db = await this.database;
@@ -66,14 +65,16 @@ class DBProvider{
 
   newSport(Sport sport) async {
     final db = await database;
-    var res = await db.insert('$sportsTable', sport.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    var res = await db.insert('$sportsTable', sport.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
     return res;
   }
 
   getSport(int sportId) async {
     final db = await database;
-    var res =await  db.query('$sportsTable', where: "sport_id = ?", whereArgs: [sportId]);
-    return res.isNotEmpty ? Sport.fromMap(res.first) : Null ;
+    var res = await db
+        .query('$sportsTable', where: "sport_id = ?", whereArgs: [sportId]);
+    return res.isNotEmpty ? Sport.fromMap(res.first) : Null;
   }
 
   blockOrUnblock(Sport sport) async {
@@ -104,5 +105,4 @@ class DBProvider{
     final db = await database;
     db.rawDelete("Delete * from $sportsTable");
   }
-
 }

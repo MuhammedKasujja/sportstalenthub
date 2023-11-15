@@ -10,7 +10,7 @@ import 'files_page.dart';
 class ProfilePage extends StatefulWidget {
   final Player player;
 
-  const ProfilePage({Key key, @required this.player}) : super(key: key);
+  const ProfilePage({Key? key, required this.player});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -18,8 +18,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
-  ScrollController scrollController;
-  TabController tabController;
+  late ScrollController scrollController;
+  late TabController tabController;
   final _myTabbedPageKey = new GlobalKey<_ProfilePageState>();
   int selectedTab = 0;
   bool isFavourite = false;
@@ -70,8 +70,11 @@ class _ProfilePageState extends State<ProfilePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  color: selectedTab == 0 ? Colors.teal : Colors.white,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        selectedTab == 0 ? Colors.teal : Colors.white,
+                  ),
                   child: Text("Details"),
                   onPressed: () {
                     //tabController.animateTo((tabController.index + 1) % 2);
@@ -81,8 +84,11 @@ class _ProfilePageState extends State<ProfilePage>
                     });
                   },
                 ),
-                RaisedButton(
-                  color: selectedTab == 1 ? Colors.green : Colors.white,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        selectedTab == 1 ? Colors.green : Colors.white,
+                  ),
                   child: Text("Career"),
                   onPressed: () {
                     tabController.animateTo(1);
@@ -91,8 +97,11 @@ class _ProfilePageState extends State<ProfilePage>
                     });
                   },
                 ),
-                RaisedButton(
-                  color: selectedTab == 2 ? Colors.yellow : Colors.white,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        selectedTab == 2 ? Colors.yellow : Colors.white,
+                  ),
                   child: Text("Achievements"),
                   onPressed: () {
                     tabController.animateTo(2);
@@ -256,18 +265,26 @@ class _ProfilePageState extends State<ProfilePage>
                         children: <Widget>[
                           Flexible(
                             flex: 3,
-                            child: Text(player.height,
-                                style: TextStyle(fontSize: 18)),
+                            child: Text(
+                              player.height ?? '',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
                           Flexible(
                             flex: 6,
-                            child: Text(player.dob,
-                                style: TextStyle(fontSize: 18)),
+                            child: Text(
+                              player.dob,
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ),
                           Flexible(
                             flex: 3,
-                            child: Text(player.gender,
-                                style: TextStyle(fontSize: 18)),
+                            child: Text(
+                              player.gender,
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ),
                         ],
                       ),
@@ -397,7 +414,7 @@ class _ProfilePageState extends State<ProfilePage>
                     Text(prayer.nationality),
                     Text(prayer.category),
                     Text(prayer.dob),
-                    Text(prayer.contact)
+                    Text(prayer.contact ?? '')
                   ],
                 ),
               )
@@ -450,7 +467,7 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  share({title: 'Share', message}) {
+  share({title = 'Share', message}) {
     //  SimpleShare.share(
     //     title: title,
     //     msg: message,
@@ -461,10 +478,12 @@ class _ProfilePageState extends State<ProfilePage>
   _addRemoveFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayers =
+    List<String>? myPlayers =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+
+    if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -484,10 +503,12 @@ class _ProfilePageState extends State<ProfilePage>
   _checkFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayers =
+    List<String>? myPlayers =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+
+    if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {

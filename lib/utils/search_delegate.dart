@@ -7,16 +7,17 @@ class PlayersSearchDelegate extends SearchDelegate {
   PlayersSearchDelegate(this.players);
   @override
   List<Widget> buildActions(BuildContext context) {
-    return null;
+    return [];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.arrow_menu,
-        progress: null,
-      ),
+      // icon: AnimatedIcon(
+      //   icon: AnimatedIcons.arrow_menu,
+      //   progress: null,
+      // ),
+      icon: Icon(Icons.menu_open),
       onPressed: () {
         this.close(context, null);
       },

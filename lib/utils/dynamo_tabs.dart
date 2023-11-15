@@ -15,9 +15,9 @@ class CardStack extends StatefulWidget {
 class _MainState extends State<CardStack> with TickerProviderStateMixin {
   List<DynamicTabContent> myList = [];
 
-  TabController _cardController;
+  late TabController _cardController;
 
-  TabPageSelector _tabPageSelector;
+  late TabPageSelector _tabPageSelector;
 
   @override
   void initState() {

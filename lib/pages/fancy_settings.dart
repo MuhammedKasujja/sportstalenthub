@@ -13,11 +13,11 @@ class FancySettingsPage extends StatefulWidget {
   final int totalSports;
 
   const FancySettingsPage({
-    Key key,
-    this.totalSports,
-    this.callbackRemoveTabs,
-    this.callbackClearTabs,
-  }) : super(key: key);
+    Key? key,
+    required this.totalSports,
+    required this.callbackRemoveTabs,
+    required this.callbackClearTabs,
+  });
   @override
   _FancySettingsPageState createState() => _FancySettingsPageState();
 }
@@ -28,10 +28,10 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
 
   final api = ApiService();
   final db = DBProvider();
-  Future<List<Sport>> sportsList;
-  List<Sport> selectedList = List();
-  List<Sport> repoList = List();
-  Sport selectedSport;
+  late Future<List<Sport>> sportsList;
+  List<Sport> selectedList = [];
+  List<Sport> repoList = [];
+  Sport? selectedSport;
   @override
   void initState() {
     super.initState();
@@ -54,7 +54,7 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
     }
 
     db.getAllSports().then((sports) {
-      List<Sport> savedList = List();
+      List<Sport> savedList = [];
       for (Sport s in sports) {
         print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
@@ -105,7 +105,7 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
             );
           }
           if (snapshot.hasData) {
-            if (snapshot.data.length > 0) {
+            if (snapshot.data!.isNotEmpty) {
               return Container(
                 child: Column(
                   children: <Widget>[
@@ -152,7 +152,7 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                     Expanded(
                       child: Wrap(
                         direction: Axis.horizontal,
-                        children: snapshot.data
+                        children: snapshot.data!
                             .map(
                               (s) => Draggable(
                                 data: s,
@@ -172,8 +172,11 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                                 feedback: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Material(
-                                      color: Colors.transparent,
-                                      child: Chip(label: Text(s.name))),
+                                    color: Colors.transparent,
+                                    child: Chip(
+                                      label: Text(s.name),
+                                    ),
+                                  ),
                                 ),
                                 childWhenDragging: Opacity(
                                   opacity: 0.0,
@@ -185,24 +188,33 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                       ),
                     ),
                     Expanded(
-                        child: DragTarget<Sport>(onAccept: (sport) {
-                      selectedSport = sport;
-                    }, onWillAccept: (sport) {
-                      return true;
-                    }, builder: (context, List<Sport> incomming, rejected) {
-                      return selectedSport != null
-                          ? Draggable(
-                              child: Chip(label: Text("${selectedSport.name}")),
-                              feedback: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Material(
-                                    color: Colors.transparent,
-                                    child:
-                                        Chip(label: Text(selectedSport.name))),
-                              ),
-                            )
-                          : Container();
-                    }))
+                      child: DragTarget<Sport>(
+                        onAccept: (sport) {
+                          selectedSport = sport;
+                        },
+                        onWillAccept: (sport) {
+                          return true;
+                        },
+                        builder: (context, List<Sport?> incomming, rejected) {
+                          return selectedSport != null
+                              ? Draggable(
+                                  child: Chip(
+                                    label: Text("${selectedSport!.name}"),
+                                  ),
+                                  feedback: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: Chip(
+                                        label: Text(selectedSport!.name),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox();
+                        },
+                      ),
+                    )
                   ],
                 ),
               );

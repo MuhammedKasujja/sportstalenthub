@@ -14,7 +14,7 @@ class PostsPage extends StatefulWidget {
 class _PostsPageState extends State<PostsPage>
     with AutomaticKeepAliveClientMixin {
   final api = ApiService();
-  var posts;
+  late Future<List<Post>> posts;
 
   @override
   void initState() {
@@ -26,33 +26,35 @@ class _PostsPageState extends State<PostsPage>
   Widget build(BuildContext context) {
     super.build(context);
     return FutureBuilder(
-        future: posts,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return ShimmerWidget(type: ShimmerType.post);
-            // return PostShimmer();
-          }
-          if (snapshot.hasError) {
-            return RetryAgainIcon(
-              onTry: () {
-                setState(() {
-                  posts = api.fetchPosts();
-                });
-              },
-            );
-          }
-          return ListView.builder(
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) =>
-                PostCard(tag: "$index", post: snapshot.data[index]),
+      future: posts,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return ShimmerWidget(type: ShimmerType.post);
+          // return PostShimmer();
+        }
+        if (snapshot.hasError) {
+          return RetryAgainIcon(
+            onTry: () {
+              setState(() {
+                posts = api.fetchPosts();
+              });
+            },
           );
-        });
+        }
+        return ListView.builder(
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) =>
+              PostCard(tag: "$index", post: snapshot.data![index]),
+        );
+      },
+    );
   }
 
   @override
   bool get wantKeepAlive => true;
 
   Post post = new Post(
+      postId: '3456789',
       title: "There is no doubt Lionel Messi's Talent has made him a legend",
       description: info,
       imageUrl: 'http://img.youtube.com/vi/rqahKvZZVdg/0.jpg',

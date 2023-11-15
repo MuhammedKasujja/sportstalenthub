@@ -9,7 +9,7 @@ import 'package:sth/widgets/post_full_article.dart';
 class PostDetailsPage extends StatelessWidget {
   final Post post;
 
-  const PostDetailsPage({Key key, @required this.post}) : super(key: key);
+  const PostDetailsPage({Key? key, required this.post});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,10 @@ class _NewsAppBar extends StatelessWidget {
   final double height;
   final Post post;
 
-  const _NewsAppBar({Key key, this.height, this.post}) : super(key: key);
+  const _NewsAppBar({
+    required this.height,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +60,16 @@ class _NewsAppBar extends StatelessWidget {
           ),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.share, color: Colors.white), onPressed: null)
+              icon: Icon(Icons.share, color: Colors.white),
+              onPressed: null,
+            )
           ],
         ),
         Positioned.fill(
           child: Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).padding.top + 40.0),
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 40.0,
+            ),
             child: new Column(
               children: <Widget>[
                 SizedBox(
@@ -85,14 +91,14 @@ class _NewsAppBar extends StatelessWidget {
 class ContentCard extends StatefulWidget {
   final Post post;
 
-  const ContentCard({Key key, this.post}) : super(key: key);
+  const ContentCard({Key? key,required this.post});
   @override
   _ContentCardState createState() => _ContentCardState();
 }
 
 class _ContentCardState extends State<ContentCard> {
   final api = ApiService();
-  String fullArticle;
+  late String fullArticle;
 
   @override
   void initState() {

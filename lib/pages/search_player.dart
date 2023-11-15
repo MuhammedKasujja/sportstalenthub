@@ -26,10 +26,10 @@ class SearchPlayerPage extends StatefulWidget {
 
 class _SearchPlayerPageState extends State<SearchPlayerPage> {
   var subject = PublishSubject<String>();
-  List<Player> players = List();
+  List<Player> players = [];
   bool isLoading = false;
   final db = DBProvider();
-  List<Sport> repoList = List();
+  List<Sport> repoList = [];
 
   final api = ApiService();
 
@@ -123,7 +123,7 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
     _changeState(true);
     _clearPlayers();
     http
-        .get(Urls.SEARCH_PLAYERS + query)
+        .get(Uri.https(Urls.SEARCH_PLAYERS + query))
         .then((res) => res.body)
         .then(json.decode)
         .then((map) => map['players'])
@@ -177,10 +177,11 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
 
   _saveSearchQuery({query}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> searchStrings =
+    List<String>? searchStrings =
         prefs.getStringList(Consts.PREF_LIST_SEARCH_STRINGS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_SEARCH_STRINGS);
+    if (searchStrings == null) return;
     searchStrings.add(query);
     await prefs.setStringList(Consts.PREF_LIST_SEARCH_STRINGS, searchStrings);
   }
@@ -367,7 +368,8 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
     );
   }
 
-  void _onSelectedSport(String value) {
+  void _onSelectedSport(String? value) {
+    if (value == null) return;
     setState(() {
       _selectedPosition = Consts.SELECTED_POSITION;
       _positions = [Consts.SELECTED_POSITION];
@@ -377,21 +379,23 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
     });
   }
 
-  void _onSelectedPostion(String value) {
+  void _onSelectedPostion(String? value) {
+    if (value == null) return;
     setState(() => _selectedPosition = value);
   }
 
-  void _onSelectedGender(String value) {
+  void _onSelectedGender(String? value) {
+    if (value == null) return;
     setState(() => _selectedGender = value);
   }
 
-  void _onSelectedCountry(String value) {
-    print(value);
+  void _onSelectedCountry(String? value) {
+    if (value == null) return;
     setState(() => _selectedCountry = value);
   }
 
-  void _onSelectedAgeGroup(String value) {
-    print(value);
+  void _onSelectedAgeGroup(String? value) {
+    if (value == null) return;
     setState(() => _selectedAgeGroup = value);
   }
 }

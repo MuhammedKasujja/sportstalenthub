@@ -88,10 +88,12 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
 
   navigateToSettings() async {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                PreferencesPage(callbackRemoveTabs: _addRemoveTabs)));
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            PreferencesPage(callbackRemoveTabs: _addRemoveTabs),
+      ),
+    );
   }
 
   Widget appDrawer() {

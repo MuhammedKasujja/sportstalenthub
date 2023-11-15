@@ -9,7 +9,7 @@ import 'package:sth/widgets/retry.dart';
 class PostInfoPage extends StatefulWidget {
   final Post post;
 
-  const PostInfoPage({Key key, this.post}) : super(key: key);
+  const PostInfoPage({Key? key,required this.post});
   @override
   _PostInfoPageState createState() => _PostInfoPageState();
 }

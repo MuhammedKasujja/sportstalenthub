@@ -20,7 +20,7 @@ class FancyProfilePage extends StatefulWidget {
 
 class _FancyProfilePageState extends State<FancyProfilePage>
     with TickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
   final api = ApiService();
   var achievements;
   bool isFavourite = false;
@@ -139,10 +139,10 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                     child: ListTile(
                                       title: Text(Consts.HEIGHT),
                                       subtitle: (widget.player.height != null &&
-                                                  widget.player.height
+                                                  widget.player.height!
                                                       .isNotEmpty ||
                                               widget.player.height != 'null')
-                                          ? Text(widget.player.height + " M")
+                                          ? Text("${widget.player.height} M")
                                           : Text('-'),
                                     ),
                                   ),
@@ -150,17 +150,15 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                     child: ListTile(
                                       title: Text(Consts.WEIGHT),
                                       subtitle: (widget.player.weight != null &&
-                                              widget.player.weight.isNotEmpty)
-                                          ? Text(widget.player.weight + " kg")
+                                              widget.player.weight!.isNotEmpty)
+                                          ? Text("${widget.player.weight!} kg")
                                           : Text('-'),
                                     ),
                                   ),
                                   Flexible(
                                     child: ListTile(
                                       title: Text(Consts.DATE_OF_BIRTH),
-                                      subtitle: widget.player.dob != null
-                                          ? Text(widget.player.dob)
-                                          : Text(''),
+                                      subtitle: Text(widget.player.dob),
                                     ),
                                   ),
                                 ],
@@ -227,7 +225,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                             return ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: snapshot.data.length,
+                                itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   return Card(
                                     elevation: 5,
@@ -245,7 +243,8 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                                   label: Text(
                                                     'From',
                                                     style: TextStyle(
-                                                        color: Colors.white),
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                   backgroundColor:
                                                       Colors.red[400],
@@ -255,32 +254,34 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                                 ),
                                                 Text(
                                                   snapshot
-                                                      .data[index].startDate,
+                                                      .data![index].startDate,
                                                   style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
                                                 Chip(
-                                                    elevation: 8,
-                                                    label: Text(
-                                                      'To',
-                                                      style: TextStyle(
-                                                          color: Colors.white),
+                                                  elevation: 8,
+                                                  label: Text(
+                                                    'To',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
                                                     ),
-                                                    backgroundColor:
-                                                        Colors.red[400]),
+                                                  ),
+                                                  backgroundColor:
+                                                      Colors.red[400],
+                                                ),
                                                 SizedBox(
                                                   width: 5.0,
                                                 ),
                                                 Text(
-                                                    snapshot
-                                                        .data[index].endDate,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                  snapshot.data![index].endDate,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                             Divider(
@@ -289,16 +290,21 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(6.0),
-                                              child: Text(snapshot
-                                                  .data[index].description),
+                                              child: Text(
+                                                snapshot
+                                                    .data![index].description,
+                                              ),
                                             ),
                                             SizedBox(
                                               height: 5.0,
                                             ),
-                                            snapshot.data[index].achievements !=
+                                            snapshot.data![index]
+                                                        .achievements !=
                                                     null
-                                                ? Text(snapshot
-                                                    .data[index].achievements)
+                                                ? Text(
+                                                    snapshot.data![index]
+                                                        .achievements!,
+                                                  )
                                                 : Container(),
                                           ],
                                         ),
@@ -361,36 +367,41 @@ class _FancyProfilePageState extends State<FancyProfilePage>
     );
   }
 
-  Widget _tabItem(String value) {
+  Widget _tabItem(String? value) {
     return Container(
       height: 30,
       decoration: BoxDecoration(
-          color: Colors.red[300], borderRadius: BorderRadius.circular(5)),
-      child: Center(child: Text(value ?? '')),
+        color: Colors.red[300],
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Center(
+        child: Text(value ?? ''),
+      ),
     );
   }
 
   _generateAppTab(bool checked) {
     return _SliverAppBarDelegate(
-        TabBar(
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white,
-          indicatorColor: Colors.transparent,
-          controller: _tabController,
-          tabs: [
-            _tabItem(widget.player.category),
-            _tabItem(widget.player.ageGroup),
-            _tabItem(widget.player.gender == 'M' ? 'Male' : 'Female'),
-          ],
-        ),
-        widget.player,
-        checked ? 'Unfollow' : 'Follow',
-        _addRemoveFavourite);
+      tabBar: TabBar(
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white,
+        indicatorColor: Colors.transparent,
+        controller: _tabController,
+        tabs: [
+          _tabItem(widget.player.category),
+          _tabItem(widget.player.ageGroup),
+          _tabItem(widget.player.gender == 'M' ? 'Male' : 'Female'),
+        ],
+      ),
+      player: widget.player,
+      type: checked ? 'Unfollow' : 'Follow',
+      addFav: _addRemoveFavourite,
+    );
   }
 
-  Widget _sportsCategories(String listCategories) {
+  Widget _sportsCategories(String? listCategories) {
     if (listCategories == null) {
-      return Container();
+      return SizedBox();
     }
 
     var cats = listCategories.split(',');
@@ -418,10 +429,12 @@ class _FancyProfilePageState extends State<FancyProfilePage>
   _addRemoveFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayers =
+    List<String>? myPlayers =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+
+    if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -447,10 +460,11 @@ class _FancyProfilePageState extends State<FancyProfilePage>
   _checkFavourite() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> myPlayers =
+    List<String>? myPlayers =
         prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? List()
+            ? []
             : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+    if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -470,9 +484,14 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final TabBar tabBar;
   final Player player;
   String type;
-  final Function addFav;
+  final Function()? addFav;
 
-  _SliverAppBarDelegate(this.tabBar, this.player, this.type, this.addFav);
+  _SliverAppBarDelegate({
+    required this.tabBar,
+    required this.player,
+    required this.type,
+    required this.addFav,
+  });
 
   @override
   Widget build(
@@ -483,7 +502,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         color: Colors.white,
         child: Stack(
           alignment: FractionalOffset(0.96, 1.8),
-          overflow: Overflow.visible,
+          fit: StackFit.loose,
           children: <Widget>[
             Column(
               children: <Widget>[

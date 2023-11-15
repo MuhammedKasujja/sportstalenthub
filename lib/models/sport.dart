@@ -1,11 +1,11 @@
 class Sport {
   bool isSelected;
   String name;
-  String sportId;
+  String? sportId;
 
   Sport({
     required this.name,
-    required this.sportId,
+     this.sportId,
      this.isSelected = false,
   });
 

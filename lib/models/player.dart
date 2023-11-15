@@ -13,8 +13,8 @@ class Player {
   String category;
   String? lastUpdated;
   String position;
-  String height;
-  String weight;
+  String? height;
+  String? weight;
   String teamName;
   String? birthPlace;
 
@@ -29,9 +29,9 @@ class Player {
     required this.profilePhoto,
     required this.dob,
     required this.position,
-    required this.height,
+    this.height,
     this.location,
-    required this.weight,
+    this.weight,
     required this.teamName,
     this.birthPlace,
   });

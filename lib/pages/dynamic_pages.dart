@@ -15,13 +15,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  TabController _tabController;
+  late TabController _tabController;
   PageController pageController = PageController();
   var currentPageValue = 0.0;
 
-  List<Widget> _tabViews;
+  late List<Widget> _tabViews;
 
-  List<Widget> _tabTitles;
+  late List<Widget> _tabTitles;
 
   List<Sport> sportsList = [
     Sport(name: Consts.FEATURED_PROFILES, sportId: '11001'),
@@ -60,6 +60,7 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("STH"),

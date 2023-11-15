@@ -13,7 +13,7 @@ import 'package:sth/utils/consts.dart';
 
 class ApiService {
   Future<List<Sport>> getSports() async {
-    final res = await http.get(Urls.GET_SPORTS).catchError((onError) {
+    final res = await http.get(Uri.https(Urls.GET_SPORTS)).catchError((onError) {
       print("${onError.toString()}");
     });
     print(res.body);
@@ -23,7 +23,7 @@ class ApiService {
   Future<List<Player>> getPlayers({category}) async {
     print("fetching data");
     final res = await http
-        .get(Urls.GET_PLAYERS + category.toString())
+        .get(Uri.https(Urls.GET_PLAYERS + category.toString()))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -34,7 +34,7 @@ class ApiService {
   Future<List<Player>> getFavouritePlayers(playerIds) async {
     print("fetching data");
     final res = await http
-        .get(Urls.MY_FAVOURITE_PLAYERS + playerIds)
+        .get(Uri.https(Urls.MY_FAVOURITE_PLAYERS + playerIds))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -43,15 +43,15 @@ class ApiService {
   }
 
   Future<List<Player>> filterPlayers(
-      {sport, String gender, country, ageGroup}) async {
+      {sport, String? gender, country, ageGroup}) async {
     String sex = (gender != null && gender.isNotEmpty)
         ? gender == Consts.GENDER_MALE
             ? 'M'
             : 'F'
         : '';
     final res = await http
-        .get(Urls.FILTER_PLAYERS +
-            "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
+        .get(Uri.https(Urls.FILTER_PLAYERS +
+            "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup"))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -76,8 +76,8 @@ class ApiService {
   Future<List<Attachment>> getPlayersAttachments(
       {@required playerId, @required category}) async {
     final res = await http
-        .get(Urls.GET_PLAYERS_ATTACHMENTS +
-            "player_id=$playerId&category=$category")
+        .get(Uri.https(Urls.GET_PLAYERS_ATTACHMENTS +
+            "player_id=$playerId&category=$category"))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -95,7 +95,7 @@ class ApiService {
   Future<PlayerList> fetchPlayers({category, page}) async {
     print("fetching paginated data");
     final res = await http
-        .get(Urls.GET_PAGING_PLAYERS + category)
+        .get(Uri.https(Urls.GET_PAGING_PLAYERS + category))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -111,7 +111,7 @@ class ApiService {
 
   Future<List<Post>> fetchPosts() async {
     print("fetching data");
-    final res = await http.get(Urls.GET_POSTS).catchError((onError) {
+    final res = await http.get(Uri.https(Urls.GET_POSTS)).catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
     // print(res.body);
@@ -127,7 +127,7 @@ class ApiService {
   Future<List<Achievement>> getPlayersAchievements({@required playerId}) async {
     print("Player ID: {$playerId} ");
     final res = await http
-        .get(Urls.GET_PLAYERS_ACHIEVEMENTS + "player_id=$playerId")
+        .get(Uri.https(Urls.GET_PLAYERS_ACHIEVEMENTS + "player_id=$playerId"))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -142,10 +142,10 @@ class ApiService {
     return achievements.toList();
   }
 
-  Future<String> fetchPostFullArticle({@required String postId}) async {
+  Future<String> fetchPostFullArticle({required String postId}) async {
     // print("post_id: $postId");
     final res = await http
-        .get(Urls.POST_FULL_ARTICLE + "post_id=$postId")
+        .get(Uri.https(Urls.POST_FULL_ARTICLE + "post_id=$postId"))
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });

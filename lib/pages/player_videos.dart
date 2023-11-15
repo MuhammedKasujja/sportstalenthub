@@ -19,11 +19,11 @@ class PlayerVideosPage extends StatefulWidget {
 
 class _PlayerVideosPageState extends State<PlayerVideosPage> {
   final api = ApiService();
-  var futureVideos;
-  String videoId;
+  late Future<List<Attachment>> futureVideos;
+  late String videoId;
   // String videoId = YoutubePlayer.convertUrlToId("https://youtu.be/kqyXwSV0rgM");
-  List<Attachment> listVideos;
-  int videoPosition;
+  List<Attachment>? listVideos;
+  int videoPosition = 0;
   bool isLoading = true;
   bool isError = false;
 
@@ -141,10 +141,10 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                   );
                 }
                 if (snapshot.hasData) {
-                  if (snapshot.data.length > 0) {
+                  if (snapshot.data!.isNotEmpty) {
                     // videoId = snapshot.data[0].filename;
                     return ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) => Stack(
                         children: <Widget>[
                           GestureDetector(
@@ -158,41 +158,44 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           width: videoId ==
-                                                  snapshot.data[0].filename
+                                                  snapshot.data![0].filename
                                               ? 1
                                               : 0,
                                           color: videoId ==
-                                                  snapshot.data[0].filename
+                                                  snapshot.data![0].filename
                                               ? Colors.red
                                               : Colors.transparent),
                                       borderRadius: BorderRadius.circular(5.0),
                                       image: DecorationImage(
-                                          image: NetworkImage(
-                                            "http://img.youtube.com/vi/" +
-                                                snapshot.data[index].filename +
-                                                "/0.jpg",
-                                          ),
-                                          fit: BoxFit.cover),
+                                        image: NetworkImage(
+                                          "http://img.youtube.com/vi/" +
+                                              snapshot.data![index].filename +
+                                              "/0.jpg",
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Positioned.fill(
-                                      child: Align(
-                                    child: IconButton(
+                                    child: Align(
+                                      child: IconButton(
                                         icon: Icon(
                                           Icons.play_arrow,
                                           size: 40,
                                           color: Colors.red,
                                         ),
-                                        onPressed: null),
-                                  ))
+                                        onPressed: null,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
                             onTap: () {
-                              print(snapshot.data[index].filename);
+                              print(snapshot.data![index].filename);
                               setState(() {
                                 videoPosition = index;
-                                videoId = snapshot.data[index].filename;
+                                videoId = snapshot.data![index].filename;
                                 // videoId = YoutubePlayer.convertUrlToId(
                                 //     snapshot.data[index].filename);
                                 youtubePlayerController.load(videoId);
@@ -200,14 +203,15 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                             },
                           ),
                           Positioned(
-                              right: 10,
-                              bottom: 10,
-                              child: InkWell(
-                                child: Icon(
-                                  Icons.more_vert,
-                                  color: Colors.white,
-                                ),
-                              ))
+                            right: 10,
+                            bottom: 10,
+                            child: InkWell(
+                              child: Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     );
@@ -237,20 +241,20 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
         child: IconButton(
             icon: Icon(
               Icons.skip_previous,
-              color: (listVideos != null && listVideos.length > 0)
+              color: (listVideos != null && listVideos!.length > 0)
                   ? Colors.red
                   : Colors.grey,
             ),
             onPressed: () {
-              if (listVideos != null && listVideos.length > 0) {
-                if (listVideos.length == 1) {
+              if (listVideos != null && listVideos!.length > 0) {
+                if (listVideos!.length == 1) {
                 } else {
                   if (videoPosition == 0) {
                     // TODO disable button
                   } else if (videoPosition > 0) {
                     int position = videoPosition - 1;
                     setState(() {
-                      videoId = listVideos.elementAt(position).filename;
+                      videoId = listVideos!.elementAt(position).filename;
                       videoPosition = position;
                       youtubePlayerController.load(videoId);
                     });
@@ -262,32 +266,34 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
 
   Widget playNextVideo() {
     return Positioned(
-        right: 20,
-        bottom: 6,
-        child: IconButton(
-            icon: Icon(
-              Icons.skip_next,
-              color: (listVideos != null && listVideos.length > 0)
-                  ? Colors.red
-                  : Colors.grey,
-            ),
-            onPressed: () {
-              if (listVideos != null && listVideos.length > 0) {
-                if (listVideos.length == 1) {
-                } else {
-                  if (videoPosition == listVideos.length - 1) {
-                    // TODO disable button
-                  } else if (videoPosition > 0) {
-                    int position = videoPosition + 1;
-                    setState(() {
-                      videoId = listVideos.elementAt(position).filename;
-                      videoPosition = position;
-                      youtubePlayerController.load(videoId);
-                    });
-                  }
-                }
+      right: 20,
+      bottom: 6,
+      child: IconButton(
+        icon: Icon(
+          Icons.skip_next,
+          color: (listVideos != null && listVideos!.length > 0)
+              ? Colors.red
+              : Colors.grey,
+        ),
+        onPressed: () {
+          if (listVideos != null && listVideos!.length > 0) {
+            if (listVideos!.length == 1) {
+            } else {
+              if (videoPosition == listVideos!.length - 1) {
+                // TODO disable button
+              } else if (videoPosition > 0) {
+                int position = videoPosition + 1;
+                setState(() {
+                  videoId = listVideos!.elementAt(position).filename;
+                  videoPosition = position;
+                  youtubePlayerController.load(videoId);
+                });
               }
-            }));
+            }
+          }
+        },
+      ),
+    );
   }
 
   _shareVideo(String videoLink) {

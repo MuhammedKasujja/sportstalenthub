@@ -8,17 +8,17 @@ import 'package:sth/utils/consts.dart';
 import 'package:sth/widgets/retry.dart';
 
 class SettingsPage extends StatefulWidget {
-  final ValueChanged<List<Sport>> callbackRemoveTabs;
-  final ValueChanged<List<Sport>> callbackClearTabs;
+  final ValueChanged<List<Sport>>? callbackRemoveTabs;
+  final ValueChanged<List<Sport>>? callbackClearTabs;
   final int totalSports;
   Future<String> one(List list) => new Future.value("from one");
 
   const SettingsPage({
-    Key key,
-    this.totalSports,
+    Key? key,
+     this.totalSports =0,
     this.callbackRemoveTabs,
     this.callbackClearTabs,
-  }) : super(key: key);
+  });
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -29,14 +29,17 @@ class _SettingsPageState extends State<SettingsPage> {
 
   final api = ApiService();
   final db = DBProvider();
-  Future<List<Sport>> sportsList;
-  List<Sport> selectedList = List();
-  List<Sport> repoList = List();
+  late Future<List<Sport>> sportsList;
+  List<Sport> selectedList = [];
+  List<Sport> repoList = [];
   @override
   void initState() {
     super.initState();
     repo.findAll().then((sports) {
-      widget.callbackClearTabs(sports);
+      if (widget.callbackClearTabs != null) {
+        widget.callbackClearTabs!(sports);
+      }
+
       repoList.addAll(sports);
       repo.removeAll();
     });
@@ -54,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     db.getAllSports().then((sports) {
-      List<Sport> savedList = List();
+      List<Sport> savedList = [];
       for (Sport s in sports) {
         print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
@@ -78,7 +81,10 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           title: Text(Consts.SETTINGS),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.save), onPressed: _saveChanges,)
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: _saveChanges,
+            )
           ],
         ),
         body: FutureBuilder<List<Sport>>(
@@ -102,17 +108,16 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             }
             if (snapshot.hasData) {
-              if (snapshot.data.length > 0) {
+              if (snapshot.data!.length > 0) {
                 return ListView.builder(
-                    itemCount: snapshot.data.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      Sport sport = snapshot.data[index];
+                      Sport sport = snapshot.data![index];
                       return CheckboxListTile(
                         title: new Text(sport.name),
                         value: selectedList.contains(sport), //sport.isSelected,
-                        onChanged: (bool selected) {
+                        onChanged: (selected) {
                           _onSportSelected(selected, sport);
-                          print(selected);
                         },
                       );
                     });
@@ -126,7 +131,8 @@ class _SettingsPageState extends State<SettingsPage> {
         ));
   }
 
-  void _onSportSelected(bool selected, Sport sport) {
+  void _onSportSelected(bool? selected, Sport sport) {
+    if (selected == null) return;
     if (selected) {
       setState(() {
         sport.isSelected = true;
@@ -161,6 +167,8 @@ class _SettingsPageState extends State<SettingsPage> {
     //if(repoList.length > selectedList.length){
 
     //}
-    widget.callbackRemoveTabs(selectedList);
+    if (widget.callbackRemoveTabs != null) {
+      widget.callbackRemoveTabs!(selectedList);
+    }
   }
 }

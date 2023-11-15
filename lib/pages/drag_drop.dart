@@ -10,17 +10,17 @@ import 'package:sth/utils/consts.dart';
 import 'package:sth/widgets/retry.dart';
 
 class FinalSettingsPage extends StatefulWidget {
-  final ValueChanged<List<Sport>> callbackRemoveTabs;
-  final ValueChanged<List<Sport>> callbackClearTabs;
+  final ValueChanged<List<Sport>>? callbackRemoveTabs;
+  final ValueChanged<List<Sport>>? callbackClearTabs;
   final int totalSports;
   Future<String> one(List list) => new Future.value("from one");
 
   const FinalSettingsPage({
-    Key key,
-    this.totalSports,
+    Key? key,
+    required this.totalSports,
     this.callbackRemoveTabs,
     this.callbackClearTabs,
-  }) : super(key: key);
+  });
   @override
   _FinalSettingsPageState createState() => _FinalSettingsPageState();
 }
@@ -33,14 +33,16 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
 
   final api = ApiService();
   final db = DBProvider();
-  Future<List<Sport>> sportsList;
+  late Future<List<Sport>> sportsList;
   List<Sport> selectedList = [];
   List<Sport> repoList = [];
   @override
   void initState() {
     super.initState();
     repo.findAll().then((sports) {
-      widget.callbackClearTabs(sports);
+      if (widget.callbackClearTabs != null) {
+        widget.callbackClearTabs!(sports);
+      }
       repoList.addAll(sports);
       repo.removeAll();
     });
@@ -109,8 +111,8 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
               );
             }
             if (snapshot.hasData) {
-              if (snapshot.data.length > 0) {
-                var listSports = snapshot.data;
+              if (snapshot.data!.isNotEmpty) {
+                var listSports = snapshot.data!;
 
                 return dragDropBoard(listSports);
                 // ListView.builder(
@@ -171,7 +173,9 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
     //if(repoList.length > selectedList.length){
 
     //}
-    widget.callbackRemoveTabs(selectedList);
+    if (widget.callbackRemoveTabs != null) {
+      widget.callbackRemoveTabs!(selectedList);
+    }
   }
 
   Widget dragDropBoard(List<Sport> listSports) {
@@ -181,25 +185,35 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
       if (sport.isSelected) {
         mySports.add(DragAndDropItem(
             child: Chip(
-          key: Key(sport.sportId),
+          key: Key(sport.sportId!),
           label: Text(
             sport.name,
           ),
         )));
       } else {
-        otherSports.add(DragAndDropItem(
+        otherSports.add(
+          DragAndDropItem(
             child: Chip(
-                key: Key(sport.sportId),
-                label: Text(
-                  sport.name,
-                ))));
+              key: Key(sport.sportId!),
+              label: Text(
+                sport.name,
+              ),
+            ),
+          ),
+        );
       }
     });
     _contents = [
       DragAndDropList(
-          header: Text('My Sports'), canDrag: false, children: mySports),
+        header: Text('My Sports'),
+        canDrag: false,
+        children: mySports,
+      ),
       DragAndDropList(
-          header: Text('Other Sports'), canDrag: false, children: otherSports)
+        header: Text('Other Sports'),
+        canDrag: false,
+        children: otherSports,
+      )
     ];
 
     return Column(

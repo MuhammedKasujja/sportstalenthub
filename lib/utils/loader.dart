@@ -7,13 +7,13 @@ class Loader extends StatefulWidget {
 }
 
 class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
-  AnimationController controller;
+  late AnimationController controller;
   // ignore: non_constant_identifier_names
-  Animation<double> animation_rotation;
+  late Animation<double> animation_rotation;
   // ignore: non_constant_identifier_names
-  Animation<double> animation_radius_in;
+  late Animation<double> animation_radius_in;
   // ignore: non_constant_identifier_names
-  Animation<double> animation_radius_out;
+  late Animation<double> animation_radius_out;
 
   final double intialRadius = 20.0;
   double radius = 0.0;

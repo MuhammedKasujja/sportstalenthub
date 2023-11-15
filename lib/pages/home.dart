@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  TabController _tc;
+  late TabController _tc;
 
   List<Map<String, dynamic>> _tabs = [];
   List<String> _views = [];
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tc,
         children: _views
-            .map((view) => PrayerProfiles(sport: Sport(),))
+            .map((view) => PrayerProfiles(sport: Sport(name: view),))
             .toList(),
       ),
     );
