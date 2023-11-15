@@ -27,7 +27,7 @@ class Repository {
   //       .toList();
   // }
 
-  loadJson() async {
+  Future loadJson() async {
     var data = await rootBundle.loadString("assets/sports.json");
     return json.decode(data);
   }

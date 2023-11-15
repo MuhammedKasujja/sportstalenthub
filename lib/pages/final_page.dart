@@ -53,7 +53,7 @@ class _StartPageState extends State<StartPage>
   ];
 
   var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
-  late int _allSports;
+  int _allSports = 0;
   void initTabController(int index) {
     tabController = TabController(
         initialIndex: index, length: widget.sportsList.length, vsync: this);

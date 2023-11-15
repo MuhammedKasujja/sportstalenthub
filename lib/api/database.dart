@@ -10,7 +10,7 @@ class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
 
-  static late Database? _database;
+  static Database? _database;
 
   factory DBProvider() {
     return db;

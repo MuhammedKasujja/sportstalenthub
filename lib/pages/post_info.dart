@@ -9,7 +9,7 @@ import 'package:sth/widgets/retry.dart';
 class PostInfoPage extends StatefulWidget {
   final Post post;
 
-  const PostInfoPage({Key? key,required this.post});
+  const PostInfoPage({Key? key, required this.post});
   @override
   _PostInfoPageState createState() => _PostInfoPageState();
 }
@@ -42,16 +42,15 @@ class _PostInfoPageState extends State<PostInfoPage> {
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                       color: Colors.red,
-                       shape: BoxShape.circle
+                      color: Colors.red,
+                      shape: BoxShape.circle,
                     ),
-                    child:  Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                        
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     AppUtils(context: context).goBack();
                   },
                 ),
@@ -63,14 +62,11 @@ class _PostInfoPageState extends State<PostInfoPage> {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                         color: Colors.red,
-                         shape: BoxShape.circle
+                          color: Colors.red, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.share,
+                        color: Colors.white,
                       ),
-                      child:  Icon(
-                            Icons.share,
-                            color: Colors.white,
-                          ),
-                          
                     ),
                   ),
                 ],
@@ -162,9 +158,11 @@ class _PostInfoPageState extends State<PostInfoPage> {
                       });
                     }
                     return Expanded(
-                        child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: _articleInfo(snapshot.data)));
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: _articleInfo(snapshot.data),
+                      ),
+                    );
                   }),
             ],
           ),

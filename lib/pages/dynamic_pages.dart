@@ -19,8 +19,6 @@ class _MainPageState extends State<MainPage>
   PageController pageController = PageController();
   var currentPageValue = 0.0;
 
-  late List<Widget> _tabViews;
-
   late List<Widget> _tabTitles;
 
   List<Sport> sportsList = [
@@ -41,14 +39,6 @@ class _MainPageState extends State<MainPage>
   void initState() {
     super.initState();
     _tabController = new TabController(vsync: this, length: sportsList.length);
-
-    _tabViews = sportsList
-        .map(
-          (s) => PrayerProfiles(
-            sport: s,
-          ),
-        )
-        .toList();
 
     _tabTitles = sportsList
         .map((s) => InkWell(

@@ -20,7 +20,7 @@ class PlayerVideosPage extends StatefulWidget {
 class _PlayerVideosPageState extends State<PlayerVideosPage> {
   final api = ApiService();
   late Future<List<Attachment>> futureVideos;
-  late String videoId;
+ String? videoId;
   // String videoId = YoutubePlayer.convertUrlToId("https://youtu.be/kqyXwSV0rgM");
   List<Attachment>? listVideos;
   int videoPosition = 0;
@@ -94,7 +94,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                         onPressed: () {
                           if (videoId != null) {
                             setState(() {
-                              youtubePlayerController.load(videoId);
+                              youtubePlayerController.load(videoId!);
                             });
                           }
                         }),
@@ -109,7 +109,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                           color: Colors.white,
                         ),
                         onTap: () {
-                          _shareVideo(videoId);
+                          _shareVideo(videoId!);
                         },
                       ))
                   : Container(),
@@ -198,7 +198,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                                 videoId = snapshot.data![index].filename;
                                 // videoId = YoutubePlayer.convertUrlToId(
                                 //     snapshot.data[index].filename);
-                                youtubePlayerController.load(videoId);
+                                youtubePlayerController.load(videoId!);
                               });
                             },
                           ),
@@ -256,7 +256,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                     setState(() {
                       videoId = listVideos!.elementAt(position).filename;
                       videoPosition = position;
-                      youtubePlayerController.load(videoId);
+                      youtubePlayerController.load(videoId!);
                     });
                   }
                 }
@@ -286,7 +286,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                 setState(() {
                   videoId = listVideos!.elementAt(position).filename;
                   videoPosition = position;
-                  youtubePlayerController.load(videoId);
+                  youtubePlayerController.load(videoId!);
                 });
               }
             }

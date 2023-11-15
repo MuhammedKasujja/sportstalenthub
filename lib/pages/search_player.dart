@@ -1,8 +1,8 @@
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
@@ -122,10 +122,9 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
 
     _changeState(true);
     _clearPlayers();
-    http
-        .get(Uri.https(Urls.SEARCH_PLAYERS + query))
-        .then((res) => res.body)
-        .then(json.decode)
+    Dio()
+        .get(Urls.SEARCH_PLAYERS + query)
+        .then((res) => res.data)
         .then((map) => map['players'])
         .then((players) => players.forEach(_addPlayer))
         .then((e) {

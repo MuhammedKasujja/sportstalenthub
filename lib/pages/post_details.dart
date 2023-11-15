@@ -98,7 +98,7 @@ class ContentCard extends StatefulWidget {
 
 class _ContentCardState extends State<ContentCard> {
   final api = ApiService();
-  late String fullArticle;
+   String? fullArticle;
 
   @override
   void initState() {
