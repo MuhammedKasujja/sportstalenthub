@@ -1,12 +1,12 @@
-import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
-import 'package:drag_and_drop_lists/drag_and_drop_list.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 
 class DragDropSettiogsPage extends StatefulWidget {
+  const DragDropSettiogsPage({super.key});
+
   @override
-  _DragDropSettiogsPageState createState() => _DragDropSettiogsPageState();
+  State<DragDropSettiogsPage> createState() => _DragDropSettiogsPageState();
 }
 
 class _DragDropSettiogsPageState extends State<DragDropSettiogsPage> {
@@ -15,17 +15,17 @@ class _DragDropSettiogsPageState extends State<DragDropSettiogsPage> {
   @override
   void initState() {
     _contents = [
-      DragAndDropList(header: Text('My Sports'), children: [
-        DragAndDropItem(child: Text('kasujja')),
-        DragAndDropItem(child: Text('kato')),
-        DragAndDropItem(child: Text('kimera')),
-        DragAndDropItem(child: Text('ismail'))
+      DragAndDropList(header: const Text('My Sports'), children: [
+        DragAndDropItem(child: const Text('kasujja')),
+        DragAndDropItem(child: const Text('kato')),
+        DragAndDropItem(child: const Text('kimera')),
+        DragAndDropItem(child: const Text('ismail'))
       ]),
-      DragAndDropList(header: Text('Other Sports'), children: [
-        DragAndDropItem(child: Text('meddie')),
-        DragAndDropItem(child: Text('kimbugwe')),
-        DragAndDropItem(child: Text('lubega')),
-        DragAndDropItem(child: Text('charles'))
+      DragAndDropList(header: const Text('Other Sports'), children: [
+        DragAndDropItem(child: const Text('meddie')),
+        DragAndDropItem(child: const Text('kimbugwe')),
+        DragAndDropItem(child: const Text('lubega')),
+        DragAndDropItem(child: const Text('charles'))
       ]),
     ];
     super.initState();
@@ -35,7 +35,7 @@ class _DragDropSettiogsPageState extends State<DragDropSettiogsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Drag Into List'),
+        title: const Text('Drag Into List'),
       ),
       body: Column(
         children: <Widget>[
@@ -47,7 +47,7 @@ class _DragDropSettiogsPageState extends State<DragDropSettiogsPage> {
               onListReorder: _onListReorder,
               onItemAdd: _onItemAdd,
               onListAdd: _onListAdd,
-              listGhost: Container(
+              listGhost: const SizedBox(
                 height: 50,
                 width: 100,
                 child: Center(
@@ -79,20 +79,22 @@ class _DragDropSettiogsPageState extends State<DragDropSettiogsPage> {
   _onItemAdd(DragAndDropItem newItem, int listIndex, int itemIndex) {
     print('adding new item');
     setState(() {
-      if (itemIndex == -1)
+      if (itemIndex == -1) {
         _contents[listIndex].children.add(newItem);
-      else
+      } else {
         _contents[listIndex].children.insert(itemIndex, newItem);
+      }
     });
   }
 
   _onListAdd(DragAndDropListInterface newList, int listIndex) {
     print('adding new list');
     setState(() {
-      if (listIndex == -1)
+      if (listIndex == -1) {
         _contents.add(newList as DragAndDropList);
-      else
+      } else {
         _contents.insert(listIndex, newList as DragAndDropList);
+      }
     });
   }
 }

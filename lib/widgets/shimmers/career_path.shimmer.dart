@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CareerPathShimmer extends StatelessWidget {
+  const CareerPathShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +19,7 @@ class CareerPathShimmer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -26,7 +28,7 @@ class CareerPathShimmer extends StatelessWidget {
               height: 10.0,
               color: Colors.white,
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Container(
@@ -35,7 +37,7 @@ class CareerPathShimmer extends StatelessWidget {
               color: Colors.white,
             ),
           ]),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Column(
@@ -45,7 +47,7 @@ class CareerPathShimmer extends StatelessWidget {
                 height: 8.0,
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -53,7 +55,7 @@ class CareerPathShimmer extends StatelessWidget {
                 height: 8.0,
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -61,7 +63,7 @@ class CareerPathShimmer extends StatelessWidget {
                 height: 8.0,
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -69,7 +71,7 @@ class CareerPathShimmer extends StatelessWidget {
                 height: 8.0,
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -77,7 +79,7 @@ class CareerPathShimmer extends StatelessWidget {
                 height: 8.0,
                 color: Colors.white,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(

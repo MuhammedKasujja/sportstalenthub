@@ -5,20 +5,22 @@ import 'package:sth/models/sport.dart';
 import 'package:sth/pages/prayer_profiles.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _tc;
 
-  List<Map<String, dynamic>> _tabs = [];
-  List<String> _views = [];
+  final List<Map<String, dynamic>> _tabs = [];
+  final List<String> _views = [];
 
   @override
   void initState() {
     super.initState();
-    this._addTab();
+    _addTab();
   }
 
   TabController _makeNewTabController() => TabController(
@@ -53,10 +55,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dynamic tabs"),
+        title: const Text("Dynamic tabs"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: this._addTab),
-          IconButton(icon: Icon(Icons.remove), onPressed: this._removeTab),
+          IconButton(icon: const Icon(Icons.add), onPressed: _addTab),
+          IconButton(icon: const Icon(Icons.remove), onPressed: _removeTab),
         ],
         bottom: TabBar(
           key: Key(Random().nextDouble().toString()),

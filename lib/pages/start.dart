@@ -9,7 +9,7 @@ class StartPage extends StatefulWidget {
 
   const StartPage({Key? key, required this.sportsList}) : super(key: key);
   @override
-  _StartPageState createState() => _StartPageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage>
@@ -26,7 +26,7 @@ class _StartPageState extends State<StartPage>
 
   void newTab() {
     setState(() {
-      widget.sportsList.add(new Sport(sportId: "15", name: "Baseball"));
+      widget.sportsList.add(Sport(sportId: "15", name: "Baseball"));
       initTabController(widget.sportsList.length - 1, widget.sportsList);
       //initTabController(0);
     });
@@ -49,7 +49,7 @@ class _StartPageState extends State<StartPage>
     // initTabController(tabController.index - 1, widget.sportsList);
     _tabTitles = widget.sportsList
         .map((s) => InkWell(
-                child: new Tab(
+                child: Tab(
               text: s.name,
             )))
         .toList();
@@ -78,15 +78,15 @@ class _StartPageState extends State<StartPage>
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: newTab),
+          IconButton(icon: const Icon(Icons.add), onPressed: newTab),
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: closeCurrentTab,
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: PreferencesPage());
+              AppUtils(context: context).gotoPage(page: const PreferencesPage());
             },
           )
         ],

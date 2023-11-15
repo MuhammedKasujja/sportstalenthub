@@ -13,21 +13,21 @@ class FinalSettingsPage extends StatefulWidget {
   final ValueChanged<List<Sport>>? callbackRemoveTabs;
   final ValueChanged<List<Sport>>? callbackClearTabs;
   final int totalSports;
-  Future<String> one(List list) => new Future.value("from one");
+  Future<String> one(List list) => Future.value("from one");
 
   const FinalSettingsPage({
-    Key? key,
+    super.key,
     required this.totalSports,
     this.callbackRemoveTabs,
     this.callbackClearTabs,
   });
   @override
-  _FinalSettingsPageState createState() => _FinalSettingsPageState();
+  State<FinalSettingsPage> createState() => _FinalSettingsPageState();
 }
 
 class _FinalSettingsPageState extends State<FinalSettingsPage> {
   //Storing sport in SharedPref as Serialized
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
 
   List<DragAndDropList> _contents = <DragAndDropList>[];
 
@@ -79,13 +79,13 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: _saveChanges,
           ),
-          title: Text(Consts.SETTINGS),
+          title: const Text(Consts.SETTINGS),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               onPressed: _saveChanges,
             )
           ],
@@ -106,9 +106,7 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                child: Center(child: CircularProgressIndicator()),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
               if (snapshot.data!.isNotEmpty) {
@@ -129,10 +127,10 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
                 //       );
                 //     });
               } else {
-                return Center(child: Text(Consts.NO_DATA_FOUND));
+                return const Center(child: Text(Consts.NO_DATA_FOUND));
               }
             } else {
-              return Text(Consts.NO_DATA_FOUND);
+              return const Text(Consts.NO_DATA_FOUND);
             }
           },
         ));
@@ -205,12 +203,12 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
     });
     _contents = [
       DragAndDropList(
-        header: Text('My Sports'),
+        header: const Text('My Sports'),
         canDrag: false,
         children: mySports,
       ),
       DragAndDropList(
-        header: Text('Other Sports'),
+        header: const Text('Other Sports'),
         canDrag: false,
         children: otherSports,
       )
@@ -226,7 +224,7 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
             onListReorder: _onListReorder,
             onItemAdd: _onItemAdd,
             onListAdd: _onListAdd,
-            listGhost: Container(
+            listGhost: const SizedBox(
               height: 50,
               width: 100,
               child: Center(
@@ -257,20 +255,22 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
   _onItemAdd(DragAndDropItem newItem, int listIndex, int itemIndex) {
     print('adding new item');
     setState(() {
-      if (itemIndex == -1)
+      if (itemIndex == -1) {
         _contents[listIndex].children.add(newItem);
-      else
+      } else {
         _contents[listIndex].children.insert(itemIndex, newItem);
+      }
     });
   }
 
   _onListAdd(DragAndDropListInterface newList, int listIndex) {
     print('adding new list');
     setState(() {
-      if (listIndex == -1)
+      if (listIndex == -1) {
         _contents.add(newList as DragAndDropList);
-      else
+      } else {
         _contents.insert(listIndex, newList as DragAndDropList);
+      }
     });
   }
 }

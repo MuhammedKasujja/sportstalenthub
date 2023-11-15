@@ -46,7 +46,7 @@ class _FilesPageState extends State<FilesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.playerName}'),
+        title: Text(widget.playerName),
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -64,14 +64,10 @@ class _FilesPageState extends State<FilesPage> {
         future: photos,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasError) {
-            return Container(
-              child: Text("Error: ${snapshot.error}"),
-            );
+            return Text("Error: ${snapshot.error}");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              child: const Center(child: CircularProgressIndicator()),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData) {
             if (snapshot.data.length > 0) {

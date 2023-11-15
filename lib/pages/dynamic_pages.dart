@@ -9,8 +9,10 @@ import 'package:sth/utils/dynamo_tabs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage>
@@ -38,11 +40,11 @@ class _MainPageState extends State<MainPage>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: sportsList.length);
+    _tabController = TabController(vsync: this, length: sportsList.length);
 
     _tabTitles = sportsList
         .map((s) => InkWell(
-                child: new Tab(
+                child: Tab(
               text: s.name,
             )))
         .toList();
@@ -53,7 +55,7 @@ class _MainPageState extends State<MainPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("STH"),
+        title: const Text("STH"),
         bottom: TabBar(
             isScrollable: true,
             controller: _tabController,
@@ -62,13 +64,13 @@ class _MainPageState extends State<MainPage>
             tabs: _tabTitles),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+              AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
             },
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onPressed: () {
               navigateToSettings();
             },
@@ -89,11 +91,11 @@ class _MainPageState extends State<MainPage>
         onPressed: () {
           //AppUtils(context: context).gotoPage(page: HomePage());
           setState(() {
-            Sport sport = new Sport(name: 'Bad Minton', sportId: '1');
+            Sport sport = Sport(name: 'Bad Minton', sportId: '1');
             sportsList.add(sport);
             // _tabTitles.add(Tab(text: sport.name,));
             pageController.animateToPage((sportsList.length),
-                duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+                duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
           });
         },
       ),
@@ -120,12 +122,12 @@ class _MainPageState extends State<MainPage>
             SizedBox(
               height: 200,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.teal,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15))),
-                child: Center(
+                child: const Center(
                   child: Text(
                     Consts.APP_NAME,
                     style: TextStyle(fontSize: 24),
@@ -134,7 +136,7 @@ class _MainPageState extends State<MainPage>
               ),
             ),
             drawerTile(title: 'Create Account'),
-            drawerTile(title: 'Settings', page: SettingsPage()),
+            drawerTile(title: 'Settings', page: const SettingsPage()),
             drawerTile(title: 'About'),
           ],
         ),
@@ -155,7 +157,7 @@ class _MainPageState extends State<MainPage>
             }
           },
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget{
+  const SearchPage({super.key});
+
   @override
-  _SearchPageState createState() {
+  State<SearchPage> createState() {
     return _SearchPageState();
   }
 
@@ -13,7 +15,7 @@ class _SearchPageState extends State<SearchPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
+        title: const TextField(
           decoration: InputDecoration(hintText: 'Search',
            hintStyle: TextStyle(color: Colors.white),
             suffixIcon: Icon(Icons.search)

@@ -74,7 +74,7 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
                 _createSearchBar(context),
                 Expanded(
                   child: isLoading
-                      ? PlayerShimmer()
+                      ? const PlayerShimmer()
                       : players.isNotEmpty
                           ? ListView.builder(
                               itemCount: players.length,

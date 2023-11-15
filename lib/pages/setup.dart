@@ -9,21 +9,20 @@ class SetupPage extends StatefulWidget {
   final ValueChanged<List<Sport>> callbackRemoveTabs;
   final ValueChanged<List<Sport>> callbackClearTabs;
   final int totalSports;
-  Future<String> one(List list) => new Future.value("from one");
+  Future<String> one(List list) => Future.value("from one");
 
-  const SetupPage({
-    Key? key,
+  const SetupPage({super.key, 
     required this.totalSports,
     required this.callbackRemoveTabs,
     required this.callbackClearTabs,
   });
   @override
-  _SetupPageState createState() => _SetupPageState();
+  State<SetupPage> createState() => _SetupPageState();
 }
 
 class _SetupPageState extends State<SetupPage> {
   //Storing sport in SharedPref as Serialized
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
 
   final api = ApiService();
   final db = DBProvider();
@@ -53,7 +52,6 @@ class _SetupPageState extends State<SetupPage> {
     db.getAllSports().then((sports) {
       List<int> savedList = [];
       for (Sport s in sports) {
-        print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
           savedList.add(int.parse(s.sportId!));
         }
@@ -69,7 +67,7 @@ class _SetupPageState extends State<SetupPage> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               //    repo.saveAll(selectedList).then((list){
               //     Navigator.pop(context, selectedList);
@@ -77,42 +75,37 @@ class _SetupPageState extends State<SetupPage> {
               //  widget.callbackRemoveTabs(selectedList);
             },
           ),
-          title: Text('Settings'),
+          title: const Text('Settings'),
         ),
         body: FutureBuilder<List<Sport>>(
           future: sportsList,
           builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
             if (snapshot.hasError) {
-              print("${snapshot.error}");
-              return Container(
-                child: Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "No internet connection",
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.refresh,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          setState(
-                            () {
-                              sportsList = api.getSports();
-                            },
-                          );
-                        })
-                  ],
-                )),
-              );
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    "No internet connection",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  IconButton(
+                      icon: const Icon(
+                        Icons.refresh,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        setState(
+                          () {
+                            sportsList = api.getSports();
+                          },
+                        );
+                      })
+                ],
+              ));
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                child: Center(child: CircularProgressIndicator()),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
               if (snapshot.data!.isNotEmpty) {
@@ -121,7 +114,7 @@ class _SetupPageState extends State<SetupPage> {
                     itemBuilder: (BuildContext context, int index) {
                       Sport sport = snapshot.data![index];
                       return CheckboxListTile(
-                        title: new Text(sport.name),
+                        title: Text(sport.name),
                         value: selectedList.contains(
                             int.parse(sport.sportId!)), //sport.isSelected,
                         onChanged: (selected) {
@@ -130,10 +123,10 @@ class _SetupPageState extends State<SetupPage> {
                       );
                     });
               } else {
-                return Center(child: Text("No data Found"));
+                return const Center(child: Text("No data Found"));
               }
             } else {
-              return Text("No data Found");
+              return const Text("No data Found");
             }
           },
         ));

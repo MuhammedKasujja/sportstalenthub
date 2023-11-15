@@ -7,7 +7,7 @@ class ShimmerWidget extends StatelessWidget {
   final ShimmerType type;
   final int itemLength;
 
-  const ShimmerWidget({Key? key, required this.type, this.itemLength = 10});
+  const ShimmerWidget({super.key,  required this.type, this.itemLength = 10});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,15 +25,15 @@ class ShimmerWidget extends StatelessWidget {
         highlightColor: Colors.grey.shade100,
         child: ListView.separated(
           shrinkWrap: true,
-          itemCount: this.itemLength,
+          itemCount: itemLength,
           padding: const EdgeInsets.only(bottom: 8.0),
           itemBuilder: (_, index) {
-            Widget shimmer = this.type == ShimmerType.player
+            Widget shimmer = type == ShimmerType.player
                 ? PlayerShimmer()
-                : this.type == ShimmerType.post
+                : type == ShimmerType.post
                     ? PostShimmer()
-                    : this.type == ShimmerType.careerPath
-                        ? CareerPathShimmer()
+                    : type == ShimmerType.careerPath
+                        ? const CareerPathShimmer()
                         : Container();
             return shimmer;
           },

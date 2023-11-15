@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PlayerShimmer extends StatelessWidget {
+  const PlayerShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,24 +40,18 @@ class PlayerShimmer extends StatelessWidget {
                     height: 100.0,
                     color: Colors.white,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Container(
                         width: 80,
                         height: 8.0,
                         color: Colors.white,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Container(
                         width: 100,
                         height: 8.0,

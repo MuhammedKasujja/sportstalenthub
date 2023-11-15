@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PostShimmer extends StatelessWidget {
+  const PostShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +21,7 @@ class PostShimmer extends StatelessWidget {
             height: 200.0,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -27,7 +29,7 @@ class PostShimmer extends StatelessWidget {
             height: 8.0,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -35,7 +37,7 @@ class PostShimmer extends StatelessWidget {
             height: 8.0,
             color: Colors.white,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Align(

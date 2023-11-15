@@ -18,7 +18,7 @@ class PlayerList {
       page: json['page'],
       totalResults: json['total_results'],
       totalPages: json['total_pages'],
-      players: new List<Player>.from(
+      players: List<Player>.from(
         json['players'].map((p) => Player.fromJson(p)),
       ),
     );

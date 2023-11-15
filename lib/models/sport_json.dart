@@ -13,8 +13,8 @@ class SportJson {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['name'] = this.name;
-    data['positions'] = this.positions;
+    data['name'] = name;
+    data['positions'] = positions;
     return data;
   }
 }

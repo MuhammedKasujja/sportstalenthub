@@ -8,13 +8,12 @@ class PlayerVideosPage extends StatefulWidget {
   final String playerId;
   final String playerName;
 
-  const PlayerVideosPage({
-    Key? key,
+  const PlayerVideosPage({super.key,
     required this.playerId,
     required this.playerName,
   });
   @override
-  _PlayerVideosPageState createState() => _PlayerVideosPageState();
+  State<PlayerVideosPage> createState() => _PlayerVideosPageState();
 }
 
 class _PlayerVideosPageState extends State<PlayerVideosPage> {
@@ -86,7 +85,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                         controller: youtubePlayerController,
                       )
                     : IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.play_arrow,
                           size: 40,
                           color: Colors.red,
@@ -104,7 +103,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                       right: 10,
                       bottom: 8,
                       child: InkWell(
-                        child: Icon(
+                        child: const Icon(
                           Icons.share,
                           color: Colors.white,
                         ),
@@ -122,23 +121,19 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
               future: futureVideos,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Container(
-                    child: Center(
-                        child: InkWell(
-                      child: Chip(label: Text("Error: ${snapshot.error}")),
-                      onTap: () {
-                        loadVideos();
-                        // this.futureVideos = api.getPlayersAttachments(
-                        //     playerId: widget.playerId,
-                        //     category: Consts.FILE_TYPE_VIDEOS);
-                      },
-                    )),
-                  );
+                  return Center(
+                      child: InkWell(
+                    child: Chip(label: Text("Error: ${snapshot.error}")),
+                    onTap: () {
+                      loadVideos();
+                      // this.futureVideos = api.getPlayersAttachments(
+                      //     playerId: widget.playerId,
+                      //     category: Consts.FILE_TYPE_VIDEOS);
+                    },
+                  ));
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                    child: Center(child: CircularProgressIndicator()),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
@@ -168,15 +163,13 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                                       borderRadius: BorderRadius.circular(5.0),
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                          "http://img.youtube.com/vi/" +
-                                              snapshot.data![index].filename +
-                                              "/0.jpg",
+                                          "http://img.youtube.com/vi/${snapshot.data![index].filename}/0.jpg",
                                         ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                  Positioned.fill(
+                                  const Positioned.fill(
                                     child: Align(
                                       child: IconButton(
                                         icon: Icon(
@@ -202,7 +195,7 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                               });
                             },
                           ),
-                          Positioned(
+                          const Positioned(
                             right: 10,
                             bottom: 10,
                             child: InkWell(
@@ -216,14 +209,14 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                       ),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                         child: Text(
                       "Player has no videos",
                       style: TextStyle(color: Colors.grey),
                     ));
                   }
                 } else {
-                  return Text("Player has no videos",
+                  return const Text("Player has no videos",
                       style: TextStyle(color: Colors.grey));
                 }
               },
@@ -241,12 +234,12 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
         child: IconButton(
             icon: Icon(
               Icons.skip_previous,
-              color: (listVideos != null && listVideos!.length > 0)
+              color: (listVideos != null && listVideos!.isNotEmpty)
                   ? Colors.red
                   : Colors.grey,
             ),
             onPressed: () {
-              if (listVideos != null && listVideos!.length > 0) {
+              if (listVideos != null && listVideos!.isNotEmpty) {
                 if (listVideos!.length == 1) {
                 } else {
                   if (videoPosition == 0) {
@@ -271,12 +264,12 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
       child: IconButton(
         icon: Icon(
           Icons.skip_next,
-          color: (listVideos != null && listVideos!.length > 0)
+          color: (listVideos != null && listVideos!.isNotEmpty)
               ? Colors.red
               : Colors.grey,
         ),
         onPressed: () {
-          if (listVideos != null && listVideos!.length > 0) {
+          if (listVideos != null && listVideos!.isNotEmpty) {
             if (listVideos!.length == 1) {
             } else {
               if (videoPosition == listVideos!.length - 1) {

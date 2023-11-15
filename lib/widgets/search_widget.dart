@@ -6,7 +6,7 @@ class SearchWidget extends StatelessWidget {
   final String hint = 'Search';
 
   const SearchWidget({
-    Key? key,
+    super.key,
     required this.onTextChange,
     hint,
     this.backPressed,
@@ -14,28 +14,29 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(0.0),
+      margin: const EdgeInsets.all(0.0),
       elevation: 9.0,
       child: Row(
         children: <Widget>[
-          this.backPressed != null
+          backPressed != null
               ? IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.red),
+                  icon: const Icon(Icons.arrow_back, color: Colors.red),
                   onPressed: backPressed)
               : IconButton(
-                  icon: Icon(Icons.search, color: Colors.red),
+                  icon: const Icon(Icons.search, color: Colors.red),
                   onPressed: () {},
                 ),
           Expanded(
-              child: TextField(
-            // autofocus: true,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.all(16.0),
-              hintText: hint,
+            child: TextField(
+              // autofocus: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.all(16.0),
+                hintText: hint,
+              ),
+              onChanged: onTextChange,
             ),
-            onChanged: onTextChange,
-          ))
+          )
         ],
       ),
     );

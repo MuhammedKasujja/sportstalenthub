@@ -7,8 +7,10 @@ import 'package:sth/pages/final_page.dart';
 import 'package:sth/utils/consts.dart';
 
 class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage>
@@ -18,7 +20,7 @@ class _SplashPageState extends State<SplashPage>
     Sport(name: Consts.FEATURED_PROFILES, sportId: Consts.FEATURED_PROFILES_ID),
     Sport(name: Consts.LATEST_PROFILES, sportId: Consts.LATEST_PROFILES_ID),
   ];
-  var repo = FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
   List<Sport> savedSports = [];
   late Animation<double> animation;
   late AnimationController animationController;
@@ -28,7 +30,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     var list = repo.findAll();
     animationController = AnimationController(
-        duration: Duration(milliseconds: 3000), vsync: this);
+        duration: const Duration(milliseconds: 3000), vsync: this);
 
     animation = Tween(begin: 0.0, end: 200.0).animate(animationController);
     // Use this to repeat the animation
@@ -40,13 +42,12 @@ class _SplashPageState extends State<SplashPage>
      */
     list.then((onValue) {
       for (Sport s in onValue) {
-        print(s.name);
         setState(() {
           savedSports.add(s);
           sportsList.add(s);
         });
       }
-      new Timer.periodic(Duration(seconds: 2), (timer) {
+      Timer.periodic(const Duration(seconds: 2), (timer) {
         // Remove and replace this page with the new Page ie StartPage
         Navigator.pushReplacement(
             context,
@@ -88,13 +89,13 @@ class _SplashPageState extends State<SplashPage>
 }
 
 class LogoAnimation extends AnimatedWidget {
-  LogoAnimation({Key? key, required Animation<double> animation})
+  const LogoAnimation({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     return Center(
-      child: Container(
+      child: SizedBox(
         height: animation.value,
         width: animation.value,
         child: FittedBox(

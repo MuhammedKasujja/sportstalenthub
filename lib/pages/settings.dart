@@ -11,21 +11,20 @@ class SettingsPage extends StatefulWidget {
   final ValueChanged<List<Sport>>? callbackRemoveTabs;
   final ValueChanged<List<Sport>>? callbackClearTabs;
   final int totalSports;
-  Future<String> one(List list) => new Future.value("from one");
+  Future<String> one(List list) => Future.value("from one");
 
-  const SettingsPage({
-    Key? key,
+  const SettingsPage({super.key, 
      this.totalSports =0,
     this.callbackRemoveTabs,
     this.callbackClearTabs,
   });
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
   //Storing sport in SharedPref as Serialized
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
 
   final api = ApiService();
   final db = DBProvider();
@@ -59,7 +58,6 @@ class _SettingsPageState extends State<SettingsPage> {
     db.getAllSports().then((sports) {
       List<Sport> savedList = [];
       for (Sport s in sports) {
-        print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
           savedList.add(s);
         }
@@ -76,13 +74,13 @@ class _SettingsPageState extends State<SettingsPage> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: _saveChanges,
           ),
-          title: Text(Consts.SETTINGS),
+          title: const Text(Consts.SETTINGS),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.save),
+              icon: const Icon(Icons.save),
               onPressed: _saveChanges,
             )
           ],
@@ -103,18 +101,16 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                child: Center(child: CircularProgressIndicator()),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
-              if (snapshot.data!.length > 0) {
+              if (snapshot.data!.isNotEmpty) {
                 return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       Sport sport = snapshot.data![index];
                       return CheckboxListTile(
-                        title: new Text(sport.name),
+                        title: Text(sport.name),
                         value: selectedList.contains(sport), //sport.isSelected,
                         onChanged: (selected) {
                           _onSportSelected(selected, sport);
@@ -122,10 +118,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       );
                     });
               } else {
-                return Center(child: Text(Consts.NO_DATA_FOUND));
+                return const Center(child: Text(Consts.NO_DATA_FOUND));
               }
             } else {
-              return Text(Consts.NO_DATA_FOUND);
+              return const Text(Consts.NO_DATA_FOUND);
             }
           },
         ));
@@ -145,7 +141,6 @@ class _SettingsPageState extends State<SettingsPage> {
       });
     }
     DBProvider.db.updateSport(sport);
-    print('object: ${sport.isSelected}');
     for (Sport s in selectedList) {
       print(s.name);
     }

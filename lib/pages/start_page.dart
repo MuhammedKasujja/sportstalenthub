@@ -9,8 +9,10 @@ import 'package:sth/utils/dynamo_tabs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StartPage extends StatefulWidget {
+  const StartPage({super.key});
+
   @override
-  _StartPageState createState() => _StartPageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage>
@@ -38,7 +40,7 @@ class _StartPageState extends State<StartPage>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: sportsList.length);
+    _tabController = TabController(vsync: this, length: sportsList.length);
 
     _tabViews = sportsList
         .map(
@@ -49,7 +51,7 @@ class _StartPageState extends State<StartPage>
         .toList();
 
     _tabTitles = sportsList
-        .map((s) => new Tab(
+        .map((s) => Tab(
               text: s.name,
             ))
         .toList();
@@ -60,7 +62,7 @@ class _StartPageState extends State<StartPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("STH"),
+        title: const Text("STH"),
         bottom: TabBar(
             isScrollable: true,
             controller: _tabController,
@@ -69,13 +71,13 @@ class _StartPageState extends State<StartPage>
             tabs: _tabTitles),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+              AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
             },
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onPressed: () {
               navigateToSettings();
             },
@@ -83,8 +85,8 @@ class _StartPageState extends State<StartPage>
         ],
       ),
       body: TabBarView(
-        children: _tabViews,
         controller: _tabController,
+        children: _tabViews,
       ),
       drawer: appDrawer(),
       /* floatingActionButton: FloatingActionButton(
@@ -116,12 +118,12 @@ class _StartPageState extends State<StartPage>
             SizedBox(
               height: 200,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.teal,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15))),
-                child: Center(
+                        bottomRight: Radius.circular(15),),),
+                child: const Center(
                   child: Text(
                     Consts.APP_NAME,
                     style: TextStyle(fontSize: 24),
@@ -132,7 +134,7 @@ class _StartPageState extends State<StartPage>
             drawerTile(title: 'Create Account'),
             drawerTile(
                 title: 'Settings',
-                page: SettingsPage(
+                page: const SettingsPage(
                   totalSports: 3,
                 )),
             drawerTile(title: 'About'),
@@ -155,7 +157,7 @@ class _StartPageState extends State<StartPage>
             }
           },
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

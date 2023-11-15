@@ -14,15 +14,15 @@ import 'package:url_launcher/url_launcher.dart';
 class DynamicTabsPage extends StatefulWidget {
   final List<Sport> sportsList;
 
-  const DynamicTabsPage({Key? key, required this.sportsList});
+  const DynamicTabsPage({super.key, required this.sportsList});
   @override
-  _DynamicTabsPageState createState() => _DynamicTabsPageState();
+  State<DynamicTabsPage> createState() => _DynamicTabsPageState();
 }
 
 class _DynamicTabsPageState extends State<DynamicTabsPage>
     with AutomaticKeepAliveClientMixin<DynamicTabsPage> {
   int initPosition = 0;
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
   List<Sport> savedSports = [];
 
   @override
@@ -45,17 +45,17 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("STH"),
+        title: const Text("STH"),
         elevation: 0.0,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+              AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
             },
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onPressed: () {
               navigateToSettings();
             },
@@ -69,11 +69,9 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
             tabBuilder: (context, index) =>
                 Tab(text: widget.sportsList[index].name),
             pageBuilder: (context, index) {
-              print("ID: " + widget.sportsList[index].sportId.toString());
-              return Container(
-                  child: PrayerProfiles(
+              return PrayerProfiles(
                 sport: widget.sportsList[index],
-              ));
+              );
             },
             onPositionChange: (index) {
               print('current position: $index');
@@ -107,12 +105,12 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
             SizedBox(
               height: 200,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.teal,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15))),
-                child: Center(
+                child: const Center(
                   child: Text(
                     Consts.APP_NAME,
                     style: TextStyle(fontSize: 24),
@@ -124,7 +122,7 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
               title: 'Login',
             ),
             drawerTile(title: 'Create Account'),
-            drawerTile(title: 'Settings', page: SettingsPage()),
+            drawerTile(title: 'Settings', page: const SettingsPage()),
             drawerTile(title: 'About'),
           ],
         ),
@@ -145,7 +143,7 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
             }
           },
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }
@@ -184,7 +182,7 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
       print("removed ${s.name} ids: ${s.sportId}");
     }
 
-    if (removeSports.length > 0) {
+    if (removeSports.isNotEmpty) {
       setState(() {
         initPosition = 0;
       });

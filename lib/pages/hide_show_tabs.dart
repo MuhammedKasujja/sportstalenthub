@@ -9,8 +9,10 @@ import 'package:sth/utils/dynamo_tabs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ShowTabsTage extends StatefulWidget {
+  const ShowTabsTage({super.key});
+
   @override
-  _ShowTabsTageState createState() => _ShowTabsTageState();
+  State<ShowTabsTage> createState() => _ShowTabsTageState();
 }
 
 class _ShowTabsTageState extends State<ShowTabsTage>
@@ -36,7 +38,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: sportsList.length);
+    _tabController = TabController(vsync: this, length: sportsList.length);
 
     _tabViews = sportsList
         .map(
@@ -44,7 +46,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
               ? PrayerProfiles(
                   sport: s,
                 )
-              : Opacity(
+              : const Opacity(
                   opacity: 0.0,
                 ),
         )
@@ -52,10 +54,10 @@ class _ShowTabsTageState extends State<ShowTabsTage>
 
     _tabTitles = sportsList
         .map((t) => t.isSelected
-            ? new Tab(
+            ? Tab(
                 text: t.name,
               )
-            : Visibility(visible: false, child: new Tab(text: t.name)))
+            : Visibility(visible: false, child: Tab(text: t.name)))
         .toList();
   }
 
@@ -64,7 +66,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("STH"),
+        title: const Text("STH"),
         bottom: TabBar(
             isScrollable: true,
             controller: _tabController,
@@ -73,13 +75,13 @@ class _ShowTabsTageState extends State<ShowTabsTage>
             tabs: _tabTitles),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+              AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
             },
           ),
           IconButton(
-            icon: Icon(Icons.more_vert),
+            icon: const Icon(Icons.more_vert),
             onPressed: () {
               navigateToSettings();
             },
@@ -120,12 +122,12 @@ class _ShowTabsTageState extends State<ShowTabsTage>
             SizedBox(
               height: 200,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.teal,
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15))),
-                child: Center(
+                child: const Center(
                   child: Text(
                     Consts.APP_NAME,
                     style: TextStyle(fontSize: 24),
@@ -134,7 +136,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
               ),
             ),
             drawerTile(title: 'Create Account'),
-            drawerTile(title: 'Settings', page: SettingsPage()),
+            drawerTile(title: 'Settings', page: const SettingsPage()),
             drawerTile(title: 'About'),
           ],
         ),
@@ -155,7 +157,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
             }
           },
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

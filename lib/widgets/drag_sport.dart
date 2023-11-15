@@ -5,13 +5,17 @@ class DragSportBox extends StatefulWidget {
   final Sport sport;
   final Offset offset;
 
-  const DragSportBox({Key? key, required this.sport, required this.offset});
+  const DragSportBox({
+    super.key,
+    required this.sport,
+    required this.offset,
+  });
   @override
-  _DragSportBoxState createState() => _DragSportBoxState();
+  State<DragSportBox> createState() => _DragSportBoxState();
 }
 
 class _DragSportBoxState extends State<DragSportBox> {
-  Offset position = Offset(0.0, 0.0);
+  Offset position = const Offset(0.0, 0.0);
 
   @override
   void initState() {
@@ -24,36 +28,37 @@ class _DragSportBoxState extends State<DragSportBox> {
     return Positioned(
       child: Draggable(
         data: widget.sport,
-        child: Container(
-          width: 100.0,
-          height: 100.0,
-          child: Center(
-            child: Chip(
-              label: Text(
-                widget.sport.name,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    decoration: TextDecoration.none),
-              ),
-            ),
-          ),
-        ),
         onDraggableCanceled: (velocity, offset) {
           setState(() {
             position = offset;
           });
         },
-        feedback: Container(
+        feedback: SizedBox(
           width: 120.0,
           height: 120.0,
           child: Center(
             child: Chip(
               label: Text(
                 widget.sport.name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.blue,
                   fontSize: 18.0,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ),
+        ),
+        child: SizedBox(
+          width: 100.0,
+          height: 100.0,
+          child: Center(
+            child: Chip(
+              label: Text(
+                widget.sport.name,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
                   decoration: TextDecoration.none,
                 ),
               ),

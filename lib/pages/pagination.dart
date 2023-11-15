@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PaginationPage extends StatefulWidget {
+  const PaginationPage({super.key});
+
   @override
-  _PaginationPageState createState() => _PaginationPageState();
+  State<PaginationPage> createState() => _PaginationPageState();
 }
 
 class _PaginationPageState extends State<PaginationPage> {
@@ -30,7 +32,7 @@ class _PaginationPageState extends State<PaginationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Pagination Example"),
+          title: const Text("Pagination Example"),
         ),
         body: ListView.builder(
           itemCount: items.length,
@@ -60,7 +62,7 @@ class _PaginationPageState extends State<PaginationPage> {
         if (offsetFromBottom < edge) {
           _scrollController.animateTo(
               _scrollController.offset - (edge - offsetFromBottom),
-              duration: new Duration(microseconds: 500),
+              duration: const Duration(microseconds: 500),
               curve: Curves.easeOut);
         }
       }
@@ -75,17 +77,17 @@ class _PaginationPageState extends State<PaginationPage> {
   Widget _buildProgressIndicator() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: new Center(
+      child: Center(
         child: Opacity(
           opacity: isPerformingRequest ? 1.0 : 0.0,
-          child: new CircularProgressIndicator(),
+          child: const CircularProgressIndicator(),
         ),
       ),
     );
   }
 
   Future<List<int>> fakeRequest(int from, int to) async {
-    return Future.delayed(Duration(seconds: 5), () {
+    return Future.delayed(const Duration(seconds: 5), () {
       return List.generate(to - from, (i) => i + from);
     });
   }

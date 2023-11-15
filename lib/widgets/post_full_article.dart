@@ -4,14 +4,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 class PostFullArticle extends StatefulWidget {
   final String article;
   final bool isClickable;
-  const PostFullArticle({
-    Key? key,
+  const PostFullArticle({super.key, 
     required this.article,
     this.isClickable = false,
   });
 
   @override
-  _PostFullArticleState createState() => _PostFullArticleState();
+  State<PostFullArticle> createState() => _PostFullArticleState();
 }
 
 class _PostFullArticleState extends State<PostFullArticle> {
@@ -25,7 +24,7 @@ class _PostFullArticleState extends State<PostFullArticle> {
   // }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text('To fix webview loading'),
       ),

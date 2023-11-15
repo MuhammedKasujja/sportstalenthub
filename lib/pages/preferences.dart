@@ -10,20 +10,19 @@ import 'package:sth/models/sport_pref.dart';
 class PreferencesPage extends StatefulWidget {
   final ValueChanged<List<Sport>>? callbackRemoveTabs;
   final ValueChanged<List<Sport>>? callbackClearTabs;
-  Future<String> one(List list) => new Future.value("from one");
+  Future<String> one(List list) => Future.value("from one");
 
-  const PreferencesPage({
-    Key? key,
+  const PreferencesPage({super.key, 
     this.callbackRemoveTabs,
     this.callbackClearTabs,
   });
   @override
-  _PreferencesPageState createState() => _PreferencesPageState();
+  State<PreferencesPage> createState() => _PreferencesPageState();
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
   //Storing sport in SharedPref as Serialized
-  var repo = new FuturePreferencesRepository<Sport>(new SportDesSer());
+  var repo = FuturePreferencesRepository<Sport>(SportDesSer());
 
   final api = ApiService();
   final db = DBProvider();
@@ -48,7 +47,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               repo.saveAll(selectedList).then((list) {
                 Navigator.pop(context, selectedList);
@@ -58,7 +57,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
               }
             },
           ),
-          title: Text('Settings'),
+          title: const Text('Settings'),
           /*actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
@@ -77,33 +76,29 @@ class _PreferencesPageState extends State<PreferencesPage> {
           future: sportsList,
           builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
             if (snapshot.hasError) {
-              return Container(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Error: ${snapshot.error}"),
-                      IconButton(
-                          icon: Icon(
-                            Icons.refresh,
-                            size: 30,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                sportsList = api.getSports();
-                              },
-                            );
-                          })
-                    ],
-                  ),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Error: ${snapshot.error}"),
+                    IconButton(
+                        icon: const Icon(
+                          Icons.refresh,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              sportsList = api.getSports();
+                            },
+                          );
+                        })
+                  ],
                 ),
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                child: Center(child: CircularProgressIndicator()),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
               if (snapshot.data!.isNotEmpty) {
@@ -112,7 +107,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
                     itemBuilder: (BuildContext context, int index) {
                       Sport sport = snapshot.data![index];
                       return CheckboxListTile(
-                        title: new Text(sport.name),
+                        title: Text(sport.name),
                         value: selectedList.contains(sport),
                         onChanged: (selected) {
                           if (selected != null)
@@ -121,10 +116,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
                       );
                     });
               } else {
-                return Center(child: Text("No data Found"));
+                return const Center(child: Text("No data Found"));
               }
             } else {
-              return Text("No data Found");
+              return const Text("No data Found");
             }
           },
         ));

@@ -10,24 +10,24 @@ import 'files_page.dart';
 class ProfilePage extends StatefulWidget {
   final Player player;
 
-  const ProfilePage({Key? key, required this.player});
+  const ProfilePage({super.key, required this.player});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   late ScrollController scrollController;
   late TabController tabController;
-  final _myTabbedPageKey = new GlobalKey<_ProfilePageState>();
+  final _myTabbedPageKey = GlobalKey<_ProfilePageState>();
   int selectedTab = 0;
   bool isFavourite = false;
   @override
   void initState() {
     super.initState();
-    scrollController = new ScrollController();
-    tabController = new TabController(length: 3, vsync: this);
+    scrollController = ScrollController();
+    tabController = TabController(length: 3, vsync: this);
     _checkFavourite();
   }
 
@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage>
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          child: isFavourite ? Icon(Icons.remove) : Icon(Icons.add),
+          child: isFavourite ? const Icon(Icons.remove) : const Icon(Icons.add),
           onPressed: () {
             _addRemoveFavourite();
           }),
@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage>
       children: <Widget>[
         Container(
             color: Colors.transparent,
-            constraints: BoxConstraints.expand(height: 50),
+            constraints: const BoxConstraints.expand(height: 50),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -75,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage>
                     backgroundColor:
                         selectedTab == 0 ? Colors.teal : Colors.white,
                   ),
-                  child: Text("Details"),
+                  child: const Text("Details"),
                   onPressed: () {
                     //tabController.animateTo((tabController.index + 1) % 2);
                     tabController.animateTo(0);
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage>
                     backgroundColor:
                         selectedTab == 1 ? Colors.green : Colors.white,
                   ),
-                  child: Text("Career"),
+                  child: const Text("Career"),
                   onPressed: () {
                     tabController.animateTo(1);
                     setState(() {
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage>
                     backgroundColor:
                         selectedTab == 2 ? Colors.yellow : Colors.white,
                   ),
-                  child: Text("Achievements"),
+                  child: const Text("Achievements"),
                   onPressed: () {
                     tabController.animateTo(2);
                     setState(() {
@@ -113,22 +113,20 @@ class _ProfilePageState extends State<ProfilePage>
               ],
             )),
         Expanded(
-          child: Container(
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: tabController,
-              children: <Widget>[
-                Container(
-                  child: Center(child: Text('Details')),
-                ),
-                Container(
-                  child: Center(child: Text('Career')),
-                ),
-                Container(
-                  child: Center(child: Text('Achievements')),
-                ),
-              ],
-            ),
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: tabController,
+            children: <Widget>[
+              Container(
+                child: const Center(child: Text('Details')),
+              ),
+              Container(
+                child: const Center(child: Text('Career')),
+              ),
+              Container(
+                child: const Center(child: Text('Achievements')),
+              ),
+            ],
           ),
         )
       ],
@@ -143,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage>
           Container(
             height: 220,
             //color: Colors.green,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
@@ -152,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage>
           Align(
               alignment: Alignment.topLeft,
               child: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   print('object');
                   AppUtils(
@@ -171,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage>
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              icon: Icon(Icons.share),
+              icon: const Icon(Icons.share),
               onPressed: () {
                 share(
                     message: '${widget.player.fullname} \n' +
@@ -186,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage>
                 children: <Widget>[
                   Text(
                     '${widget.player.fullname}',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                   Text('${widget.player.nationality}'),
                   Text('${widget.player.category}'),
@@ -197,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage>
           Align(
             alignment: Alignment.centerLeft,
             child: IconButton(
-              icon: Icon(FontAwesomeIcons.cameraRetro),
+              icon: const Icon(FontAwesomeIcons.cameraRetro),
               onPressed: () {
                 print('Hello');
                 AppUtils(context: context).gotoPage(
@@ -212,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage>
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              icon: Icon(FontAwesomeIcons.video),
+              icon: const Icon(FontAwesomeIcons.video),
               onPressed: () {
                 AppUtils(context: context).gotoPage(
                     page: FilesPage(
@@ -233,7 +231,7 @@ class _ProfilePageState extends State<ProfilePage>
                   children: <Widget>[
                     Container(
                       color: Colors.tealAccent,
-                      child: Row(
+                      child: const Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -267,7 +265,7 @@ class _ProfilePageState extends State<ProfilePage>
                             flex: 3,
                             child: Text(
                               player.height ?? '',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
@@ -276,14 +274,14 @@ class _ProfilePageState extends State<ProfilePage>
                             flex: 6,
                             child: Text(
                               player.dob,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ),
                           Flexible(
                             flex: 3,
                             child: Text(
                               player.gender,
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ),
                         ],
@@ -299,7 +297,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   Widget bottomContainer() {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 3,
       controller: scrollController,
       scrollDirection: Axis.horizontal,
@@ -310,12 +308,12 @@ class _ProfilePageState extends State<ProfilePage>
             child: Card(
               child: Container(
                 width: 250.0,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -331,12 +329,12 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             child: Text(
                               " Tasks",
@@ -344,7 +342,7 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             child: Text(
                               "Holla",
@@ -352,7 +350,7 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'hi',
                             ),
@@ -375,7 +373,7 @@ class _ProfilePageState extends State<ProfilePage>
             }
             setState(() {
               scrollController.animateTo((index) * 256.0,
-                  duration: Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   curve: Curves.fastOutSlowIn);
             });
           },
@@ -409,7 +407,7 @@ class _ProfilePageState extends State<ProfilePage>
                   children: <Widget>[
                     Text(
                       prayer.fullname,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                     Text(prayer.nationality),
                     Text(prayer.category),
@@ -419,12 +417,12 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
               )
             ]),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
               color: Colors.teal,
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

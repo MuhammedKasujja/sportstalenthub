@@ -16,7 +16,7 @@ class ViewImagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(this.title ?? ''),
+        title: Text(title ?? ''),
       ),
       body: Container(
         color: Colors.black,

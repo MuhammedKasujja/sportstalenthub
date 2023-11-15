@@ -9,16 +9,16 @@ import 'package:sth/widgets/retry.dart';
 import 'package:sth/widgets/shimmers/shimmers.dart';
 
 class PrayerProfiles extends StatefulWidget {
-  const PrayerProfiles({Key? key, required this.sport});
+  const PrayerProfiles({super.key, required this.sport});
   final Sport sport;
 
   @override
-  _PrayerProfilesState createState() => _PrayerProfilesState();
+  State<PrayerProfiles> createState() => _PrayerProfilesState();
 }
 
 class _PrayerProfilesState extends State<PrayerProfiles>
     with AutomaticKeepAliveClientMixin<PrayerProfiles> {
-  final api = new ApiService();
+  final api = ApiService();
   var playerList;
   bool isLoading = true;
 
@@ -37,27 +37,25 @@ class _PrayerProfilesState extends State<PrayerProfiles>
     return widget.sport.sportId == Consts.POSTS_PAGE_ID
         ? PostsPage()
         : FutureBuilder<List<Player>>(
-            future: this.playerList,
+            future: playerList,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Player>> snapshot) {
               if (snapshot.hasError) {
-                return Container(
-                  child: Center(
-                      child: InkWell(
-                    child: RetryIcon(),
-                    onTap: () {
-                      setState(
-                        () {
-                          playerList =
-                              api.getPlayers(category: widget.sport.sportId);
-                        },
-                      );
-                    },
-                  )),
-                );
+                return Center(
+                    child: InkWell(
+                  child: RetryIcon(),
+                  onTap: () {
+                    setState(
+                      () {
+                        playerList =
+                            api.getPlayers(category: widget.sport.sportId);
+                      },
+                    );
+                  },
+                ));
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return ShimmerWidget(
+                return const ShimmerWidget(
                   type: ShimmerType.player,
                 );
                 // return Container( child: Center(child: CircularProgressIndicator()),);
@@ -73,10 +71,10 @@ class _PrayerProfilesState extends State<PrayerProfiles>
                         ProfileCard(player: snapshot.data![index]),
                   );
                 } else {
-                  return Center(child: Text("No data Found"));
+                  return const Center(child: Text("No data Found"));
                 }
               } else {
-                return Text("No data Found");
+                return const Text("No data Found");
               }
             },
           );
@@ -96,7 +94,7 @@ class _PrayerProfilesState extends State<PrayerProfiles>
       // order: GroupedListOrder.ASC,
       itemBuilder: (context, Player p) => ProfileCard(player: p));
 
-  Player player = new Player(
+  Player player = Player(
       playerId: '56789',
       teamName: 'Kataka',
       fullname: "Kasujja Muhammed",
@@ -117,17 +115,15 @@ class _PrayerProfilesState extends State<PrayerProfiles>
 
 class PlayersGroupSeparator extends StatelessWidget {
   final String category;
-  PlayersGroupSeparator({required this.category});
+  const PlayersGroupSeparator({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-        child: Text(
-          "$category",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+      child: Text(
+        category,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }

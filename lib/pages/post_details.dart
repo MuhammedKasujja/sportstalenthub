@@ -9,7 +9,7 @@ import 'package:sth/widgets/post_full_article.dart';
 class PostDetailsPage extends StatelessWidget {
   final Post post;
 
-  const PostDetailsPage({Key? key, required this.post});
+  const PostDetailsPage({super.key, required this.post});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +39,8 @@ class _NewsAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        new Container(
-          decoration: new BoxDecoration(
+        Container(
+          decoration: const BoxDecoration(
               /*gradient: new LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -50,15 +50,15 @@ class _NewsAppBar extends StatelessWidget {
               color: Colors.red),
           height: height,
         ),
-        new AppBar(
+        AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
-          title: new Text(
+          title: const Text(
             "News",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          actions: <Widget>[
+          actions: const <Widget>[
             IconButton(
               icon: Icon(Icons.share, color: Colors.white),
               onPressed: null,
@@ -70,9 +70,9 @@ class _NewsAppBar extends StatelessWidget {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 40.0,
             ),
-            child: new Column(
+            child: Column(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 5.0,
                 ),
                 Expanded(
@@ -91,9 +91,9 @@ class _NewsAppBar extends StatelessWidget {
 class ContentCard extends StatefulWidget {
   final Post post;
 
-  const ContentCard({Key? key,required this.post});
+  const ContentCard({super.key,required this.post});
   @override
-  _ContentCardState createState() => _ContentCardState();
+  State<ContentCard> createState() => _ContentCardState();
 }
 
 class _ContentCardState extends State<ContentCard> {
@@ -108,17 +108,16 @@ class _ContentCardState extends State<ContentCard> {
         fullArticle = article;
       });
     }).catchError((onError) {
-      print("$onError");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Card(
+    return Card(
       elevation: 4.0,
       // color: Colors.amber,
       margin: const EdgeInsets.all(8.0),
-      child: new LayoutBuilder(
+      child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return Column(
             children: <Widget>[
@@ -133,11 +132,11 @@ class _ContentCardState extends State<ContentCard> {
                           child: Container(
                             height: 170.0,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.horizontal(
+                              borderRadius: const BorderRadius.horizontal(
                                   left: Radius.circular(5.0)),
                               image: DecorationImage(
                                   image: NetworkImage(
-                                    "${widget.post.imageUrl}",
+                                    widget.post.imageUrl,
                                   ),
                                   fit: BoxFit.cover),
                             ),
@@ -149,7 +148,7 @@ class _ContentCardState extends State<ContentCard> {
                           ).gotoPage(
                               page: ViewImagePage(
                             tag: widget.post.postId,
-                            imageUrl: "${widget.post.imageUrl}",
+                            imageUrl: widget.post.imageUrl,
                           ));
                         },
                       ),
@@ -159,10 +158,10 @@ class _ContentCardState extends State<ContentCard> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.post.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8.0,
               ),
               Stack(
@@ -177,12 +176,12 @@ class _ContentCardState extends State<ContentCard> {
                       left: 10,
                       child: widget.post.category != null
                           ? Text('${widget.post.category}')
-                          : Text("")),
+                          : const Text("")),
                   Positioned(
                       right: 10,
                       child: Text(
-                        '${widget.post.date}',
-                        style: TextStyle(color: Colors.red),
+                        widget.post.date,
+                        style: const TextStyle(color: Colors.red),
                       ))
                 ],
               ),
@@ -204,7 +203,7 @@ class _ContentCardState extends State<ContentCard> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "${widget.post.description}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),
@@ -213,7 +212,7 @@ class _ContentCardState extends State<ContentCard> {
               ? Expanded(
                   child: GestureDetector(
                   child: Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: _articleInfo(fullArticle)),
                   onTap: () {
                     AppUtils(context: context).showFullArticle(
@@ -224,7 +223,7 @@ class _ContentCardState extends State<ContentCard> {
                         viewArticle(fullArticle), widget.post.description);
                   },
                 ))
-              : LoadingIcon(),
+              : const LoadingIcon(),
         ],
       ),
     );

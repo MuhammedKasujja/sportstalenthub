@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PostShimmer extends StatelessWidget {
+  const PostShimmer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +15,7 @@ class PostShimmer extends StatelessWidget {
         child: ListView.builder(
           itemCount: 10,
           padding: const EdgeInsets.only(bottom: 8.0),
-          itemBuilder: (_, index) => Container(
+          itemBuilder: (_, index) => SizedBox(
             // width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 4,
             child: Column(

@@ -7,11 +7,11 @@ class PostCard extends StatelessWidget {
   final Post post;
   final String? tag;
 
-  const PostCard({Key? key, required this.post, this.tag});
+  const PostCard({super.key, required this.post, this.tag});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 300,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
@@ -33,16 +33,16 @@ class PostCard extends StatelessWidget {
                   height: 170.0,
                   decoration: BoxDecoration(
                     borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(5.0)),
+                        const BorderRadius.horizontal(left: Radius.circular(5.0)),
                     image: DecorationImage(
                         image: NetworkImage(
-                          "${post.imageUrl}",
+                          post.imageUrl,
                         ),
                         fit: BoxFit.cover),
                   ),
                 ),
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     height: 150.0,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -52,25 +52,25 @@ class PostCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(post.title,
-                              style: Theme.of(context).textTheme.subtitle2),
-                          SizedBox(
+                              style: Theme.of(context).textTheme.titleSmall),
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Text(
                             post.description ?? '',
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: Theme.of(context).textTheme.bodyMedium,
                             // maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                              '${post.date}',
+                              post.date,
                               //style: Theme.of(context).textTheme.caption,
-                              style: TextStyle(color: Colors.red, fontSize: 12),
+                              style: const TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
                           Expanded(child: Container()),
