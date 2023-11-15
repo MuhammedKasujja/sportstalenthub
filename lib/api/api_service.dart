@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sth/api/urls.dart';
+import 'package:sth/core/core.dart';
 import 'package:sth/models/models.dart';
 import 'dart:convert';
 
@@ -15,13 +16,11 @@ class ApiService {
   }
 
   Future<List<Player>> getPlayers({category}) async {
-    print("fetching data: getPlayers");
     final res = await Dio()
         .get(Urls.GET_PLAYERS + category.toString())
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
-    print(res.data);
     return compute(_parsePlayers, res.data);
   }
 
@@ -43,8 +42,7 @@ class ApiService {
             : 'F'
         : '';
     final res = await Dio()
-        .get(Urls.FILTER_PLAYERS +
-            "gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
+        .get("${Urls.FILTER_PLAYERS}gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -53,22 +51,26 @@ class ApiService {
   }
 
   static List<Player> _parsePlayers(resBody) {
+    try{
     final players =
-        (resBody['players'] as List).map((p) => new Player.fromJson(p));
+        (resBody['players'] as List).map((p) => Player.fromJson(p));
     return players.toList();
+    }catch(error){
+      Logger.debug(data:error, key: 'fetching error: getPlayers');
+      return [];
+    }
   }
 
   static List<Sport> _parseSports(resBody) {
     final sports =
-        (resBody['sports'] as List).map((s) => new Sport.fromJson(s));
+        (resBody['sports'] as List).map((s) => Sport.fromJson(s));
     return sports.toList();
   }
 
   Future<List<Attachment>> getPlayersAttachments(
       {@required playerId, @required category}) async {
     final res = await Dio()
-        .get(Urls.GET_PLAYERS_ATTACHMENTS +
-            "player_id=$playerId&category=$category")
+        .get("${Urls.GET_PLAYERS_ATTACHMENTS}player_id=$playerId&category=$category")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -78,7 +80,7 @@ class ApiService {
 
   static List<Attachment> _parsePlayersPhotos( resBody) {
     final photos =
-        (resBody['files'] as List).map((p) => new Attachment.fromJson(p));
+        (resBody['files'] as List).map((p) => Attachment.fromJson(p));
     return photos.toList();
   }
 
@@ -114,7 +116,7 @@ class ApiService {
   Future<List<Achievement>> getPlayersAchievements({@required playerId}) async {
     print("Player ID: {$playerId} ");
     final res = await Dio()
-        .get(Urls.GET_PLAYERS_ACHIEVEMENTS + "player_id=$playerId")
+        .get("${Urls.GET_PLAYERS_ACHIEVEMENTS}player_id=$playerId")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -124,14 +126,14 @@ class ApiService {
 
   static List<Achievement> _parseAchievements( resBody) {
     final achievements = (resBody['achievements'] as List)
-        .map((p) => new Achievement.fromJson(p));
+        .map((p) => Achievement.fromJson(p));
     return achievements.toList();
   }
 
   Future<String> fetchPostFullArticle({required String postId}) async {
     // print("post_id: $postId");
     final res = await Dio()
-        .get(Urls.POST_FULL_ARTICLE + "post_id=$postId")
+        .get("${Urls.POST_FULL_ARTICLE}post_id=$postId")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });

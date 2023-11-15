@@ -57,7 +57,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                     pinned: true,
                     elevation: 0.0,
                     leading: IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           color: Colors.red,
                         ),
@@ -66,7 +66,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                       centerTitle: true,
                       title: Text(
                         widget.player.fullname,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold),
@@ -104,12 +104,12 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                   // physics: BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 10.0,
                       ),
                       Card(
                         elevation: 5,
-                        margin: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                         child: Container(
                           child: Column(
                             children: <Widget>[
@@ -118,46 +118,46 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                   Flexible(
                                     child: ListTile(
                                       subtitle: Text(widget.player.category),
-                                      title: Text(Consts.SPORT),
+                                      title: const Text(Consts.SPORT),
                                     ),
                                   ),
                                   Flexible(
                                     child: ListTile(
                                       subtitle: Text(widget.player.nationality),
-                                      title: Text(Consts.COUNTRY),
+                                      title: const Text(Consts.COUNTRY),
                                     ),
                                   ),
                                 ],
                               ),
                               ListTile(
-                                subtitle: Text(Consts.TEAM),
+                                subtitle: const Text(Consts.TEAM),
                                 title: Text(widget.player.teamName),
                               ),
                               Row(
                                 children: [
                                   Flexible(
                                     child: ListTile(
-                                      title: Text(Consts.HEIGHT),
+                                      title: const Text(Consts.HEIGHT),
                                       subtitle: (widget.player.height != null &&
                                                   widget.player.height!
                                                       .isNotEmpty ||
                                               widget.player.height != 'null')
                                           ? Text("${widget.player.height} M")
-                                          : Text('-'),
+                                          : const Text('-'),
                                     ),
                                   ),
                                   Flexible(
                                     child: ListTile(
-                                      title: Text(Consts.WEIGHT),
+                                      title: const Text(Consts.WEIGHT),
                                       subtitle: (widget.player.weight != null &&
                                               widget.player.weight!.isNotEmpty)
                                           ? Text("${widget.player.weight!} kg")
-                                          : Text('-'),
+                                          : const Text('-'),
                                     ),
                                   ),
                                   Flexible(
                                     child: ListTile(
-                                      title: Text(Consts.DATE_OF_BIRTH),
+                                      title: const Text(Consts.DATE_OF_BIRTH),
                                       subtitle: Text(widget.player.dob),
                                     ),
                                   ),
@@ -167,11 +167,11 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 6.0,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 8.0),
                         child: Row(
                           children: <Widget>[
@@ -184,8 +184,8 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                         ),
                       ),
                       _sportsCategories(widget.player.position),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 8.0),
                         child: Row(
                           children: <Widget>[
@@ -198,122 +198,113 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                         ),
                       ),
                       FutureBuilder(
-                          future: this.achievements,
+                          future: achievements,
                           builder: (context,
                               AsyncSnapshot<List<Achievement>> snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return ShimmerWidget(
+                              return const ShimmerWidget(
                                 itemLength: 3,
                                 type: ShimmerType.careerPath,
                               );
                             }
                             if (snapshot.hasError) {
-                              return Container(
-                                child: Center(
-                                  child: InkWell(
-                                    child: RetryIcon(),
-                                    onTap: () {
-                                      this.achievements =
-                                          api.getPlayersAchievements(
-                                              playerId: widget.player.playerId);
-                                    },
-                                  ),
+                              return Center(
+                                child: InkWell(
+                                  child: RetryIcon(),
+                                  onTap: () {
+                                    achievements = api.getPlayersAchievements(
+                                        playerId: widget.player.playerId);
+                                  },
                                 ),
                               );
                             }
                             return ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   return Card(
                                     elevation: 5,
-                                    margin:
-                                        EdgeInsets.fromLTRB(8.0, 2.0, 8.0, 2.0),
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                Chip(
-                                                  elevation: 8,
-                                                  label: Text(
-                                                    'From',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.red[400],
-                                                ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Text(
-                                                  snapshot
-                                                      .data![index].startDate,
+                                    margin: const EdgeInsets.fromLTRB(
+                                        8.0, 2.0, 8.0, 2.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Chip(
+                                                elevation: 8,
+                                                label: const Text(
+                                                  'From',
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Chip(
-                                                  elevation: 8,
-                                                  label: Text(
-                                                    'To',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.red[400],
-                                                ),
-                                                SizedBox(
-                                                  width: 5.0,
-                                                ),
-                                                Text(
-                                                  snapshot.data![index].endDate,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Divider(
-                                              thickness: 1.0,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              child: Text(
-                                                snapshot
-                                                    .data![index].description,
+                                                backgroundColor:
+                                                    Colors.red[400],
                                               ),
+                                              const SizedBox(
+                                                width: 5.0,
+                                              ),
+                                              Text(
+                                                snapshot.data![index].startDate,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5.0,
+                                              ),
+                                              Chip(
+                                                elevation: 8,
+                                                label: const Text(
+                                                  'To',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                backgroundColor:
+                                                    Colors.red[400],
+                                              ),
+                                              const SizedBox(
+                                                width: 5.0,
+                                              ),
+                                              Text(
+                                                snapshot.data![index].endDate,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Divider(
+                                            thickness: 1.0,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(6.0),
+                                            child: Text(
+                                              snapshot.data![index].description,
                                             ),
-                                            SizedBox(
-                                              height: 5.0,
-                                            ),
-                                            snapshot.data![index]
-                                                        .achievements !=
-                                                    null
-                                                ? Text(
-                                                    snapshot.data![index]
-                                                        .achievements!,
-                                                  )
-                                                : Container(),
-                                          ],
-                                        ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5.0,
+                                          ),
+                                          snapshot.data![index].achievements !=
+                                                  null
+                                              ? Text(
+                                                  snapshot.data![index]
+                                                      .achievements!,
+                                                )
+                                              : Container(),
+                                        ],
                                       ),
                                     ),
                                   );
                                 });
                           }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10.0,
                       )
                     ],
@@ -337,7 +328,6 @@ class _FancyProfilePageState extends State<FancyProfilePage>
       children: [
         FloatingActionButton(
           tooltip: 'photos',
-          child: Icon(Icons.photo),
           onPressed: () {
             AppUtils(context: context).gotoPage(
                 page: FilesPage(
@@ -347,13 +337,14 @@ class _FancyProfilePageState extends State<FancyProfilePage>
             ));
           },
           heroTag: null,
+          child: const Icon(Icons.photo),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         FloatingActionButton(
           tooltip: 'videos',
-          child: Icon(Icons.videocam),
+          child: const Icon(Icons.videocam),
           onPressed: () {
             AppUtils(context: context).gotoPage(
                 page: PlayerVideosPage(
@@ -401,7 +392,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
 
   Widget _sportsCategories(String? listCategories) {
     if (listCategories == null) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     var cats = listCategories.split(',');
@@ -412,7 +403,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
             child: Chip(
               label: Text(
                 c,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
               backgroundColor: Colors.white,
             ),
@@ -430,11 +421,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String>? myPlayers =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
-
-    if (myPlayers == null) return;
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -461,9 +448,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String>? myPlayers =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
     if (myPlayers == null) return;
 
     if (myPlayers.contains(widget.player.playerId)) {
@@ -498,15 +483,15 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     // print("Tab height: ${this._tabBar.preferredSize.height}");
     return Container(
-        padding: EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 8),
         color: Colors.white,
         child: Stack(
-          alignment: FractionalOffset(0.96, 1.8),
+          alignment: const FractionalOffset(0.96, 1.8),
           fit: StackFit.loose,
           children: <Widget>[
             Column(
               children: <Widget>[
-                this.tabBar,
+                tabBar,
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //   children: <Widget>[
@@ -569,12 +554,13 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                     height: 40,
                     width: 100,
                     decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(8)),
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: Center(
                       child: Text(
-                        this.type,
-                        style: TextStyle(color: Colors.white),
+                        type,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

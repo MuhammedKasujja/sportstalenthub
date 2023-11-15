@@ -40,17 +40,17 @@ class Player {
     return Player(
       playerId: json['player_id'].toString(),
       fullname: json['full_name'],
-      weight: json['weight'].toString(),
-      height: json['height'].toString(),
+      weight: json['weight']?.toString(),
+      height: json['height']?.toString(),
       dob: json['birth_date'],
-      birthPlace: json['birth_place'],
-      nationality: json['country_name'],
-      category: json['sport_name'],
+      birthPlace: json['birth_place'] ?? '',
+      nationality: json['country_name'] ?? '',
+      category: json['sport_name'] ?? '',
       contact: json['contact'],
       profilePhoto: Urls.PROFILE_PHOTO_LINK + json['profile_photo'],
-      gender: json['gender'],
-      teamName: json['team_name'],
-      position: json['position'],
+      gender: json['gender'] ?? '',
+      teamName: json['team_name'] ?? '',
+      position: json['position'] ?? '',
     );
   }
 
