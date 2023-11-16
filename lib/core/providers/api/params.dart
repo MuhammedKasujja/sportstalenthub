@@ -1,0 +1,3 @@
+class Params {
+  Params._();
+}

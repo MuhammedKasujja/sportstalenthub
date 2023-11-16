@@ -43,6 +43,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  freezed: ^1.1.1
+  freezed_annotation: ^1.1.0
 
 # The following section is specific to Flutter.
 flutter:
