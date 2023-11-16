@@ -1,4 +1,4 @@
-import 'package:sth/api/urls.dart';
+import 'package:sth/core/core.dart';
 
 class Attachment {
   String filename;

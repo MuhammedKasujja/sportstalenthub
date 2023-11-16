@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sth/api/urls.dart';
 import 'package:sth/core/core.dart';
 import 'package:sth/models/models.dart';
 import 'dart:convert';

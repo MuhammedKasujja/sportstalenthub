@@ -47,7 +47,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
   static NetworkExceptions getDioException(error) {
     if (error is Exception) {
       try {
-       late NetworkExceptions networkExceptions;
+        late NetworkExceptions networkExceptions;
         if (error is DioException) {
           switch (error.type) {
             case DioExceptionType.cancel:
@@ -63,7 +63,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
             case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
               break;
-            case DioExceptionType.badResponse:  
+            case DioExceptionType.badResponse:
               switch (error.response!.statusCode) {
                 case 400:
                   networkExceptions =
@@ -104,6 +104,12 @@ abstract class NetworkExceptions with _$NetworkExceptions {
               break;
             case DioExceptionType.sendTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
+              break;
+            case DioExceptionType.connectionError:
+              networkExceptions = const NetworkExceptions.serviceUnavailable();
+              break;
+            case DioExceptionType.badCertificate:
+              networkExceptions = const NetworkExceptions.badRequest();
               break;
           }
         } else if (error is SocketException) {

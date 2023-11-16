@@ -38,13 +38,13 @@ dependencies:
   equatable: ^2.0.5
   get_it: ^7.6.4
   cached_network_image: ^3.3.0
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  freezed: ^1.1.1
-  freezed_annotation: ^1.1.0
+  freezed: ^2.4.5
 
 # The following section is specific to Flutter.
 flutter:

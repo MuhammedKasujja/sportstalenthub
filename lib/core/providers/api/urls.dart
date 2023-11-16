@@ -1,42 +1,26 @@
 class Urls {
   Urls._();
-  static const baseUrl = 'http://projectdental.nl/staging-backend/api/patients';
 
-  // static const String baseUrl = "http://10.0.2.2:8000/api/patients";
+  // static const BASE_URL =  "http://192.168.1.106/hub/api";
+  // static const BASE_URL =  "http://josemusicapps.000webhostapp.com/hub/api";
+  // static const BASE_URL =  "http://kasmudtech.000webhostapp.com/hub/api";
+  static const baseUrl = "https://www.sportstalenthub.com/hub/api";
+  static const GET_PLAYERS = "/getPlayers.php?category=";
+  static const GET_SPORTS = "/getSportsCategories.php";
+  static const GET_PLAYERS_ATTACHMENTS = "/getAttachments.php?";
+  static const GET_PAGING_PLAYERS = "/pagingPlayers.php?category=";
+  static const SEARCH_PLAYERS = "/searchPlayers.php?query=";
+  static const MY_FAVOURITE_PLAYERS = "/fetchFavouritePlayers.php?";
+  static const GET_POSTS = "/fetchPosts.php?";
+  static const FILTER_PLAYERS = "/filterPlayers.php?";
+  static const GET_PLAYERS_ACHIEVEMENTS = "/getAchievements.php?";
 
-  static const login = "/auth/login";
-  static const register = "/auth/register";
-  static const logout = "/auth/logout";
-  static const updateProfile = "/auth/update_info";
-  static const appointments = "/appointments/all";
-  static const appointmentsTypes = "/appointments/types";
-  static const createAppointment = "/appointments/create";
-  static const invoices = "/invoices/all";
-  static const changeProfileImage = "/auth/update_photo";
-  static const changePassword = "/auth/password_reset";
-  static const checkin = "/appointments/checkin";
-  static const makePayment = "/payments/process";
-  static const invoiceTransactions = "/invoices/transactions/invoice";
-  static const freeSlots =
-      "http://projectdental.nl/staging-backend/api/v2/slots/free-slots";
+  static const POST_FULL_ARTICLE = "/postFullArticle.php?";
 
-  // static const freeSlots = "http://10.0.2.2:8000/api/v2/slots/free-slots";
-
-  static const inbox =
-      'http://projectdental.nl/staging-backend/api/v2/mails/inbox/mobile';
-
-  static const outbox =
-      'http://projectdental.nl/staging-backend/api/v2/mails/outbox';
-
-  static const sendmail =
-      'http://projectdental.nl/staging-backend/api/v2/mails/sendmail';
-
-  static const myDoctorEmails =
-      'http://projectdental.nl/staging-backend/api/v2/mails/drs_emailist';
-
-  static const openMessage =
-      'http://projectdental.nl/staging-backend/api/v2/mails/view';
-
-  static const replyMessage =
-      'http://projectdental.nl/staging-backend/api/v2/mails/reply';
+  static const PROFILE_PHOTO_LINK =
+      "https://www.sportstalenthub.com/media/cache/my_thumb_330x242/images/players/";
+  static const ACTION_PHOTOS_LINKS =
+      "https://www.sportstalenthub.com/media/cache/my_thumb_690x450/images/action_photos/";
+  static const POST_IMAGE_LINKS =
+      "https://www.sportstalenthub.com/media/cache/my_thumb_690x450/images/posts/";
 }

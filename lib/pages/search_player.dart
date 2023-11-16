@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
 import 'package:sth/api/database.dart';
 import 'package:sth/api/repositoty.dart';
+import 'package:sth/core/core.dart';
 
 import 'package:sth/models/player.dart';
 import 'package:sth/models/sport.dart';
@@ -14,7 +15,6 @@ import 'package:sth/utils/app_utils.dart';
 import 'package:sth/utils/consts.dart';
 import 'package:sth/widgets/player_shimmer.dart';
 import 'package:sth/widgets/profile_card.dart';
-import 'package:sth/api/urls.dart';
 
 class SearchPlayerPage extends StatefulWidget {
   const SearchPlayerPage({super.key});
@@ -278,7 +278,8 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
             child: Card(
               margin: const EdgeInsets.all(0),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 child: CountryPickerDropdown(
                   initialValue: _selectedCountry,
                   // isExpanded: true,

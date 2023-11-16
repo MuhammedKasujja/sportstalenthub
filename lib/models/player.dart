@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:sth/api/urls.dart';
+import 'package:sth/core/core.dart';
 import 'package:sth/utils/consts.dart';
 
 class Player {
