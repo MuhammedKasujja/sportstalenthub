@@ -112,7 +112,7 @@ class _DynamicTabsPageState extends State<DynamicTabsPage>
                         bottomRight: Radius.circular(15))),
                 child: const Center(
                   child: Text(
-                    Consts.APP_NAME,
+                    Consts.appName,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),

@@ -80,7 +80,7 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
             icon: const Icon(Icons.arrow_back),
             onPressed: _saveChanges,
           ),
-          title: const Text(Consts.SETTINGS),
+          title: const Text(Consts.settings),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.save),

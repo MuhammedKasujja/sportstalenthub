@@ -28,13 +28,13 @@ class _StartPageState extends State<StartPage>
     Sport(
       name: Consts.LATEST_PROFILES,
     ),
-    Sport(name: Consts.FOOTBALL, sportId: '1'),
-    Sport(name: Consts.NETBALL, sportId: '2'),
-    Sport(name: Consts.VOLLEYBALL, sportId: '6'),
+    Sport(name: Consts.football, sportId: '1'),
+    Sport(name: Consts.netball, sportId: '2'),
+    Sport(name: Consts.volleyBall, sportId: '6'),
     Sport(name: "American Football", sportId: '13'),
     Sport(name: "Basketball", sportId: '3'),
     Sport(name: "Baseball", sportId: '15'),
-    Sport(name: Consts.DARTS, sportId: '11'),
+    Sport(name: Consts.darts, sportId: '11'),
   ];
 
   @override
@@ -125,7 +125,7 @@ class _StartPageState extends State<StartPage>
                         bottomRight: Radius.circular(15),),),
                 child: const Center(
                   child: Text(
-                    Consts.APP_NAME,
+                    Consts.appName,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),

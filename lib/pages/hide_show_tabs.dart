@@ -26,13 +26,13 @@ class _ShowTabsTageState extends State<ShowTabsTage>
   List<Sport> sportsList = [
     Sport(name: Consts.FEATURED_PROFILES, sportId: '11001', isSelected: true),
     Sport(name: Consts.LATEST_PROFILES, isSelected: true),
-    Sport(name: Consts.FOOTBALL, sportId: '1', isSelected: true),
-    Sport(name: Consts.NETBALL, sportId: '2', isSelected: true),
-    Sport(name: Consts.VOLLEYBALL, sportId: '6', isSelected: true),
+    Sport(name: Consts.football, sportId: '1', isSelected: true),
+    Sport(name: Consts.netball, sportId: '2', isSelected: true),
+    Sport(name: Consts.volleyBall, sportId: '6', isSelected: true),
     Sport(name: "American Football", sportId: '13', isSelected: false),
     Sport(name: "Basketball", sportId: '3', isSelected: false),
     Sport(name: "Baseball", sportId: '15', isSelected: true),
-    Sport(name: Consts.DARTS, sportId: '11', isSelected: false),
+    Sport(name: Consts.darts, sportId: '11', isSelected: false),
   ];
 
   @override
@@ -129,7 +129,7 @@ class _ShowTabsTageState extends State<ShowTabsTage>
                         bottomRight: Radius.circular(15))),
                 child: const Center(
                   child: Text(
-                    Consts.APP_NAME,
+                    Consts.appName,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),

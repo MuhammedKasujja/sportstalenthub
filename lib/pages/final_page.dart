@@ -27,7 +27,7 @@ class _StartPageState extends State<StartPage>
 
   List<DrawerTile> drawerTiles = [
     const DrawerTile(
-      title: Consts.SEARCH,
+      title: Consts.search,
       icon: Icons.search,
       page: SearchPlayerPage(),
     ),
@@ -46,7 +46,7 @@ class _StartPageState extends State<StartPage>
       page: DragDropSettiogsPage(),
     ),
     const DrawerTile(
-      title: Consts.FEEDBACK,
+      title: Consts.feedback,
       icon: Icons.list,
       page: FeedbackPage(),
     ),
@@ -106,7 +106,7 @@ class _StartPageState extends State<StartPage>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(95),
         child: AppBar(
-          title: const Text(Consts.APP_NAME),
+          title: const Text(Consts.appName),
           elevation: 0.0,
           actions: <Widget>[
             IconButton(
@@ -228,7 +228,7 @@ class _StartPageState extends State<StartPage>
                       ),
                       DrawerTile(
                           icon: Icons.settings,
-                          title: Consts.SETTINGS,
+                          title: Consts.settings,
                           page: FinalSettingsPage(
                             totalSports: _allSports,
                             callbackRemoveTabs: _addRemoveTabs,

@@ -75,7 +75,7 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: _saveChanges,
         ),
-        title: const Text(Consts.SETTINGS),
+        title: const Text(Consts.settings),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
@@ -118,22 +118,26 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
                               feedback: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Material(
-                                    color: Colors.transparent,
-                                    child: Chip(label: Text(s.name),),),
+                                  color: Colors.transparent,
+                                  child: Chip(
+                                    label: Text(s.name),
+                                  ),
+                                ),
                               ),
-                              childWhenDragging: Opacity(
+                              childWhenDragging: const Opacity(
                                 opacity: 0.0,
-                                child: Container(),
+                                child: SizedBox(),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Material(
-                                    color: Colors.transparent,
-                                    child: Chip(
-                                      label: Text(s.name),
-                                      deleteIcon: const Icon(Icons.delete),
-                                      deleteIconColor: Colors.red,
-                                    ),),
+                                  color: Colors.transparent,
+                                  child: Chip(
+                                    label: Text(s.name),
+                                    deleteIcon: const Icon(Icons.delete),
+                                    deleteIconColor: Colors.red,
+                                  ),
+                                ),
                               ),
                             ),
                           )

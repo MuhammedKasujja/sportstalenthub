@@ -16,7 +16,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   List<Sport> sportsList = [
-    Sport(name: Consts.NEWS, sportId: Consts.POSTS_PAGE_ID),
+    Sport(name: Consts.news, sportId: Consts.POSTS_PAGE_ID),
     Sport(name: Consts.FEATURED_PROFILES, sportId: Consts.FEATURED_PROFILES_ID),
     Sport(name: Consts.LATEST_PROFILES, sportId: Consts.LATEST_PROFILES_ID),
   ];
@@ -100,7 +100,7 @@ class LogoAnimation extends AnimatedWidget {
         width: animation.value,
         child: FittedBox(
           child: Text(
-            Consts.APP_NAME,
+            Consts.appName,
             style: TextStyle(
               color: Colors.red,
               fontSize: animation.value,

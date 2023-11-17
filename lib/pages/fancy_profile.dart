@@ -118,26 +118,26 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                 Flexible(
                                   child: ListTile(
                                     subtitle: Text(widget.player.category),
-                                    title: const Text(Consts.SPORT),
+                                    title: const Text(Consts.sport),
                                   ),
                                 ),
                                 Flexible(
                                   child: ListTile(
                                     subtitle: Text(widget.player.nationality),
-                                    title: const Text(Consts.COUNTRY),
+                                    title: const Text(Consts.country),
                                   ),
                                 ),
                               ],
                             ),
                             ListTile(
-                              subtitle: const Text(Consts.TEAM),
+                              subtitle: const Text(Consts.team),
                               title: Text(widget.player.teamName),
                             ),
                             Row(
                               children: [
                                 Flexible(
                                   child: ListTile(
-                                    title: const Text(Consts.HEIGHT),
+                                    title: const Text(Consts.height),
                                     subtitle: (widget.player.height != null &&
                                                 widget.player.height!
                                                     .isNotEmpty ||
@@ -148,7 +148,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                 ),
                                 Flexible(
                                   child: ListTile(
-                                    title: const Text(Consts.WEIGHT),
+                                    title: const Text(Consts.weight),
                                     subtitle: (widget.player.weight != null &&
                                             widget.player.weight!.isNotEmpty)
                                         ? Text("${widget.player.weight!} kg")
@@ -157,7 +157,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                                 ),
                                 Flexible(
                                   child: ListTile(
-                                    title: const Text(Consts.DATE_OF_BIRTH),
+                                    title: const Text(Consts.dateOfBirth),
                                     subtitle: Text(widget.player.dob),
                                   ),
                                 ),
@@ -175,7 +175,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
                         child: Row(
                           children: <Widget>[
                             Text(
-                              Consts.POSITIONS,
+                              Consts.positions,
                               style: TextStyle(
                                   fontSize: 18.0, fontWeight: FontWeight.bold),
                             ),

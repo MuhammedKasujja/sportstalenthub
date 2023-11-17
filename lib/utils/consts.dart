@@ -1,27 +1,29 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
-class Consts{
+class Consts {
   Consts._();
 
-  static const APP_NAME = "STH";
+  static const appName = "STH";
 
-  static const SETTINGS = "Settings";
+  static const settings = "Settings";
 
-  static const NETBALL = 'Netball';
+  static const netball = 'Netball';
 
-  static const FOOTBALL = 'Soccer';
+  static const football = 'Soccer';
 
-  static const POSTS = 'Posts';
+  static const posts = 'Posts';
 
-  static const NEWS = 'News';
+  static const news = 'News';
 
-  static const DARTS = 'Darts';
-  
-  static const SEARCH = 'Search';
+  static const darts = 'Darts';
 
-  static const VOLLEYBALL = 'Volleyball';
+  static const search = 'Search';
 
-  static const PROFILES = 'Profiles';
+  static const volleyBall = 'Volleyball';
+
+  static const profiles = 'Profiles';
 
   static const FEATURED_PROFILES = 'Featured CVs';
 
@@ -55,27 +57,27 @@ class Consts{
 
   static const CREATE_ACCOUNT = 'Create Account';
 
-  static const FEEDBACK = 'Feedback';
+  static const feedback = 'Feedback';
 
-  static const PROFILE = "Profile";
+  static const profile = "Profile";
 
-  static const POSITIONS = "Positions";
+  static const positions = "Positions";
 
   static const ACHIEVEMENTS = 'Career Path';
 
-  static const WEIGHT = 'Weight';
+  static const weight = 'Weight';
 
-  static const HEIGHT = "Height";
+  static const height = "Height";
 
-  static const COUNTRY = "Country";
+  static const country = "Country";
 
-  static const TEAM = "Team";
+  static const team = "Team";
 
-  static const SPORT = "Sport";
+  static const sport = "Sport";
 
-  static const GENDER = "Gender";
+  static const gender = "Gender";
 
-  static const DATE_OF_BIRTH = "DOB";
+  static const dateOfBirth = "DOB";
 
   static const SELECTED_GENDER = "Select Gender";
 
@@ -104,5 +106,4 @@ class Consts{
   static const GROUP_U10 = "U10";
 
   static const GROUP_U7 = "U7";
-
 }
