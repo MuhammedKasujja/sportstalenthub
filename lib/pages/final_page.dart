@@ -26,29 +26,29 @@ class _StartPageState extends State<StartPage>
   late TabController tabController;
 
   List<DrawerTile> drawerTiles = [
-    DrawerTile(
+    const DrawerTile(
       title: Consts.SEARCH,
       icon: Icons.search,
       page: SearchPlayerPage(),
     ),
-    DrawerTile(
+    const DrawerTile(
       title: Consts.FAVOURITE_PLAYERS,
       icon: Icons.favorite,
       page: MyPlayersPage(),
     ),
-    DrawerTile(
+    const DrawerTile(
       title: Consts.LOGIN,
       icon: Icons.list,
     ),
-    DrawerTile(
+    const DrawerTile(
       title: Consts.CREATE_ACCOUNT,
       icon: Icons.list,
       page: DragDropSettiogsPage(),
     ),
-    DrawerTile(
+    const DrawerTile(
       title: Consts.FEEDBACK,
       icon: Icons.list,
-      page: const FeedbackPage(),
+      page: FeedbackPage(),
     ),
   ];
 
@@ -112,13 +112,15 @@ class _StartPageState extends State<StartPage>
             IconButton(
               icon: const Icon(Icons.favorite),
               onPressed: () {
-                AppUtils(context: context).gotoPage(page: MyPlayersPage());
+                AppUtils(context: context)
+                    .gotoPage(page: const MyPlayersPage());
               },
             ),
             IconButton(
               icon: const Icon(Icons.search),
               onPressed: () {
-                AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+                AppUtils(context: context)
+                    .gotoPage(page: const SearchPlayerPage());
               },
             ),
             IconButton(
@@ -232,7 +234,7 @@ class _StartPageState extends State<StartPage>
                             callbackRemoveTabs: _addRemoveTabs,
                             callbackClearTabs: _removeAllTabs,
                           )),
-                      DrawerTile(icon: Icons.info, title: Consts.ABOUT),
+                      const DrawerTile(icon: Icons.info, title: Consts.ABOUT),
                     ],
                   ),
                 ),
@@ -257,7 +259,7 @@ class _StartPageState extends State<StartPage>
   }
 
   _removeAllTabs(List<Sport> savedTabs) {
-    if (savedTabs.length > 0) {
+    if (savedTabs.isNotEmpty) {
       setState(() {
         widget.sportsList.removeRange(3, widget.sportsList.length);
         //initTabController(tabController.index - 1);
@@ -307,10 +309,11 @@ class _StartPageState extends State<StartPage>
 
 class DrawerTile extends StatelessWidget {
   final String title;
-  final icon;
-  final page;
+  final IconData icon;
+  final Widget? page;
 
-  DrawerTile({
+  const DrawerTile({
+    super.key,
     required this.title,
     required this.icon,
     this.page,

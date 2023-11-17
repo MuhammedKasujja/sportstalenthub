@@ -13,8 +13,8 @@ class SportDesSer extends DesSer<Sport> {
   }
 
   @override
-  String serialize(Sport s) {
-    return "${s.name},${s.sportId}";
+  String serialize(Sport t) {
+    return "${t.name},${t.sportId}";
   }
 
   @override

@@ -50,22 +50,22 @@ class DBProvider {
   //
   Future<int> getCount() async {
     //database connection
-    final db = await this.database;
+    final db = await database;
     var x = await db.rawQuery('SELECT COUNT (*) from  $sportsTable');
     int? count = Sqflite.firstIntValue(x);
     return count ?? 0;
   }
 
-  updateSport(Sport sport) async {
+  Future<int> updateSport(Sport sport) async {
     final db = await database;
-    var res = await db.update('$sportsTable', sport.toMap(),
+    var res = await db.update(sportsTable, sport.toMap(),
         where: "sport_id = ?", whereArgs: [sport.sportId]);
     return res;
   }
 
   newSport(Sport sport) async {
     final db = await database;
-    var res = await db.insert('$sportsTable', sport.toMap(),
+    var res = await db.insert(sportsTable, sport.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     return res;
   }
@@ -73,7 +73,7 @@ class DBProvider {
   getSport(int sportId) async {
     final db = await database;
     var res = await db
-        .query('$sportsTable', where: "sport_id = ?", whereArgs: [sportId]);
+        .query(sportsTable, where: "sport_id = ?", whereArgs: [sportId]);
     return res.isNotEmpty ? Sport.fromMap(res.first) : Null;
   }
 
@@ -83,14 +83,14 @@ class DBProvider {
         sportId: sport.sportId,
         name: sport.name,
         isSelected: !sport.isSelected);
-    var res = await db.update('$sportsTable', favorite.toMap(),
+    var res = await db.update(sportsTable, favorite.toMap(),
         where: "sport_id = ?", whereArgs: [sport.sportId]);
     return res;
   }
 
   Future<List<Sport>> getAllSports() async {
     final db = await database;
-    var res = await db.query('$sportsTable');
+    var res = await db.query(sportsTable);
     List<Sport> list =
         res.isNotEmpty ? res.map((s) => Sport.fromMap(s)).toList() : [];
     return list;
@@ -98,7 +98,7 @@ class DBProvider {
 
   deleteSport(int sportId) async {
     final db = await database;
-    db.delete('$sportsTable', where: "sport_id = ?", whereArgs: [sportId]);
+    db.delete(sportsTable, where: "sport_id = ?", whereArgs: [sportId]);
   }
 
   deleteAll() async {

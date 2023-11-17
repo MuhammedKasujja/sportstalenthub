@@ -41,7 +41,8 @@ class ApiService {
             : 'F'
         : '';
     final res = await Dio()
-        .get("${Urls.FILTER_PLAYERS}gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
+        .get(
+            "${Urls.FILTER_PLAYERS}gender=$sex&sport=$sport&country=$country&age_group=$ageGroup")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -50,26 +51,26 @@ class ApiService {
   }
 
   static List<Player> _parsePlayers(resBody) {
-    try{
-    final players =
-        (resBody['players'] as List).map((p) => Player.fromJson(p));
-    return players.toList();
-    }catch(error){
-      Logger.debug(data:error, key: 'fetching error: getPlayers');
+    try {
+      final players =
+          (resBody['players'] as List).map((p) => Player.fromJson(p));
+      return players.toList();
+    } catch (error) {
+      Logger.debug(data: error, key: 'fetching error: getPlayers');
       return [];
     }
   }
 
   static List<Sport> _parseSports(resBody) {
-    final sports =
-        (resBody['sports'] as List).map((s) => Sport.fromJson(s));
+    final sports = (resBody['sports'] as List).map((s) => Sport.fromJson(s));
     return sports.toList();
   }
 
   Future<List<Attachment>> getPlayersAttachments(
-      {@required playerId, @required category}) async {
+      {required playerId, required category}) async {
     final res = await Dio()
-        .get("${Urls.GET_PLAYERS_ATTACHMENTS}player_id=$playerId&category=$category")
+        .get(
+            "${Urls.GET_PLAYERS_ATTACHMENTS}player_id=$playerId&category=$category")
         .catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
@@ -77,7 +78,7 @@ class ApiService {
     return compute(_parsePlayersPhotos, res.data);
   }
 
-  static List<Attachment> _parsePlayersPhotos( resBody) {
+  static List<Attachment> _parsePlayersPhotos(resBody) {
     final photos =
         (resBody['files'] as List).map((p) => Attachment.fromJson(p));
     return photos.toList();
@@ -94,20 +95,20 @@ class ApiService {
     return compute(_parsePagedPlayers, res.data);
   }
 
-  static PlayerList _parsePagedPlayers( resBody) {
+  static PlayerList _parsePagedPlayers(resBody) {
     return PlayerList.fromJson(resBody);
   }
 
   Future<List<Post>> fetchPosts() async {
     print("fetching data: fetchPosts");
-    final res = await  Dio().get(Urls.GET_POSTS).catchError((onError) {
+    final res = await Dio().get(Urls.GET_POSTS).catchError((onError) {
       print("CatchError : ${onError.toString()}");
     });
     // print(res.body);
     return compute(_parsePosts, res.data);
   }
 
-  static List<Post> _parsePosts( resBody) {
+  static List<Post> _parsePosts(resBody) {
     final posts = (resBody['posts'] as List).map((p) => Post.fromJson(p));
     return posts.toList();
   }
@@ -123,9 +124,9 @@ class ApiService {
     return compute(_parseAchievements, res.data);
   }
 
-  static List<Achievement> _parseAchievements( resBody) {
-    final achievements = (resBody['achievements'] as List)
-        .map((p) => Achievement.fromJson(p));
+  static List<Achievement> _parseAchievements(resBody) {
+    final achievements =
+        (resBody['achievements'] as List).map((p) => Achievement.fromJson(p));
     return achievements.toList();
   }
 
@@ -140,7 +141,7 @@ class ApiService {
     return compute(_parseArticle, res.data);
   }
 
-  static String _parseArticle( resBody) {
+  static String _parseArticle(resBody) {
     final responseJson = json.decode(resBody);
     return responseJson['full_article'];
   }

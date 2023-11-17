@@ -89,7 +89,6 @@ class _SettingsPageState extends State<SettingsPage> {
           future: sportsList,
           builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
             if (snapshot.hasError) {
-              print("${snapshot.error}");
               return RetryAgainIcon(
                 onTry: () {
                   setState(
@@ -141,18 +140,6 @@ class _SettingsPageState extends State<SettingsPage> {
       });
     }
     DBProvider.db.updateSport(sport);
-    for (Sport s in selectedList) {
-      print(s.name);
-    }
-  }
-
-  void loadLocalSports() async {
-    var _cars = await db.getAllSports();
-    print(_cars);
-
-    setState(() {
-      //sportsList = _cars;
-    });
   }
 
   _saveChanges() {

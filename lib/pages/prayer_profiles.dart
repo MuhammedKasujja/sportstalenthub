@@ -35,7 +35,7 @@ class _PrayerProfilesState extends State<PrayerProfiles>
   Widget build(BuildContext context) {
     super.build(context);
     return widget.sport.sportId == Consts.POSTS_PAGE_ID
-        ? PostsPage()
+        ? const PostsPage()
         : FutureBuilder<List<Player>>(
             future: playerList,
             builder:

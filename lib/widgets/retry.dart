@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class RetryIcon extends StatelessWidget {
   final String message = "Try Again";
+
+  const RetryIcon({super.key});
   @override
   Widget build(BuildContext context) {
     return Chip(
         backgroundColor: Colors.red,
         label: Text(
           message,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
           ),
         ));

@@ -11,7 +11,8 @@ class CustomTabView extends StatefulWidget {
   final ValueChanged<double>? onScroll;
   final int? initPosition;
 
-  CustomTabView({
+  const CustomTabView({
+    super.key,
     required this.itemCount,
     required this.tabBuilder,
     required this.pageBuilder,
@@ -22,7 +23,7 @@ class CustomTabView extends StatefulWidget {
   });
 
   @override
-  _CustomTabsState createState() => _CustomTabsState();
+  State<CustomTabView> createState() => _CustomTabsState();
 }
 
 class _CustomTabsState extends State<CustomTabView>
@@ -112,7 +113,7 @@ class _CustomTabsState extends State<CustomTabView>
             //labelColor: Theme.of(context).primaryColor,
             //unselectedLabelColor: Theme.of(context).hintColor,
             labelColor: Colors.white,
-            indicator: BoxDecoration(
+            indicator: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   color: Colors.white,

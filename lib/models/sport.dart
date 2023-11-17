@@ -21,7 +21,7 @@ class Sport {
   int get hashCode => name.hashCode ^ sportId.hashCode;
 
   factory Sport.fromJson(Map<String, dynamic> json) {
-    return new Sport(
+    return Sport(
       name: json['sport_name'],
       sportId: json['sport_id'].toString(),
       // isSelected: json['isSelected'] == 0 ? true : false,
@@ -30,7 +30,7 @@ class Sport {
   }
 
   factory Sport.fromMap(Map<String, dynamic> json) {
-    return new Sport(
+    return Sport(
       name: json['sport_name'],
       sportId: json['sport_id'].toString(),
       isSelected: json['isSelected'] == 0 ? true : false,

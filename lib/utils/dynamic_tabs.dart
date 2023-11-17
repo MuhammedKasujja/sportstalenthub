@@ -9,8 +9,10 @@ import 'package:sth/widgets/profile_card.dart';
 import 'package:sth/widgets/retry.dart';
 
 class MyPlayersPage extends StatefulWidget {
+  const MyPlayersPage({super.key});
+
   @override
-  _MyPlayersPageState createState() => _MyPlayersPageState();
+  State<MyPlayersPage> createState() => _MyPlayersPageState();
 }
 
 class _MyPlayersPageState extends State<MyPlayersPage> {
@@ -30,59 +32,56 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
-        title: Text("My Players"),
+        title: const Text("My Players"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
-              AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+              AppUtils(context: context)
+                  .gotoPage(page: const SearchPlayerPage());
             },
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            FutureBuilder(
-                future: futurePlayers,
-                builder:
-                    (context, AsyncSnapshot<List<Player>> playersSnapshot) {
-                  if (playersSnapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Container(
-                      child: Center(child: CircularProgressIndicator()),
+      body: Column(
+        children: <Widget>[
+          FutureBuilder(
+              future: futurePlayers,
+              builder: (context, AsyncSnapshot<List<Player>> playersSnapshot) {
+                if (playersSnapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  if (playersSnapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: playersSnapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ProfileCard(
+                          player: playersSnapshot.data![index],
+                        );
+                      },
                     );
                   } else {
-                    if (playersSnapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: playersSnapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(
-                            player: playersSnapshot.data![index],
-                          );
-                        },
-                      );
-                    } else {
-                      return RetryAgainIcon(
-                        onTry: () {
-                          setState(
-                            () {
-                              futurePlayers =
-                                  _api.getFavouritePlayers(playerIds);
-                            },
-                          );
-                        },
-                      );
-                    }
+                    return RetryAgainIcon(
+                      onTry: () {
+                        setState(
+                          () {
+                            futurePlayers = _api.getFavouritePlayers(playerIds);
+                          },
+                        );
+                      },
+                    );
                   }
-                }),
-          ],
-        ),
+                }
+              }),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
-            AppUtils(context: context).gotoPage(page: SearchPlayerPage());
+            AppUtils(context: context).gotoPage(page: const SearchPlayerPage());
           }),
     );
   }
@@ -91,16 +90,13 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String>? myPlayersIds =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
     String ids = '';
-    if(myPlayersIds == null) return;
     for (int i = 0; i < myPlayersIds.length; i++) {
       if (i == 0) {
-        ids = 'players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+        ids = 'players_ids[$i]=${myPlayersIds[i]}';
       } else {
-        ids = ids + '&players_ids[' + i.toString() + ']=' + myPlayersIds[i];
+        ids = '$ids&players_ids[$i]=${myPlayersIds[i]}';
       }
     }
 
@@ -113,7 +109,5 @@ class _MyPlayersPageState extends State<MyPlayersPage> {
         apiPlayers = players;
       });
     });
-
-    print("My Ids: " + ids);
   }
 }

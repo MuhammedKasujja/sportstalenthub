@@ -17,20 +17,20 @@ class PlayersSearchDelegate extends SearchDelegate {
       //   icon: AnimatedIcons.arrow_menu,
       //   progress: null,
       // ),
-      icon: Icon(Icons.menu_open),
+      icon: const Icon(Icons.menu_open),
       onPressed: () {
-        this.close(context, null);
+        close(context, null);
       },
     );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return SizedBox();
+    return const SizedBox();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return SizedBox();
+    return const SizedBox();
   }
 }

@@ -116,16 +116,10 @@ class _ProfilePageState extends State<ProfilePage>
           child: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: tabController,
-            children: <Widget>[
-              Container(
-                child: const Center(child: Text('Details')),
-              ),
-              Container(
-                child: const Center(child: Text('Career')),
-              ),
-              Container(
-                child: const Center(child: Text('Achievements')),
-              ),
+            children: const <Widget>[
+              Center(child: Text('Details')),
+              Center(child: Text('Career')),
+              Center(child: Text('Achievements')),
             ],
           ),
         )
@@ -145,14 +139,13 @@ class _ProfilePageState extends State<ProfilePage>
                 color: Colors.green,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10))),
+                    bottomRight: Radius.circular(10),),),
           ),
           Align(
               alignment: Alignment.topLeft,
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  print('object');
                   AppUtils(
                     context: context,
                   ).goBack();
@@ -172,8 +165,7 @@ class _ProfilePageState extends State<ProfilePage>
               icon: const Icon(Icons.share),
               onPressed: () {
                 share(
-                    message: '${widget.player.fullname} \n' +
-                        '${widget.player.nationality}');
+                    message: '${widget.player.fullname} \n${widget.player.nationality}');
               },
             ),
           ),
@@ -183,11 +175,11 @@ class _ProfilePageState extends State<ProfilePage>
               child: Column(
                 children: <Widget>[
                   Text(
-                    '${widget.player.fullname}',
+                    widget.player.fullname,
                     style: const TextStyle(fontSize: 18),
                   ),
-                  Text('${widget.player.nationality}'),
-                  Text('${widget.player.category}'),
+                  Text(widget.player.nationality),
+                  Text(widget.player.category),
                 ],
               ),
             ),
@@ -197,7 +189,6 @@ class _ProfilePageState extends State<ProfilePage>
             child: IconButton(
               icon: const Icon(FontAwesomeIcons.cameraRetro),
               onPressed: () {
-                print('Hello');
                 AppUtils(context: context).gotoPage(
                     page: FilesPage(
                   category: Consts.FILE_TYPE_IMAGES,
@@ -306,9 +297,11 @@ class _ProfilePageState extends State<ProfilePage>
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
-              child: Container(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),),
+              child: const SizedBox(
                 width: 250.0,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -361,8 +354,6 @@ class _ProfilePageState extends State<ProfilePage>
                   ],
                 ),
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
             ),
           ),
           onHorizontalDragEnd: (details) {
@@ -401,20 +392,18 @@ class _ProfilePageState extends State<ProfilePage>
                       widget.player.profilePhoto,
                     )),
                   )),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      prayer.fullname,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    Text(prayer.nationality),
-                    Text(prayer.category),
-                    Text(prayer.dob),
-                    Text(prayer.contact ?? '')
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    prayer.fullname,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  Text(prayer.nationality),
+                  Text(prayer.category),
+                  Text(prayer.dob),
+                  Text(prayer.contact ?? '')
+                ],
               )
             ]),
             const SizedBox(
@@ -477,11 +466,7 @@ class _ProfilePageState extends State<ProfilePage>
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String>? myPlayers =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
-
-    if (myPlayers == null) return;
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {
@@ -502,11 +487,7 @@ class _ProfilePageState extends State<ProfilePage>
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String>? myPlayers =
-        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) == null
-            ? []
-            : prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS);
-
-    if (myPlayers == null) return;
+        prefs.getStringList(Consts.PREF_LIST_FAVOURITE_PLAYERS) ?? [];
 
     if (myPlayers.contains(widget.player.playerId)) {
       setState(() {

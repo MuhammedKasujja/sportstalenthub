@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 Widget roundedAppBar(BuildContext context) {
   return PreferredSize(
+    preferredSize: const Size.fromHeight(200),
     child: SafeArea(
       child: Container(
         height: 200.0,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.orange,
-          boxShadow: [new BoxShadow(blurRadius: 30.0)],
-          borderRadius: new BorderRadius.vertical(
-            bottom: new Radius.elliptical(
+          boxShadow: const [BoxShadow(blurRadius: 30.0)],
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.elliptical(
               MediaQuery.of(context).size.width,
               100.0,
             ),
@@ -22,6 +23,5 @@ Widget roundedAppBar(BuildContext context) {
         ),
       ),
     ),
-    preferredSize: Size.fromHeight(200),
   );
 }

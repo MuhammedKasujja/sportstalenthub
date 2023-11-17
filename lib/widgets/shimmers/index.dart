@@ -29,9 +29,9 @@ class ShimmerWidget extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8.0),
           itemBuilder: (_, index) {
             Widget shimmer = type == ShimmerType.player
-                ? PlayerShimmer()
+                ? const PlayerShimmer()
                 : type == ShimmerType.post
-                    ? PostShimmer()
+                    ? const PostShimmer()
                     : type == ShimmerType.careerPath
                         ? const CareerPathShimmer()
                         : Container();

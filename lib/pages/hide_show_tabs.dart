@@ -89,8 +89,8 @@ class _ShowTabsTageState extends State<ShowTabsTage>
         ],
       ),
       body: TabBarView(
-        children: _tabViews,
         controller: _tabController,
+        children: _tabViews,
       ),
       drawer: appDrawer(),
       /* floatingActionButton: FloatingActionButton(

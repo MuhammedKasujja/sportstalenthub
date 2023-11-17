@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Returning Data Demo'),
+        title: const Text('Returning Data Demo'),
       ),
-      body: Center(child: SelectionButton()),
+      body: const Center(child: SelectionButton()),
     );
   }
 }
 
 class SelectionButton extends StatelessWidget {
+  const SelectionButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         _navigateAndDisplaySelection(context);
       },
-      child: Text('Pick an option, any option!'),
+      child: const Text('Pick an option, any option!'),
     );
   }
 
@@ -30,7 +34,7 @@ class SelectionButton extends StatelessWidget {
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SelectionScreen()),
+      MaterialPageRoute(builder: (context) => const SelectionScreen()),
     );
 
     // After the Selection Screen returns a result, hide any previous snackbars
@@ -42,11 +46,13 @@ class SelectionButton extends StatelessWidget {
 }
 
 class SelectionScreen extends StatelessWidget {
+  const SelectionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick an option'),
+        title: const Text('Pick an option'),
       ),
       body: Center(
         child: Column(
@@ -59,7 +65,7 @@ class SelectionScreen extends StatelessWidget {
                   // Close the screen and return "Yep!" as the result.
                   Navigator.pop(context, 'Yep!');
                 },
-                child: Text('Yep!'),
+                child: const Text('Yep!'),
               ),
             ),
             Padding(
@@ -69,7 +75,7 @@ class SelectionScreen extends StatelessWidget {
                   // Close the screen and return "Nope!" as the result.
                   Navigator.pop(context, 'Nope.');
                 },
-                child: Text('Nope.'),
+                child: const Text('Nope.'),
               ),
             )
           ],

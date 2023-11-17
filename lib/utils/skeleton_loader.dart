@@ -4,9 +4,10 @@ class SkeletonLoader extends StatefulWidget {
   final double height;
   final double width;
 
-  const SkeletonLoader({Key? key, this.height = 20, this.width = 200});
+  const SkeletonLoader({super.key, this.height = 20, this.width = 200});
 
-  createState() => SkeletonLoaderState();
+  @override
+  State<SkeletonLoader> createState() => SkeletonLoaderState();
 }
 
 class SkeletonLoaderState extends State<SkeletonLoader>
@@ -19,7 +20,7 @@ class SkeletonLoaderState extends State<SkeletonLoader>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
 
@@ -49,8 +50,8 @@ class SkeletonLoaderState extends State<SkeletonLoader>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment(gradientPosition.value, 0),
-          end: Alignment(-1, 0),
-          colors: [
+          end: const Alignment(-1, 0),
+          colors: const [
             Colors.black12,
             Colors.black26,
             Colors.black12,

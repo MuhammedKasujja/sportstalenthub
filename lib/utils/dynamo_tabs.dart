@@ -8,8 +8,10 @@ class DynamicTabContent {
 }
 
 class CardStack extends StatefulWidget {
+  const CardStack({super.key});
+
   @override
-  _MainState createState() => new _MainState();
+  State<CardStack> createState() => _MainState();
 }
 
 class _MainState extends State<CardStack> with TickerProviderStateMixin {
@@ -23,11 +25,11 @@ class _MainState extends State<CardStack> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    myList.add(new DynamicTabContent.name(Icons.favorite, "Favorited"));
-    myList.add(new DynamicTabContent.name(Icons.local_pizza, "local pizza"));
+    myList.add(DynamicTabContent.name(Icons.favorite, "Favorited"));
+    myList.add(DynamicTabContent.name(Icons.local_pizza, "local pizza"));
 
-    _cardController = new TabController(vsync: this, length: myList.length);
-    _tabPageSelector = new TabPageSelector(controller: _cardController);
+    _cardController = TabController(vsync: this, length: myList.length);
+    _tabPageSelector = TabPageSelector(controller: _cardController);
   }
 
   @override
@@ -38,13 +40,13 @@ class _MainState extends State<CardStack> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: new AppBar(
+      appBar: AppBar(
         actions: <Widget>[
-          new Padding(
+          Padding(
             padding: const EdgeInsets.all(1.0),
-            child: new IconButton(
+            child: IconButton(
               icon: const Icon(
                 Icons.add,
                 size: 30.0,
@@ -54,9 +56,9 @@ class _MainState extends State<CardStack> with TickerProviderStateMixin {
               onPressed: () {
                 List<DynamicTabContent> tempList = [];
 
-                myList.forEach((dynamicContent) {
+                for (var dynamicContent in myList) {
                   tempList.add(dynamicContent);
-                });
+                }
 
                 setState(() {
                   myList.clear();
@@ -64,45 +66,45 @@ class _MainState extends State<CardStack> with TickerProviderStateMixin {
 
                 if (tempList.length % 2 == 0) {
                   myList.add(
-                    new DynamicTabContent.name(
+                    DynamicTabContent.name(
                       Icons.shopping_cart,
                       "shopping cart",
                     ),
                   );
                 } else {
                   myList.add(
-                    new DynamicTabContent.name(
+                    DynamicTabContent.name(
                       Icons.camera,
                       "camera",
                     ),
                   );
                 }
 
-                tempList.forEach((dynamicContent) {
+                for (var dynamicContent in tempList) {
                   myList.add(dynamicContent);
-                });
+                }
 
                 setState(() {
                   _cardController =
-                      new TabController(vsync: this, length: myList.length);
+                      TabController(vsync: this, length: myList.length);
                   _tabPageSelector =
-                      new TabPageSelector(controller: _cardController);
+                      TabPageSelector(controller: _cardController);
                 });
               },
             ),
           ),
         ],
-        title: new Text("Title Here"),
-        bottom: new PreferredSize(
+        title: const Text("Title Here"),
+        bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10.0),
-          child: new Theme(
+          child: Theme(
             data: Theme.of(context)
                 .copyWith(scaffoldBackgroundColor: Colors.grey),
             child: myList.isEmpty
-                ? new Container(
+                ? Container(
                     height: 30.0,
                   )
-                : new Container(
+                : Container(
                     height: 30.0,
                     alignment: Alignment.center,
                     child: _tabPageSelector,
@@ -110,21 +112,22 @@ class _MainState extends State<CardStack> with TickerProviderStateMixin {
           ),
         ),
       ),
-      body: new TabBarView(
+      body: TabBarView(
         controller: _cardController,
         children: myList.isEmpty
             ? <Widget>[]
             : myList.map(
                 (dynamicContent) {
-                  return new Card(
-                    child: new Container(
-                        height: 450.0,
-                        width: 300.0,
-                        child: new IconButton(
-                          icon: new Icon(dynamicContent.icon, size: 100.0),
-                          tooltip: dynamicContent.tooTip,
-                          onPressed: null,
-                        )),
+                  return Card(
+                    child: SizedBox(
+                      height: 450.0,
+                      width: 300.0,
+                      child: IconButton(
+                        icon: Icon(dynamicContent.icon, size: 100.0),
+                        tooltip: dynamicContent.tooTip,
+                        onPressed: null,
+                      ),
+                    ),
                   );
                 },
               ).toList(),

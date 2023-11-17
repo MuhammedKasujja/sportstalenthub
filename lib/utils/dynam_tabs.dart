@@ -9,13 +9,15 @@
 import 'package:flutter/material.dart';
 
 class DynamoTabs extends StatefulWidget {
+  const DynamoTabs({super.key});
+
   @override
   DynamoTabsState createState() => DynamoTabsState();
 }
 
 class DynamoTabsState extends State<DynamoTabs> with TickerProviderStateMixin {
   late TabController tabController;
-  List<Tab> tabs = <Tab>[Tab(text: '0')];
+  List<Tab> tabs = <Tab>[const Tab(text: '0')];
 
   void initTabController(int index) {
     tabController =
@@ -58,9 +60,12 @@ class DynamoTabsState extends State<DynamoTabs> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: newTab),
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.add),
+            onPressed: newTab,
+          ),
+          IconButton(
+            icon: const Icon(Icons.close),
             onPressed: closeCurrentTab,
           )
         ],

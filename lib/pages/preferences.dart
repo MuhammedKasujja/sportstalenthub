@@ -110,8 +110,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
                         title: Text(sport.name),
                         value: selectedList.contains(sport),
                         onChanged: (selected) {
-                          if (selected != null)
+                          if (selected != null) {
                             _onSportSelected(selected, sport);
+                          }
                         },
                       );
                     });
@@ -136,9 +137,6 @@ class _PreferencesPageState extends State<PreferencesPage> {
         selectedList.remove(sport);
       });
     }
-    for (Sport s in selectedList) {
-      print(s.name);
-    }
   }
 
   Future<void> removeAddTabs() async {
@@ -149,14 +147,5 @@ class _PreferencesPageState extends State<PreferencesPage> {
     if (widget.callbackClearTabs != null) {
       widget.callbackClearTabs!(selectedList);
     }
-  }
-
-  void loadLocalSports() async {
-    var _cars = await db.getAllSports();
-    print(_cars);
-
-    setState(() {
-      sportsList = _cars;
-    });
   }
 }

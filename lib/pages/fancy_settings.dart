@@ -87,7 +87,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
         future: sportsList,
         builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
           if (snapshot.hasError) {
-            print("${snapshot.error}");
             return RetryAgainIcon(
               onTry: () {
                 setState(
@@ -99,123 +98,119 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              child: const Center(child: CircularProgressIndicator()),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData) {
             if (snapshot.data!.isNotEmpty) {
-              return Container(
-                child: Column(
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("My Sports"),
+              return Column(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("My Sports"),
+                  ),
+                  Expanded(
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: selectedList
+                          .map(
+                            (s) => Draggable(
+                              data: s,
+                              feedback: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Material(
+                                    color: Colors.transparent,
+                                    child: Chip(label: Text(s.name),),),
+                              ),
+                              childWhenDragging: Opacity(
+                                opacity: 0.0,
+                                child: Container(),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Material(
+                                    color: Colors.transparent,
+                                    child: Chip(
+                                      label: Text(s.name),
+                                      deleteIcon: const Icon(Icons.delete),
+                                      deleteIconColor: Colors.red,
+                                    ),),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
-                    Expanded(
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        children: selectedList
-                            .map(
-                              (s) => Draggable(
-                                data: s,
-                                feedback: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Material(
-                                      color: Colors.transparent,
-                                      child: Chip(label: Text(s.name))),
-                                ),
-                                childWhenDragging: Opacity(
-                                  opacity: 0.0,
-                                  child: Container(),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Material(
-                                      color: Colors.transparent,
-                                      child: Chip(
-                                        label: Text(s.name),
-                                        deleteIcon: const Icon(Icons.delete),
-                                        deleteIconColor: Colors.red,
-                                      )),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Other Sports"),
+                  ),
+                  Expanded(
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: snapshot.data!
+                          .map(
+                            (s) => Draggable(
+                              data: s,
+                              feedback: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: Chip(
+                                    label: Text(s.name),
+                                  ),
                                 ),
                               ),
-                            )
-                            .toList(),
-                      ),
+                              childWhenDragging: const Opacity(
+                                opacity: 0.0,
+                                child: SizedBox(),
+                              ),
+                              child: !s.isSelected
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Material(
+                                          color: Colors.transparent,
+                                          child: Chip(
+                                            label: Text(s.name),
+                                            deleteIcon:
+                                                const Icon(Icons.rotate_right),
+                                            deleteIconColor: Colors.green,
+                                          )),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ),
+                          )
+                          .toList(),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Other Sports"),
-                    ),
-                    Expanded(
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        children: snapshot.data!
-                            .map(
-                              (s) => Draggable(
-                                data: s,
+                  ),
+                  Expanded(
+                    child: DragTarget<Sport>(
+                      onAccept: (sport) {
+                        selectedSport = sport;
+                      },
+                      onWillAccept: (sport) {
+                        return true;
+                      },
+                      builder: (context, List<Sport?> incomming, rejected) {
+                        return selectedSport != null
+                            ? Draggable(
                                 feedback: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Material(
                                     color: Colors.transparent,
                                     child: Chip(
-                                      label: Text(s.name),
+                                      label: Text(selectedSport!.name),
                                     ),
                                   ),
                                 ),
-                                childWhenDragging: Opacity(
-                                  opacity: 0.0,
-                                  child: Container(),
+                                child: Chip(
+                                  label: Text(selectedSport!.name),
                                 ),
-                                child: !s.isSelected
-                                    ? Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Material(
-                                            color: Colors.transparent,
-                                            child: Chip(
-                                              label: Text(s.name),
-                                              deleteIcon:
-                                                  const Icon(Icons.rotate_right),
-                                              deleteIconColor: Colors.green,
-                                            )),
-                                      )
-                                    : Container(),
-                              ),
-                            )
-                            .toList(),
-                      ),
+                              )
+                            : const SizedBox();
+                      },
                     ),
-                    Expanded(
-                      child: DragTarget<Sport>(
-                        onAccept: (sport) {
-                          selectedSport = sport;
-                        },
-                        onWillAccept: (sport) {
-                          return true;
-                        },
-                        builder: (context, List<Sport?> incomming, rejected) {
-                          return selectedSport != null
-                              ? Draggable(
-                                  feedback: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Chip(
-                                        label: Text(selectedSport!.name),
-                                      ),
-                                    ),
-                                  ),
-                                  child: Chip(
-                                    label: Text(selectedSport!.name),
-                                  ),
-                                )
-                              : const SizedBox();
-                        },
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               );
             } else {
               return const Center(child: Text(Consts.NO_DATA_FOUND));
@@ -226,32 +221,6 @@ class _FancySettingsPageState extends State<FancySettingsPage> {
         },
       ),
     );
-  }
-
-  void _onSportSelected(bool selected, Sport sport) {
-    if (selected) {
-      setState(() {
-        sport.isSelected = true;
-        selectedList.add(sport);
-      });
-    } else {
-      setState(() {
-        sport.isSelected = false;
-        selectedList.remove(sport);
-      });
-    }
-    DBProvider.db.updateSport(sport);
-    for (Sport s in selectedList) {
-      print(s.name);
-    }
-  }
-
-  void loadLocalSports() async {
-    var _cars = await db.getAllSports();
-
-    setState(() {
-      //sportsList = _cars;
-    });
   }
 
   _saveChanges() {

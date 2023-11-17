@@ -370,7 +370,7 @@ class _FancyProfilePageState extends State<FancyProfilePage>
     );
   }
 
-  _generateAppTab(bool checked) {
+  SliverPersistentHeaderDelegate _generateAppTab(bool checked) {
     return _SliverAppBarDelegate(
       tabBar: TabBar(
         labelColor: Colors.white,

@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage>
 
   navigateToSettings() async {
     await Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CardStack()))
+            context, MaterialPageRoute(builder: (context) => const CardStack()))
         .then((onValue) {
       setState(() {
         //tabList = onValue;

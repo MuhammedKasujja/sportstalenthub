@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sth/api/api_service.dart';
-import 'package:sth/api/database.dart';
 import 'package:sth/api/repositoty.dart';
 import 'package:sth/core/core.dart';
 
@@ -29,7 +28,6 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
   var subject = PublishSubject<String>();
   List<Player> players = [];
   bool isLoading = false;
-  final db = DBProvider();
   List<Sport> repoList = [];
 
   final api = ApiService();
@@ -150,7 +148,6 @@ class _SearchPlayerPageState extends State<SearchPlayerPage> {
     setState(() {
       players.add(Player.fromJson(item));
     });
-    print("${players.map((s) => s.fullname)}");
   }
 
   _saveSearchQuery({query}) async {

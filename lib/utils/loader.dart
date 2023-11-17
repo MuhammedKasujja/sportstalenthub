@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class Loader extends StatefulWidget {
+  const Loader({super.key});
+
   @override
-  _LoaderState createState() => _LoaderState();
+  State<Loader> createState() => _LoaderState();
 }
 
 class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
@@ -21,22 +23,38 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 5));
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    );
 
     animation_rotation = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: controller,
-            curve: Interval(0.0, 1.0, curve: Curves.linear)));
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(0.0, 1.0, curve: Curves.linear),
+      ),
+    );
 
     animation_radius_in = Tween<double>(begin: 1.0, end: 0.0).animate(
-        CurvedAnimation(
-            parent: controller,
-            curve: Interval(0.75, 1.0, curve: Curves.elasticIn)));
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(
+          0.75,
+          1.0,
+          curve: Curves.elasticIn,
+        ),
+      ),
+    );
     animation_radius_out = Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: controller,
-            curve: Interval(0.0, 0.25, curve: Curves.elasticInOut)));
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(
+          0.0,
+          0.25,
+          curve: Curves.elasticInOut,
+        ),
+      ),
+    );
 
     controller.addListener(() {
       setState(() {
@@ -59,7 +77,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 100.0,
       height: 100.0,
       child: Center(
@@ -67,13 +85,13 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
           turns: animation_rotation,
           child: Stack(
             children: <Widget>[
-              Dot(
+              const Dot(
                 radius: 20.0,
                 color: Colors.green,
               ),
               Transform.translate(
                 offset: Offset(radius * cos(pi / 4), radius * sin(pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -81,7 +99,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(2 * pi / 4), radius * sin(2 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -89,7 +107,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(3 * pi / 4), radius * sin(3 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -97,7 +115,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(4 * pi / 4), radius * sin(4 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -105,7 +123,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(5 * pi / 4), radius * sin(5 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -113,7 +131,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(6 * pi / 4), radius * sin(6 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -121,7 +139,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(7 * pi / 4), radius * sin(7 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -129,7 +147,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
               Transform.translate(
                 offset:
                     Offset(radius * cos(8 * pi / 4), radius * sin(8 * pi / 4)),
-                child: Dot(
+                child: const Dot(
                   radius: 5,
                   color: Colors.redAccent,
                 ),
@@ -147,17 +165,17 @@ class Dot extends StatelessWidget {
   final Color color;
 
   const Dot({
-    Key? key,
+    super.key,
     required this.radius,
     required this.color,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: this.radius,
-      height: this.radius,
+      width: radius,
+      height: radius,
       decoration: BoxDecoration(
-        color: this.color,
+        color: color,
         shape: BoxShape.circle,
       ),
     );

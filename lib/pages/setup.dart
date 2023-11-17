@@ -147,18 +147,5 @@ class _SetupPageState extends State<SetupPage> {
       });
     }
     DBProvider.db.updateSport(sport);
-    print('object: ${sport.isSelected} ID: ${sport.sportId}');
-    // for(Sport s in selectedList){
-    //    print(s.name);
-    // }
-  }
-
-  void loadLocalSports() async {
-    var _cars = await db.getAllSports();
-    print(_cars);
-
-    setState(() {
-      //sportsList = _cars;
-    });
   }
 }

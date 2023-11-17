@@ -55,14 +55,12 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
           s.isSelected = false;
           db.newSport(s);
         }
-        // setState(() {});
       });
     }
 
     db.getAllSports().then((sports) {
       List<Sport> savedList = [];
       for (Sport s in sports) {
-        print("Name: ${s.name}, Selected: ${s.isSelected}, ID: ${s.sportId}");
         if (s.isSelected) {
           savedList.add(s);
         }
@@ -94,7 +92,6 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
           future: sportsList,
           builder: (BuildContext context, AsyncSnapshot<List<Sport>> snapshot) {
             if (snapshot.hasError) {
-              print("${snapshot.error}");
               return RetryAgainIcon(
                 onTry: () {
                   setState(
@@ -149,19 +146,9 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
       });
     }
     DBProvider.db.updateSport(sport);
-    print('object: ${sport.isSelected}');
     for (Sport s in selectedList) {
       print(s.name);
     }
-  }
-
-  void loadLocalSports() async {
-    var _cars = await db.getAllSports();
-    print(_cars);
-
-    setState(() {
-      //sportsList = _cars;
-    });
   }
 
   _saveChanges() {
@@ -179,15 +166,18 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
   Widget dragDropBoard(List<Sport> listSports) {
     List<DragAndDropItem> mySports = [];
     List<DragAndDropItem> otherSports = [];
-    listSports.forEach((sport) {
+    for (var sport in listSports) {
       if (sport.isSelected) {
-        mySports.add(DragAndDropItem(
+        mySports.add(
+          DragAndDropItem(
             child: Chip(
-          key: Key(sport.sportId!),
-          label: Text(
-            sport.name,
+              key: Key(sport.sportId!),
+              label: Text(
+                sport.name,
+              ),
+            ),
           ),
-        )));
+        );
       } else {
         otherSports.add(
           DragAndDropItem(
@@ -200,7 +190,7 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
           ),
         );
       }
-    });
+    }
     _contents = [
       DragAndDropList(
         header: const Text('My Sports'),
@@ -253,7 +243,6 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
   }
 
   _onItemAdd(DragAndDropItem newItem, int listIndex, int itemIndex) {
-    print('adding new item');
     setState(() {
       if (itemIndex == -1) {
         _contents[listIndex].children.add(newItem);
@@ -264,7 +253,6 @@ class _FinalSettingsPageState extends State<FinalSettingsPage> {
   }
 
   _onListAdd(DragAndDropListInterface newList, int listIndex) {
-    print('adding new list');
     setState(() {
       if (listIndex == -1) {
         _contents.add(newList as DragAndDropList);

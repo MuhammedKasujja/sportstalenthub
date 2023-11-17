@@ -150,7 +150,7 @@ class _PostInfoPageState extends State<PostInfoPage> {
                   future: fullArticle,
                   builder: (context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return LoadingIcon();
+                      return const LoadingIcon();
                     }
                     if (snapshot.hasError) {
                       return RetryAgainIcon(onTry: () {
