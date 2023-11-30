@@ -8,7 +8,8 @@ class PlayerVideosPage extends StatefulWidget {
   final String playerId;
   final String playerName;
 
-  const PlayerVideosPage({super.key,
+  const PlayerVideosPage({
+    super.key,
     required this.playerId,
     required this.playerName,
   });
@@ -19,7 +20,7 @@ class PlayerVideosPage extends StatefulWidget {
 class _PlayerVideosPageState extends State<PlayerVideosPage> {
   final api = ApiService();
   late Future<List<Attachment>> futureVideos;
- String? videoId;
+  String? videoId;
   // String videoId = YoutubePlayer.convertUrlToId("https://youtu.be/kqyXwSV0rgM");
   List<Attachment>? listVideos;
   int videoPosition = 0;
@@ -126,9 +127,6 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                     child: Chip(label: Text("Error: ${snapshot.error}")),
                     onTap: () {
                       loadVideos();
-                      // this.futureVideos = api.getPlayersAttachments(
-                      //     playerId: widget.playerId,
-                      //     category: Consts.FILE_TYPE_VIDEOS);
                     },
                   ));
                 }
@@ -212,12 +210,16 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
                     return const Center(
                         child: Text(
                       "Player has no videos",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ));
                   }
                 } else {
-                  return const Text("Player has no videos",
-                      style: TextStyle(color: Colors.grey));
+                  return const Text(
+                    "Player has no videos",
+                    style: TextStyle(color: Colors.grey),
+                  );
                 }
               },
             ),
@@ -229,32 +231,34 @@ class _PlayerVideosPageState extends State<PlayerVideosPage> {
 
   Widget playPreviousVideo() {
     return Positioned(
-        left: 20,
-        bottom: 6,
-        child: IconButton(
-            icon: Icon(
-              Icons.skip_previous,
-              color: (listVideos != null && listVideos!.isNotEmpty)
-                  ? Colors.red
-                  : Colors.grey,
-            ),
-            onPressed: () {
-              if (listVideos != null && listVideos!.isNotEmpty) {
-                if (listVideos!.length == 1) {
-                } else {
-                  if (videoPosition == 0) {
-                    // TODO disable button
-                  } else if (videoPosition > 0) {
-                    int position = videoPosition - 1;
-                    setState(() {
-                      videoId = listVideos!.elementAt(position).filename;
-                      videoPosition = position;
-                      youtubePlayerController.load(videoId!);
-                    });
-                  }
-                }
+      left: 20,
+      bottom: 6,
+      child: IconButton(
+        icon: Icon(
+          Icons.skip_previous,
+          color: (listVideos != null && listVideos!.isNotEmpty)
+              ? Colors.red
+              : Colors.grey,
+        ),
+        onPressed: () {
+          if (listVideos != null && listVideos!.isNotEmpty) {
+            if (listVideos!.length == 1) {
+            } else {
+              if (videoPosition == 0) {
+                // TODO disable button
+              } else if (videoPosition > 0) {
+                int position = videoPosition - 1;
+                setState(() {
+                  videoId = listVideos!.elementAt(position).filename;
+                  videoPosition = position;
+                  youtubePlayerController.load(videoId!);
+                });
               }
-            }));
+            }
+          }
+        },
+      ),
+    );
   }
 
   Widget playNextVideo() {

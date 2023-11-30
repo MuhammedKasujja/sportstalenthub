@@ -6,3 +6,16 @@ abstract class PlayerAttachmentsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class FetchPlayerAttachments extends PlayerAttachmentsEvent {
+  final String playerId;
+  final String category;
+
+  const FetchPlayerAttachments({
+    required this.playerId,
+    required this.category,
+  });
+
+  @override
+  List<Object> get props => [playerId, category];
+}

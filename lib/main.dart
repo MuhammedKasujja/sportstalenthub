@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sth/pages/splash.dart';
 import 'package:sth/utils/consts.dart';
+import 'di_container.dart' as di;
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(const App());
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: Consts.appName,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return MultiBlocProvider(
+      providers: di.blocs,
+      child: MaterialApp(
+        title: Consts.appName,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        //home: StartPage(),
+        home: const SplashPage(),
       ),
-      //home: StartPage(),
-      home: const SplashPage(),
     );
   }
 }

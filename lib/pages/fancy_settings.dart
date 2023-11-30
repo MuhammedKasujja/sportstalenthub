@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pref_dessert/pref_dessert.dart';
 import 'package:sth/api/api_service.dart';
 import 'package:sth/api/database.dart';
-import 'package:sth/models/sport.dart';
-import 'package:sth/models/sport_pref.dart';
+import 'package:sth/models/models.dart';
 import 'package:sth/utils/consts.dart';
 import 'package:sth/widgets/retry.dart';
 
